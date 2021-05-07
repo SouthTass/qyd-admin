@@ -15,6 +15,11 @@ export default new Router({
       meta: { title: '自述文件' },
       children: [
         {
+          path: '/person/baseform',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseForm.vue'),
+          meta: { title: '个人登记' }
+        },
+        {
           path: '/dashboard',
           component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
           meta: { title: '系统首页' }
