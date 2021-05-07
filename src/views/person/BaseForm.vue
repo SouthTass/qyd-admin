@@ -122,6 +122,43 @@
       <el-form-item label="文本框">
         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
       </el-form-item>
+
+      <!-- 系统信息 -->
+      <div class="form-item">
+        <h3 class="form-item-title">系统信息</h3>
+        <div class="container">
+          <el-form-item label="转移就业证号" class="line-height-l2">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="系统状态">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option v-for="item in registerTypeList" 
+                :key="item.type" :label="item.name" :value="item.type"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="查询时间">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option v-for="item in registerTypeList" :key="item.type" :label="item.name" :value="item.type"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="转移就业证号" class="line-height-l2">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="系统状态">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option v-for="item in registerTypeList" 
+                :key="item.type" :label="item.name" :value="item.type"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="查询时间">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option v-for="item in registerTypeList" :key="item.type" :label="item.name" :value="item.type"></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+      </div>
+
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit">表单提交</el-button>
         <el-button>取消</el-button>
