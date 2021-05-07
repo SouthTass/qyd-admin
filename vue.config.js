@@ -1,16 +1,8 @@
 module.exports = {
-    baseUrl: './',
-    assetsDir: 'static',
-    productionSourceMap: false,
-    // devServer: {
-    //     proxy: {
-    //         '/api':{
-    //             target:'http://jsonplaceholder.typicode.com',
-    //             changeOrigin:true,
-    //             pathRewrite:{
-    //                 '/api':''
-    //             }
-    //         }
-    //     }
-    // }
+  baseUrl: './',
+  assetsDir: 'static',
+  productionSourceMap: false,
+  chainWebpack: function(config) {
+    config.resolve.alias.set('@', path.resolve('src'));
+  },
 }
