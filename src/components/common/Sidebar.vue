@@ -60,13 +60,17 @@ export default {
       items: [
         {
           icon: "el-icon-lx-home",
-          index: "dashboard",
+          index: "1",
           title: "登记管理",
           subs: [
             {
-              index: "person/baseform",
-              title: "信息登记",
+              index: "personbaseform",
+              title: "个人信息登记",
             },
+            {
+              index: "personbasetable",
+              title: "个人信息注销",
+            }
           ]
         },
         {
