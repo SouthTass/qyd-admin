@@ -73,6 +73,7 @@ export default {
             }
           ]
         },
+        /**
         {
           icon: "el-icon-lx-home",
           index: "dashboard",
@@ -167,6 +168,7 @@ export default {
           index: "/donate",
           title: "支持作者",
         },
+        */
       ],
     };
   },

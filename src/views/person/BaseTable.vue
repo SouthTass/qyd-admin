@@ -36,7 +36,7 @@
         </el-table-column>
         <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
-            <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">注销</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,18 +53,53 @@
     </div>
 
     <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-      <el-form ref="form" :model="form" label-width="70px">
-        <el-form-item label="用户名">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="form.address"></el-input>
-        </el-form-item>
+    <el-dialog title="个人信息注销" :visible.sync="editVisible" width="800px" center>
+      <table class="dialog-table" border="1">
+        <tr style="text-align: center">
+          <td colspan="6">个人信息</td>
+        </tr>
+        <tr>
+          <td style="width: 70px">姓名</td>
+          <td style="width: 180px">张三</td>
+          <td style="width: 70px">年龄</td>
+          <td style="width: 180px">20</td>
+          <td style="width: 70px">性别</td>
+          <td style="width: 180px">男</td>
+        </tr>
+        <tr>
+          <td>就业状态</td>
+          <td>无业</td>
+          <td>户籍性质</td>
+          <td>男</td>
+          <td>身份证号</td>
+          <td>63219783128937129803</td>
+        </tr>
+        <tr>
+          <td>电话</td>
+          <td colspan="5">1339021984201</td>
+        </tr>
+        <tr>
+          <td>地址</td>
+          <td colspan="5">北京北京北京北京北京北京北京北京北京北京北京北京</td>
+        </tr>
+      </table>
+      <el-form ref="form" :model="form" label-width="68px" class="form-container"
+        style="width: 750px">
+        <div class="form-item">
+          <el-form-item label="注销原因">
+            <el-select v-model="value" placeholder="请选择"  class="from-width-l1">
+              <el-option v-for="item in registerTypeList" 
+                :key="item.type" :label="item.name" :value="item.type"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input v-model="form.name" type="textarea" :rows="6"></el-input>
+          </el-form-item>
+        </div>
       </el-form>
       <span slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="saveEdit">注 销</el-button>
         <el-button @click="editVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveEdit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -85,7 +120,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       delList: [],
-      editVisible: false,
+      editVisible: true,
       pageTotal: 0,
       form: {},
       idx: -1,
@@ -111,15 +146,16 @@ export default {
     },
     // 删除操作
     handleDelete(index, row) {
-      // 二次确认删除
-      this.$confirm('确定要删除吗？', '提示', {
-        type: 'warning'
-      })
-        .then(() => {
-          this.$message.success('删除成功');
-          this.tableData.splice(index, 1);
-        })
-        .catch(() => {});
+      this.editVisible = true
+      // // 二次确认删除
+      // this.$confirm('确定要删除吗？', '提示', {
+      //   type: 'warning'
+      // })
+      //   .then(() => {
+      //     this.$message.success('删除成功');
+      //     this.tableData.splice(index, 1);
+      //   })
+      //   .catch(() => {});
     },
     // 多选操作
     handleSelectionChange(val) {
@@ -156,7 +192,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .handle-box {
   margin-bottom: 20px;
 }
@@ -184,5 +220,13 @@ export default {
   margin: auto;
   width: 40px;
   height: 40px;
+}
+.dialog-table{
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.15);
+  td{
+    padding: 5px;
+  }
 }
 </style>

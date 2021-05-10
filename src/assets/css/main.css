@@ -177,6 +177,35 @@ a {
 }
 
 
+/** 表单label */
 .line-height-l2 .el-form-item__label{
   line-height: 16px !important;
+}
+
+/** 表单主要样式 */
+.form-container{
+  width: 875px;
+}
+.form-container .form-item{
+  padding-top: 15px;
+  margin-bottom: 15px;
+}
+.form-container .form-item .form-item-title{
+  font-size: 18px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+/** 表单表格内联样式 */
+.from-width-l1{
+  width: 177px !important;
+}
+.from-width-l2{
+  width: 712px !important;
+}
+.from-width-l3{
+  width: 425px !important;
+}
+.from-width-l4{
+  width: 325px !important;
 }

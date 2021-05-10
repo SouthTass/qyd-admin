@@ -1,28 +1,47 @@
 <template>
-  <div class="person-container">
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          当前位置：登记管理
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>信息登记</el-breadcrumb-item>
-      </el-breadcrumb>
+  <el-form ref="form" :inline="true" :model="form" label-width="80px" class="form-container">
+    <div class="form-item">
+      <h3 class="form-item-title">系统信息</h3>
+      <div class="container">
+        <el-form-item label="转移就业证号" class="line-height-l2">
+          <el-input v-model="form.name" class="from-width-l1"></el-input>
+        </el-form-item>
+        <el-form-item label="系统状态">
+          <el-select v-model="value" placeholder="请选择"  class="from-width-l1">
+            <el-option v-for="item in registerTypeList" 
+              :key="item.type" :label="item.name" :value="item.type"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="查询时间">
+          <el-date-picker class="from-width-l1"
+            v-model="value1"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="转移就业证号" class="line-height-l2">
+          <el-input v-model="form.name" class="from-width-l1"></el-input>
+        </el-form-item>
+        <el-form-item label="系统状态">
+          <el-select v-model="value" placeholder="请选择"  class="from-width-l1">
+            <el-option v-for="item in registerTypeList" 
+              :key="item.type" :label="item.name" :value="item.type"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="查询时间">
+          <el-date-picker class="from-width-l1"
+            v-model="value1"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+      </div>
     </div>
-    <Pcensus></Pcensus>
-    <Pbasic></Pbasic>
-    <Pjob></Pjob>
-    <Ptrain></Ptrain>
-    <Psystem></Psystem>
-  </div>
+  </el-form>
 </template>
 
 <script>
 import config from '@/common/config'
-import Pcensus from '@/components/person/Census'
-import Pbasic from '@/components/person/Basic'
-import Pjob from '@/components/person/Job'
-import Ptrain from '@/components/person/Train'
-import Psystem from '@/components/person/System'
 export default {
   name: "baseform",
   data() {
@@ -99,19 +118,12 @@ export default {
       this.$message.success("提交成功！");
     },
   },
-  components: {
-    Pcensus, Pbasic, Pjob, Ptrain, Psystem
-  }
 };
 </script>
 
 <style lang="scss" scoped>
 .container{
   padding-bottom: 12px;
-}
-.person-container{
-  width: 1000px;
-  margin: 0 auto;
 }
 .form{
   width: 1000px;
