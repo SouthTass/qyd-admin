@@ -12,28 +12,24 @@
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">检索</el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-        <el-table-column prop="id" label="身份证号" width="170" align="center">
-          <template slot-scope="scope">62272619950115261X</template>
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="100">
-          <template slot-scope="scope">欧阳娜娜</template>
-        </el-table-column>
-        <el-table-column label="性别" width="50" align="center">
-          <template slot-scope="scope">男</template>
-        </el-table-column>
-        <el-table-column label="户籍性质" width="80" align="center">
-          <template slot-scope="scope">农业</template>
-        </el-table-column>
+        <el-table-column prop="card_number" label="身份证号" width="170" align="center"></el-table-column>
+        <el-table-column prop="census_name" label="姓名" width="100"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="50" align="center"></el-table-column>
+        <el-table-column prop="census_domicile_type" label="户籍性质" width="80" align="center"></el-table-column>
         <el-table-column prop="date" label="年龄" width="50" align="center">
-          <template slot-scope="scope">60</template>
+          <template slot-scope="scope">{{computedAge(scope.row)}}</template>
         </el-table-column>
-        <el-table-column prop="date" label="就业状态" width="120">
-          <template slot-scope="scope">有其他资产收入</template>
+        <el-table-column prop="work_register" label="是否就业" width="120" align="center"></el-table-column>
+        <el-table-column prop="name" label="居住地址">
+          <template slot-scope="scope">
+            {{scope.row.census_city}}
+            {{scope.row.census_area}}
+            {{scope.row.census_town}}
+            {{scope.row.census_village}}
+            {{scope.row.house_number}}
+          </template>
         </el-table-column>
-        <el-table-column prop="name" label="居住地址"></el-table-column>
-        <el-table-column prop="name" label="联系电话" width="110" align="center">
-          <template slot-scope="scope">13390513859</template>
-        </el-table-column>
+        <el-table-column prop="phone_number" label="联系电话" width="110" align="center"></el-table-column>
         <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
             <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">注销</el-button>
@@ -88,8 +84,8 @@
         <div class="form-item">
           <el-form-item label="注销原因">
             <el-select v-model="value" placeholder="请选择"  class="from-width-l1">
-              <el-option v-for="item in registerTypeList" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
+              <el-option v-for="item in $root.user.domicileType" 
+                :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="备注">
@@ -111,6 +107,7 @@ export default {
   name: 'basetable',
   data() {
     return {
+      value: '',
       query: {
         address: '',
         name: '',
@@ -128,9 +125,22 @@ export default {
     };
   },
   created() {
-    this.getData();
+    this.censusList()
   },
   methods: {
+    // 获取信息列表
+    async censusList(){
+      let res = await this.$api.censusList()
+      if(res.status != 0) return
+      this.tableData = res.data
+    },
+
+    // 计算年龄
+    computedAge(item){
+      let birthday = item.birthday + ''
+      return this.$dayjs().format('YYYY') - birthday.slice(0, 4)
+    },
+
     // 获取 easy-mock 的模拟数据
     getData() {
       fetchData(this.query).then((res) => {
