@@ -120,7 +120,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       delList: [],
-      editVisible: true,
+      editVisible: false,
       pageTotal: 0,
       form: {},
       idx: -1,
