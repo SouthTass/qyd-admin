@@ -11,6 +11,9 @@ import './components/common/directives';
 import 'babel-polyfill';
 import baseConfig from '@/common/config'
 
+import DefaultArea from '@/common/area'
+Vue.prototype.$DefaultArea = DefaultArea
+
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 Vue.use(ElementUI, {

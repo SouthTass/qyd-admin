@@ -1,21 +1,24 @@
 <template>
-  <el-form ref="pCensus" :inline="true" :model="form" label-width="80px" class="form-container">
+  <el-form ref="pCensus" 
+    :inline="true"
+    :model="$root.user.domicile"
+    :rules="rules" label-width="80px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">户籍信息</h3>
       <div class="container">
-        <el-form-item label="身份证号">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="身份证号" prop="identity_number">
+          <el-input v-model="$root.user.domicile.identity_number" maxlength="18"></el-input>
         </el-form-item>
-        <el-form-item label="户主姓名">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="户主姓名" prop="domicile_name">
+          <el-input v-model="$root.user.domicile.domicile_name"></el-input>
         </el-form-item>
-        <el-form-item label="户籍性质">
-          <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-            <el-option v-for="item in registerTypeList" :key="item.type" :label="item.name" :value="item.type"></el-option>
+        <el-form-item label="户籍性质" prop="domicile_type">
+          <el-select v-model="$root.user.domicile.domicile_type" placeholder="请选择" class="from-width-l1">
+            <el-option v-for="item in $root.user.domicileType" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="住址">
-          <el-input v-model="$root.user.value" class="from-width-l2"></el-input>
+        <el-form-item label="住址" prop="domicile_address">
+          <el-input v-model="$root.user.domicile.domicile_address" class="from-width-l2"></el-input>
         </el-form-item>
       </div>
     </div>
@@ -23,99 +26,31 @@
 </template>
 
 <script>
-import config from '@/common/config'
 export default {
-  name: "baseform",
   data() {
     return {
-      options: [
-        {
-          value: "guangdong",
-          label: "广东省",
-          children: [
-            {
-              value: "guangzhou",
-              label: "广州市",
-              children: [
-                {
-                  value: "tianhe",
-                  label: "天河区",
-                },
-                {
-                  value: "haizhu",
-                  label: "海珠区",
-                },
-              ],
-            },
-            {
-              value: "dongguan",
-              label: "东莞市",
-              children: [
-                {
-                  value: "changan",
-                  label: "长安镇",
-                },
-                {
-                  value: "humen",
-                  label: "虎门镇",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: "hunan",
-          label: "湖南省",
-          children: [
-            {
-              value: "changsha",
-              label: "长沙市",
-              children: [
-                {
-                  value: "yuelu",
-                  label: "岳麓区",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: true,
-        type: ["步步高"],
-        resource: "小天才",
-        desc: "",
-        options: [],
-      },
-      registerTypeList: config.registerType,
-      gender: config.gender
+      rules: {
+        'identity_number': [
+          { required: true, message: '请输入18位身份证号码', trigger: 'blur' },
+          { min: 18, max: 18, message: '身份证号码不能少于18位', trigger: 'blur' }
+        ],
+        'domicile_name': [
+          { required: true, message: '请输入户主姓名', trigger: 'blur' }
+        ],
+        'domicile_type': [
+          { required: true, message: '请选择户籍性质', trigger: 'blur' }
+        ],
+        'domicile_address': [
+          { required: true, message: '请输入户籍住址', trigger: 'blur' }
+        ]
+      }
     };
-  },
-  methods: {
-    onSubmit() {
-      this.$message.success("提交成功！");
-    },
-  },
+  }
 };
-</script>
+</script> 
 
 <style lang="scss" scoped>
 .container{
   padding-bottom: 12px;
-}
-.form{
-  width: 1000px;
-  .form-item{
-    padding-top: 15px;
-    margin-bottom: 15px;
-    .form-item-title{
-      font-size: 18px;
-      padding-bottom: 15px;
-    }
-  }
 }
 </style>

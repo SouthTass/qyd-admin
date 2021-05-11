@@ -8,11 +8,12 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <Pcensus></Pcensus>
+    <Pcensus ref="pCensuss"></Pcensus>
     <Pbasic></Pbasic>
     <Pjob></Pjob>
     <Ptrain></Ptrain>
     <Psystem></Psystem>
+    <el-button @click="saveInfo()">提交按钮 </el-button>
   </div>
 </template>
 
@@ -98,6 +99,11 @@ export default {
     onSubmit() {
       this.$message.success("提交成功！");
     },
+    saveInfo(){
+      this.$refs['pCensuss'].$refs['pCensus'].validate((valid) => {
+        console.log(valid)
+      });
+    }
   },
   components: {
     Pcensus, Pbasic, Pjob, Ptrain, Psystem
