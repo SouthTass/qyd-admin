@@ -8,9 +8,10 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <Pcensus ref="pCensuss"></Pcensus>
-    <Pbasic></Pbasic>
+    <!-- <Pcensus ref="pCensuss"></Pcensus>
+    <Pbasic></Pbasic> -->
     <Pjob></Pjob>
+    <Psocial></Psocial>
     <Ptrain></Ptrain>
     <Psystem></Psystem>
     <el-button @click="saveInfo()">提交按钮 </el-button>
@@ -23,6 +24,7 @@ import Pcensus from '@/components/person/Census'
 import Pbasic from '@/components/person/Basic'
 import Pjob from '@/components/person/Job'
 import Ptrain from '@/components/person/Train'
+import Psocial from '@/components/person/Social'
 import Psystem from '@/components/person/System'
 export default {
   name: "baseform",
@@ -106,7 +108,7 @@ export default {
     }
   },
   components: {
-    Pcensus, Pbasic, Pjob, Ptrain, Psystem
+    Pcensus, Pbasic, Pjob, Ptrain, Psocial, Psystem
   }
 };
 </script>

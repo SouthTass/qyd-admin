@@ -1,114 +1,137 @@
 <template>
-  <el-form ref="form" :inline="true" :model="form" label-width="80px" class="form-container">
+  <el-form ref="pJob" 
+    :inline="true" 
+    :model="$root.user.work"
+    :rules="rules"
+    label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">就业信息</h3>
       <div class="container">
         <div>
-          <el-form-item label="就业状态">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in registerTypeList" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
+          <el-form-item label="就业状态" prop="work_status">
+            <el-select v-model="$root.user.work.work_status" class="from-width-l1">
+              <el-option v-for="item in $root.user.work_status" 
+                :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+
+        <!-- 就业状态为无就业需求 -->
+        <div v-if="$root.user.work.work_status == '无就业需求'">
+          <el-form-item label="说明" prop="work_status">
+            <el-select v-model="$root.user.work.work_desc" class="from-width-l1">
+              <el-option v-for="item in $root.user.work_none_desc" 
+                :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
         </div>
 
         <!-- 状态为灵活就业 -->
-        <!-- <div>
-          <el-form-item label="职业工种">
-            <el-input v-model="form.name"></el-input>
+        <div v-if="$root.user.work.work_status == '灵活就业'">
+          <el-form-item label="工作地点">
+            <el-input v-model="$root.user.work.company_address" class="from-width-l2"></el-input>
           </el-form-item>
-        </div> -->
+        </div>
+        <div v-if="$root.user.work.work_status == '灵活就业'">
+          <el-form-item label="工作内容">
+            <el-input v-model="$root.user.work.work_desc" class="from-width-l2"
+              type="textarea" :rows="6"></el-input>
+          </el-form-item>
+        </div>
 
         <!-- 状态为自主创业 -->
-        <!-- <div>
-          <el-form-item label="就业单位全称" class="line-height-l2">
-            <el-input v-model="$root.user.value" class="from-width-l2"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="户口地址">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in gender" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="$root.user.value" placeholder="请输入具体地址" style="width: 525px"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="带动就业人数" class="line-height-l2">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-        </div> -->
+        <!-- <template v-if="$root.user.work.work_status == '自主创业'">
+          <div>
+            <el-form-item label="就业单位全称" class="line-height-l2">
+              <el-input v-model="$root.user.value" class="from-width-l2"></el-input>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="户口地址">
+              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+                <el-option v-for="item in gender" 
+                  :key="item.type" :label="item.name" :value="item.type"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="$root.user.value" placeholder="请输入具体地址" style="width: 525px"></el-input>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="带动就业人数" class="line-height-l2">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+          </div>
+        </template> -->
 
         <!-- 状态为其他 -->
-        <div>
-          <el-form-item label="职业工种">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="用工形式">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in gender" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="单位性质">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in gender" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
-            </el-select>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="单位产业">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in gender" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="劳动合同时间" class="line-height-l2">
-            <el-date-picker style="width: 444px"
-              v-model="value1"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="单位联系人" class="line-height-l2">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="单位联系电话" class="line-height-l2">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <el-form-item label="是否公益性就业" class="line-height-l2">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in gender" 
-                :key="item.type" :label="item.name" :value="item.type"></el-option>
-            </el-select>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="带动就业人数" class="line-height-l2">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-        </div>
+        <template v-if="$root.user.work.work_status != '无就业需求'
+          && $root.user.work.work_status != '灵活就业'
+          && $root.user.work.work_status != '无业求职'
+          && $root.user.work.work_status != '自主创业'">
+          <div>
+            <el-form-item label="职业工种" prop="work_type">
+              <el-input v-model="$root.user.work.work_type"></el-input>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="用工形式">
+              <el-select v-model="$root.user.work.work_shape" placeholder="请选择" class="from-width-l1">
+                <el-option v-for="item in $root.user.item1" 
+                  :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="单位性质">
+              <el-select v-model="$root.user.work.company_type" placeholder="请选择" class="from-width-l1">
+                <el-option v-for="item in $root.user.item2" 
+                  :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="单位产业">
+              <el-select v-model="$root.user.work.company_industry" placeholder="请选择" class="from-width-l1">
+                <el-option v-for="item in $root.user.item3" 
+                  :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="劳动合同时间">
+              <el-date-picker style="width: 444px"
+                v-model="$root.user.work.start_time"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+              </el-date-picker>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="单位联系人">
+              <el-input v-model="$root.user.work.contact_person"></el-input>
+            </el-form-item>
+            <el-form-item label="单位联系电话">
+              <el-input v-model="$root.user.work.company_number"></el-input>
+            </el-form-item>
+            <el-form-item label="是否公益性就业">
+              <el-select v-model="$root.user.work.is_charitable" placeholder="请选择" class="from-width-l1">
+                <el-option v-for="item in $root.user.yesorno" 
+                  :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </template>
       </div>
     </div>
   </el-form>
 </template>
 
 <script>
-import config from '@/common/config'
 export default {
-  name: "baseform",
   data() {
     return {
+      rules: {
+
+      },
       options: [
         {
           value: "guangdong",

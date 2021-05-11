@@ -127,7 +127,7 @@
       <div class="form-item">
         <h3 class="form-item-title">系统信息</h3>
         <div class="container">
-          <el-form-item label="转移就业证号" class="line-height-l2">
+          <el-form-item label="转移就业证号">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item label="系统状态">
@@ -141,7 +141,7 @@
               <el-option v-for="item in registerTypeList" :key="item.type" :label="item.name" :value="item.type"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="转移就业证号" class="line-height-l2">
+          <el-form-item label="转移就业证号">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item label="系统状态">

@@ -2,7 +2,7 @@
   <el-form ref="pBasic" 
     :inline="true"
     :model="$root.user.census"
-    :rules="rules" label-width="80px" class="form-container">
+    :rules="rules" label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">基本信息</h3>
       <div class="container">
@@ -43,7 +43,7 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="是否就业登记" prop="work_register" class="line-height-l2">
+          <el-form-item label="是否就业登记" prop="work_register">
             <el-select v-model="$root.user.census.work_register"  class="from-width-l1">
               <el-option v-for="item in $root.user.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>

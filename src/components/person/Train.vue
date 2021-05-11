@@ -1,5 +1,7 @@
 <template>
-  <el-form ref="form" :inline="true" :model="form" label-width="80px" class="form-container">
+  <el-form ref="pTrain" 
+    :inline="true" 
+    :model="$root.user.job" label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">培训求职信息</h3>
       <div class="container">

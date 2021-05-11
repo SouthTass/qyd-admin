@@ -176,15 +176,9 @@ a {
     min-height: 500px;
 }
 
-
-/** 表单label */
-.line-height-l2 .el-form-item__label{
-  line-height: 16px !important;
-}
-
 /** 表单主要样式 */
 .form-container{
-  width: 875px;
+  width: 1075px;
 }
 .form-container .form-item{
   padding-top: 15px;
@@ -201,7 +195,7 @@ a {
   width: 177px !important;
 }
 .from-width-l2{
-  width: 712px !important;
+  width: 792px !important;
 }
 .from-width-l3{
   width: 425px !important;

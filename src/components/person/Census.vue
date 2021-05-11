@@ -2,7 +2,7 @@
   <el-form ref="pCensus" 
     :inline="true"
     :model="$root.user.domicile"
-    :rules="rules" label-width="80px" class="form-container">
+    :rules="rules" label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">户籍信息</h3>
       <div class="container">
