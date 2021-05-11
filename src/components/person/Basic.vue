@@ -16,7 +16,7 @@
         </div>
         <div>
           <el-form-item label="身份证号" prop="card_number">
-            <el-input v-model="$root.user.census.card_number" maxlength="18"></el-input>
+            <el-input v-model="$root.user.census.card_number" maxlength="18" @blur="computedIdentity"></el-input>
           </el-form-item>
           <el-form-item label="姓名" prop="census_name">
             <el-input v-model="$root.user.census.census_name"></el-input>
@@ -194,6 +194,14 @@ export default {
 
     // 处理居住地址
 
+    // 输入身份证号码之后，计算性别、出生日期、年龄
+    computedIdentity(){
+      if(this.$root.user.census.card_number.length < 18) return
+      let str = this.$root.user.census.card_number
+      this.$root.user.census.sex = str.slice(16, 17) % 2 ? '男' : '女' 
+      this.$root.user.census.birthday = `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
+      this.$root.user.census.age = this.$dayjs().format('YYYY') - str.slice(6,10)
+    }
   },
 };
 </script>

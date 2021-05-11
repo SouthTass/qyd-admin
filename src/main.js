@@ -11,6 +11,9 @@ import './components/common/directives';
 import 'babel-polyfill';
 import baseConfig from '@/common/config'
 
+import Dayjs from 'dayjs'
+Vue.prototype.$dayjs = Dayjs
+
 import DefaultArea from '@/common/area'
 Vue.prototype.$DefaultArea = DefaultArea
 
