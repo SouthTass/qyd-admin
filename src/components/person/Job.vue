@@ -106,11 +106,12 @@
             </el-form-item>
             <el-form-item label="劳动合同时间">
               <el-date-picker style="width: 484px"
-                v-model="$root.user.work.start_time"
+                v-model="$root.user.work.start_end_time"
                 type="daterange"
                 range-separator="至"
                 start-placeholder="开始日期"
-                end-placeholder="结束日期">
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd">
               </el-date-picker>
             </el-form-item>
           </div>

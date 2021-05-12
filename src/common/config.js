@@ -69,7 +69,7 @@ let config = {
   },
   //工作
   work: {
-    work_status: "自主创业",//就业状态
+    work_status: "单位就业",//就业状态
     work_desc: "",//说明
     company_name: "QL",//就业单位全称
     company_address: "北京大兴",//就业单位地址
@@ -79,6 +79,7 @@ let config = {
     company_industry: "三产",//单位产业
     start_time: "2021年1月31",//劳务合同开始时间
     end_time: "2021年12月31",//劳务合同结束时间
+    start_end_time: [],
     contact_person: "小A",//单位联系人
     company_number: "111",//联系方式
     is_charitable: "否",//是否公益性质
