@@ -8,7 +8,6 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <el-button @click="saveInfo()" type="primary">保 存</el-button>
     <Pcensus ref="Pcensus"></Pcensus>
     <Pbasic></Pbasic>
     <Pjob></Pjob>
@@ -37,9 +36,35 @@ export default {
   },
   methods: {
     async saveInfo(){
-      let census = await this.$refs['Pcensus'].$refs['census'].validate()
-      // if()
-      console.log('census', census)
+      let body = JSON.parse(JSON.stringify(this.$root.user))
+
+      // 删除无用数据
+      let keyArray = ['gender', 'domicileType','yesorno','work_status','work_none_desc']
+      keyArray.forEach((e) => {  
+        delete body[e]
+      });
+      for(let i = 1; i <= 18; i++){
+        delete body[`item${i}`]
+      }
+
+      // 整理培训求职信息
+      let job = []
+      if(body.job.hunting == '是'){
+        body.job.hunting_list.map(e => job.push({job_hunting: '是', ...e}))
+      }
+      if(body.job.skill == '是'){
+        body.job.skill_list.map(e => job.push({job_hunting: '是', ...e}))
+      }
+      body.job = job
+
+      // 整理基本信息中的出生日期
+      body.census.birthday = body.census.birthday.replace(/-/g, '')
+      
+      console.log(body)
+      
+      let res = await this.$api.censusCreate(body)
+      if(res.status == 0) return this.$message.success('保存成功')
+      this.$message.error(res.data.message)
     }
   },
   components: {

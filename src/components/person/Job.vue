@@ -59,16 +59,16 @@
           </div>
           <div>
             <el-form-item label="创业项目性质">
-              <el-input v-model="$root.user.work.accord.address.type"></el-input>
+              <el-input v-model="$root.user.work.accord.type"></el-input>
             </el-form-item>
             <el-form-item label="带动就业人数">
-              <el-input v-model="$root.user.work.accord.address.number"></el-input>
+              <el-input v-model="$root.user.work.accord.number"></el-input>
             </el-form-item>
           </div>
           <div>
             <el-form-item label="创业项目内容">
               <el-input class="from-width-l2"
-                v-model="$root.user.work.accord.address.type" type="textarea" :rows="5"></el-input>
+                v-model="$root.user.work.accord.type" type="textarea" :rows="5"></el-input>
             </el-form-item>
           </div>
         </template>
@@ -140,76 +140,11 @@ export default {
     return {
       rules: {
 
-      },
-      options: [
-        {
-          value: "guangdong",
-          label: "广东省",
-          children: [
-            {
-              value: "guangzhou",
-              label: "广州市",
-              children: [
-                {
-                  value: "tianhe",
-                  label: "天河区",
-                },
-                {
-                  value: "haizhu",
-                  label: "海珠区",
-                },
-              ],
-            },
-            {
-              value: "dongguan",
-              label: "东莞市",
-              children: [
-                {
-                  value: "changan",
-                  label: "长安镇",
-                },
-                {
-                  value: "humen",
-                  label: "虎门镇",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: "hunan",
-          label: "湖南省",
-          children: [
-            {
-              value: "changsha",
-              label: "长沙市",
-              children: [
-                {
-                  value: "yuelu",
-                  label: "岳麓区",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: true,
-        type: ["步步高"],
-        resource: "小天才",
-        desc: "",
-        options: [],
-      },
-      registerTypeList: config.registerType,
-      gender: config.gender
+      }
     };
   },
   mounted(){
-    console.log(this.$root.user);
+    
   },
   methods: {
     onSubmit() {

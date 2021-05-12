@@ -50,12 +50,11 @@
             </el-select>
           </el-form-item>
           <el-form-item label="电话" prop="phone_number">
-            <el-input v-model="$root.user.census.phone_number" @blur="computedPhoneNumber"
-              :error="phoneNumberErrorText"></el-input>
+            <el-input v-model="$root.user.census.phone_number"></el-input>
           </el-form-item>
-          <el-form-item label="特殊身份" prop="rapport">
-            <el-select v-model="$root.user.census.rapport"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+          <el-form-item label="特殊身份" prop="census_identity">
+            <el-select v-model="$root.user.census.census_identity"  class="from-width-l1">
+              <el-option v-for="item in $root.user.item12" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -63,7 +62,7 @@
         <div>
           <el-form-item label="学历" prop="education">
             <el-select v-model="$root.user.census.education"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item13" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -74,19 +73,19 @@
         <div>
           <el-form-item label="民族" prop="nation">
             <el-select v-model="$root.user.census.nation"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item14" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="政治面貌" prop="political_status">
             <el-select v-model="$root.user.census.political_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item15" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="婚姻状况" prop="marriage_status">
             <el-select v-model="$root.user.census.marriage_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item16" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -94,19 +93,19 @@
         <div>
           <el-form-item label="健康状况" prop="health_status">
             <el-select v-model="$root.user.census.health_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item17" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="残疾等级" prop="handicap_level">
             <el-select v-model="$root.user.census.handicap_level"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item18" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="是否低保" prop="allowance_status">
             <el-select v-model="$root.user.census.allowance_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -127,8 +126,7 @@
               filterable
               v-model="$root.user.census.census_address"
               :options="$DefaultArea"
-              :props="props"
-              @change="handleChange"></el-cascader>
+              :props="props"></el-cascader>
           </el-form-item>
           <el-form-item>
             <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
@@ -231,13 +229,6 @@ export default {
       this.$root.user.census.sex = str.slice(16, 17) % 2 ? '男' : '女' 
       this.$root.user.census.birthday = `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
       this.$root.user.census.age = this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 处理电话，只能输入8位或者11位
-    computedPhoneNumber(){
-      if(this.$root.user.census.phone_number != 8 || this.$root.user.census.phone_number != 11){
-        this.phoneNumberErrorText = 'dasdas'
-      }
     }
   },
 };

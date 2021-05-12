@@ -46,25 +46,11 @@ class Api {
     return _axios.get(`/api/census/list`);
   }
 
-
-  
   /** 
-   * 获取我的个人信息
+   * 用户退出
    */
-  async getMyInfo(){
-    return _axios.get(`/tkcms/org/members/current`);
-  }
-
-  /** 
-   * 客户列表
-   * @param {string} xid            销售人员id
-   * @param {string} sort           排序。last_visit_time/@timestamp 默认：last_visit_time
-   * @param {string} after          上页结果中的对应值。不传则返回第一页。
-   */
-  async coustomerList(body, query){
-    return _axios.post(`/tkcms/stat/customer/list`, body, {
-      params: query
-    });
+   async censusCreate(body){
+    return _axios.post(`/api/census/create`, body);
   }
 }
 export default new Api();

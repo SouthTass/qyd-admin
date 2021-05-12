@@ -15,7 +15,7 @@
           </el-form-item>
         </div>
         <template v-if="$root.user.job.hunting == '是'">
-          <div v-for="(item, index) in $root.user.job.hunting_list" :key="index">
+          <div v-for="(item, index) in $root.user.job.hunting_list" :key="`index${index}`">
             <div>
               <el-form-item :label="`求职岗位${index + 1}`">
                 <el-input v-model="item.job_position"></el-input>
