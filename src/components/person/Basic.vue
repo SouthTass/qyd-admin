@@ -132,7 +132,7 @@
           </el-form-item>
           <el-form-item>
             <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
-              style="margin-left: 80px" class="from-width-l3"></el-input>
+              style="margin-left: 120px" class="from-width-l3"></el-input>
           </el-form-item>
         </div>
       </div>

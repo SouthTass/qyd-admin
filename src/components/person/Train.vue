@@ -1,14 +1,15 @@
 <template>
   <el-form ref="pTrain" 
     :inline="true" 
-    :model="$root.user.job" label-width="120px" class="form-container">
+    :model="$root.user.job" 
+    label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">培训求职信息</h3>
       <div class="container">
         <div>
           <el-form-item label="是否求职">
-            <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-              <el-option v-for="item in registerTypeList" 
+            <el-select v-model="$root.user.job" class="from-width-l1">
+              <el-option v-for="item in $root.user.yesorno" 
                 :key="item.type" :label="item.name" :value="item.type"></el-option>
             </el-select>
           </el-form-item>
@@ -19,7 +20,7 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="薪酬要求">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -27,7 +28,7 @@
           </div>
           <div>
             <el-form-item label="就业区域">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l2">
+              <el-select v-model="value" class="from-width-l2">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -35,13 +36,13 @@
           </div>
           <div>
             <el-form-item label="是否培训">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="技能等级">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -55,7 +56,7 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="薪酬要求">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -63,7 +64,7 @@
           </div>
           <div>
             <el-form-item label="就业区域">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l2">
+              <el-select v-model="value" class="from-width-l2">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -71,13 +72,13 @@
           </div>
           <div>
             <el-form-item label="是否培训">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="技能等级">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -91,7 +92,7 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="薪酬要求">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -99,7 +100,7 @@
           </div>
           <div>
             <el-form-item label="就业区域">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l2">
+              <el-select v-model="value" class="from-width-l2">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
@@ -107,13 +108,13 @@
           </div>
           <div>
             <el-form-item label="是否培训">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="技能等级">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
+              <el-select v-model="value" class="from-width-l1">
                 <el-option v-for="item in gender" 
                   :key="item.type" :label="item.name" :value="item.type"></el-option>
               </el-select>

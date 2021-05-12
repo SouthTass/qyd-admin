@@ -8,8 +8,8 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- <Pcensus ref="pCensuss"></Pcensus>
-    <Pbasic></Pbasic> -->
+    <Pcensus ref="pCensuss"></Pcensus>
+    <Pbasic></Pbasic>
     <Pjob></Pjob>
     <Psocial></Psocial>
     <Ptrain></Ptrain>
