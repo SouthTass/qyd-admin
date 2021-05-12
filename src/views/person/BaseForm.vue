@@ -8,18 +8,20 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- <Pcensus ref="pCensuss"></Pcensus>
+    <el-button @click="saveInfo()" type="primary">保 存</el-button>
+    <Pcensus ref="Pcensus"></Pcensus>
     <Pbasic></Pbasic>
     <Pjob></Pjob>
-    <Psocial></Psocial> -->
+    <Psocial></Psocial>
     <Ptrain></Ptrain>
     <Psystem></Psystem>
-    <el-button @click="saveInfo()">提交按钮 </el-button>
+    <div class="footer">
+      <el-button @click="saveInfo()" type="primary">保 存</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import config from '@/common/config'
 import Pcensus from '@/components/person/Census'
 import Pbasic from '@/components/person/Basic'
 import Pjob from '@/components/person/Job'
@@ -30,81 +32,14 @@ export default {
   name: "baseform",
   data() {
     return {
-      options: [
-        {
-          value: "guangdong",
-          label: "广东省",
-          children: [
-            {
-              value: "guangzhou",
-              label: "广州市",
-              children: [
-                {
-                  value: "tianhe",
-                  label: "天河区",
-                },
-                {
-                  value: "haizhu",
-                  label: "海珠区",
-                },
-              ],
-            },
-            {
-              value: "dongguan",
-              label: "东莞市",
-              children: [
-                {
-                  value: "changan",
-                  label: "长安镇",
-                },
-                {
-                  value: "humen",
-                  label: "虎门镇",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: "hunan",
-          label: "湖南省",
-          children: [
-            {
-              value: "changsha",
-              label: "长沙市",
-              children: [
-                {
-                  value: "yuelu",
-                  label: "岳麓区",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: true,
-        type: ["步步高"],
-        resource: "小天才",
-        desc: "",
-        options: [],
-      },
-      registerTypeList: config.registerType,
-      gender: config.gender
+      
     };
   },
   methods: {
-    onSubmit() {
-      this.$message.success("提交成功！");
-    },
-    saveInfo(){
-      this.$refs['pCensuss'].$refs['pCensus'].validate((valid) => {
-        console.log(valid)
-      });
+    async saveInfo(){
+      let census = await this.$refs['Pcensus'].$refs['census'].validate()
+      // if()
+      console.log('census', census)
     }
   },
   components: {
@@ -131,5 +66,9 @@ export default {
       padding-bottom: 15px;
     }
   }
+}
+.footer{
+  text-align: center;
+  margin-top: 40px;
 }
 </style>

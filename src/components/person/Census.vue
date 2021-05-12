@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="pCensus" 
+  <el-form ref="census" 
     :inline="true"
     :model="$root.user.domicile"
     :rules="rules" label-width="120px" class="form-container">

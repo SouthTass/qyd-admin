@@ -40,29 +40,38 @@
         </div>
 
         <!-- 状态为自主创业 -->
-        <!-- <template v-if="$root.user.work.work_status == '自主创业'">
+        <template v-if="$root.user.work.work_status == '自主创业'">
           <div>
-            <el-form-item label="就业单位全称" class="line-height-l2">
-              <el-input v-model="$root.user.value" class="from-width-l2"></el-input>
+            <el-form-item label="创业项目名称">
+              <el-input v-model="$root.user.work.accord.name" class="from-width-l2"></el-input>
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="户口地址">
-              <el-select v-model="value" placeholder="请选择" class="from-width-l1">
-                <el-option v-for="item in gender" 
-                  :key="item.type" :label="item.name" :value="item.type"></el-option>
+            <el-form-item label="创业项目地址">
+              <el-select v-model="$root.user.work.accord.address" class="from-width-l1" placeholder="请选择地址">
+                <el-option v-for="item in $root.user.gender"
+                  :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="$root.user.value" placeholder="请输入具体地址" style="width: 525px"></el-input>
+              <el-input v-model="$root.user.work.accord.address" placeholder="请输入具体地址" style="width: 525px"></el-input>
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="带动就业人数" class="line-height-l2">
-              <el-input v-model="form.name"></el-input>
+            <el-form-item label="创业项目性质">
+              <el-input v-model="$root.user.work.accord.address.type"></el-input>
+            </el-form-item>
+            <el-form-item label="带动就业人数">
+              <el-input v-model="$root.user.work.accord.address.number"></el-input>
             </el-form-item>
           </div>
-        </template> -->
+          <div>
+            <el-form-item label="创业项目内容">
+              <el-input class="from-width-l2"
+                v-model="$root.user.work.accord.address.type" type="textarea" :rows="5"></el-input>
+            </el-form-item>
+          </div>
+        </template>
 
         <!-- 状态为其他 -->
         <template v-if="$root.user.work.work_status != '无就业需求'
@@ -96,7 +105,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="劳动合同时间">
-              <el-date-picker style="width: 444px"
+              <el-date-picker style="width: 484px"
                 v-model="$root.user.work.start_time"
                 type="daterange"
                 range-separator="至"

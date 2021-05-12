@@ -9,7 +9,7 @@
         <div>
           <el-form-item label="户主关系" prop="rapport">
             <el-select v-model="$root.user.census.rapport" class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item11" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -37,7 +37,7 @@
           </el-form-item>
           <el-form-item label="户籍性质" prop="census_domicile_type">
             <el-select v-model="$root.user.census.census_domicile_type"  class="from-width-l1">
-              <el-option v-for="item in $root.user.domicileType" 
+              <el-option v-for="item in $root.user.item10" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
