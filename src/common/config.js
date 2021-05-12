@@ -10,6 +10,11 @@ let config = {
   item4: ['学龄前', '在校生', '城乡劳动力', '超龄人员'],
   item5: ['无', '城乡基本养老', '城乡基本医疗', '灵活就业三险', '在职职工社保'],
   item6: ['城乡基本养老退休', '灵活就业', '三险退休', '在职职工退休'],
+  item7: ['3000以内', '3000至5000', '5000至7000', '7000至10000', '10000以上'],
+  item8: ['镇（街道）辖区内', '亦庄开发区', '机场地区', '区内其他地区', '区外'],
+  item9: ['无', '非等级', '初级', '中级', '高级', '技师', '高级技师'],
+  
+  
 
   //户籍
   domicile: {
@@ -72,23 +77,40 @@ let config = {
     social_desc: "在职职工退休"//退休描述
   },
   //求职和培训，，，求职和培训相互冲突
-  job: [{
-    job_hunting: "是",//是否求职
-    job_position: "金融民工",//求职岗位
-    job_salary: "5000-7000",//薪资要求
-    job_area: "北京市大兴区",//就业区域
-    is_skill: "否",
-    skill_name: "",
-    skill_level: ""
-  }, {
-    job_hunting: "否",
-    job_position: "",
-    job_salary: "",
-    job_area: "",
-    is_skill: "是",//是否培训
-    skill_name: "英语",//技能名称
-    skill_level: "四"//技能等级
-  }],
+  job: {
+    hunting: "是",
+    hunting_list: [
+      {
+        job_position: "金融民工",//求职岗位
+        job_salary: "5000-7000",//薪资要求
+        job_area: "北京市大兴区",//就业区域
+      }
+    ],
+    skill: '是',
+    skill_list: [
+      {
+        skill_name: "英语",//技能名称
+        skill_level: "四"//技能等级
+      }
+    ]
+  },
+  // job: [{
+  //   job_hunting: "是",//是否求职
+  //   job_position: "金融民工",//求职岗位
+  //   job_salary: "5000-7000",//薪资要求
+  //   job_area: "北京市大兴区",//就业区域
+  //   is_skill: "否",
+  //   skill_name: "",
+  //   skill_level: ""
+  // }, {
+  //   job_hunting: "否",
+  //   job_position: "",
+  //   job_salary: "",
+  //   job_area: "",
+  //   is_skill: "是",//是否培训
+  //   skill_name: "英语",//技能名称
+  //   skill_level: "四"//技能等级
+  // }],
   //系统
   record: {
     employment_number: "10010001",//转移就业证号

@@ -8,10 +8,10 @@
         <el-breadcrumb-item>信息登记</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <Pcensus ref="pCensuss"></Pcensus>
+    <!-- <Pcensus ref="pCensuss"></Pcensus>
     <Pbasic></Pbasic>
     <Pjob></Pjob>
-    <Psocial></Psocial>
+    <Psocial></Psocial> -->
     <Ptrain></Ptrain>
     <Psystem></Psystem>
     <el-button @click="saveInfo()">提交按钮 </el-button>
