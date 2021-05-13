@@ -2,7 +2,7 @@
   <el-dialog title="修改密码" :visible.sync="visible" width="660px" center>
     <el-form ref="pwdUserForm" 
       :inline="true" :model="user" :rules="addRules"
-      :close="close"
+      @close="close"
       label-width="100px" class="form-container" style="width: 600px">
       <div class="form-item">
         <el-form-item label="用户姓名" prop="name">
@@ -95,8 +95,8 @@ export default {
 
     // 关闭弹窗
     close(){
-      this.visible = false
       this.$refs['pwdUserForm'].resetFields()
+      this.visible = false
     }
   }
 };

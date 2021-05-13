@@ -10,12 +10,10 @@
       <div class="handle-box">
         <el-input v-model="query.name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsBaseForm.show()"
+        <el-button type="primary" icon="el-icon-plus" @click="handleSearch"
           style="float: right">录入信息</el-button>
-        <el-button type="danger" icon="el-icon-download" @click="handleSearch" plain
-          style="float: right">导出数据</el-button>
-        <el-button icon="el-icon-upload2" @click="handleSearch" plain
-          style="float: right">导入数据</el-button>
+        <el-button type="primary" icon="el-icon-download" @click="handleSearch" plain
+          style="float: right">导出Excel</el-button>
         
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
@@ -41,8 +39,7 @@
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">查看</el-button>
             <el-button type="warning" size="mini" @click="handleDelete(scope.$index, scope.row)">修改</el-button>
-            <el-button type="danger" size="mini"
-              @click="$refs.componentsLogout.show(scope.row)">注销</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.$index, scope.row)">注销</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,21 +47,69 @@
         <el-pagination background layout="total, prev, pager, next"
           :current-page="query.pageIndex"
           :page-size="query.pageSize"
-          :total="tableData.length"></el-pagination>
+          :total="pageTotal"
+          @current-change="handlePageChange"
+        ></el-pagination>
       </div>
     </div>
 
-    <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
-    <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
+    <!-- 编辑弹出框 -->
+    <el-dialog title="个人信息注销" :visible.sync="editVisible" width="800px" center>
+      <table class="dialog-table" border="1">
+        <tr style="text-align: center">
+          <td colspan="6">个人信息</td>
+        </tr>
+        <tr>
+          <td style="width: 70px">姓名</td>
+          <td style="width: 180px">张三</td>
+          <td style="width: 70px">年龄</td>
+          <td style="width: 180px">20</td>
+          <td style="width: 70px">性别</td>
+          <td style="width: 180px">男</td>
+        </tr>
+        <tr>
+          <td>就业状态</td>
+          <td>无业</td>
+          <td>户籍性质</td>
+          <td>男</td>
+          <td>身份证号</td>
+          <td>63219783128937129803</td>
+        </tr>
+        <tr>
+          <td>电话</td>
+          <td colspan="5">1339021984201</td>
+        </tr>
+        <tr>
+          <td>地址</td>
+          <td colspan="5">北京北京北京北京北京北京北京北京北京北京北京北京</td>
+        </tr>
+      </table>
+      <el-form ref="form" :model="form" label-width="68px" class="form-container"
+        style="width: 750px">
+        <div class="form-item">
+          <el-form-item label="注销原因">
+            <el-select v-model="value" placeholder="请选择"  class="from-width-l1">
+              <el-option v-for="item in $root.user.domicileType" 
+                :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input v-model="form.name" type="textarea" :rows="6"></el-input>
+          </el-form-item>
+        </div>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="saveEdit">注 销</el-button>
+        <el-button @click="editVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchData } from '../../api/index'
-import ComponentsLogout from '@/components/person/Logout'
-import ComponentsBaseForm from '@/views/person/BaseForm'
+import { fetchData } from '../../api/index';
 export default {
-  components: {ComponentsLogout, ComponentsBaseForm},
+  name: 'basetable',
   data() {
     return {
       value: '',

@@ -1,15 +1,8 @@
 <template>
   <div class="sidebar">
-    <el-menu
-      class="sidebar-el-menu"
-      :default-active="onRoutes"
-      :collapse="collapse"
-      background-color="#324157"
-      text-color="#bfcbd9"
-      active-text-color="#20a0ff"
-      unique-opened
-      router
-    >
+    <el-menu class="sidebar-el-menu" background-color="#324157" text-color="#bfcbd9" active-text-color="#20a0ff"
+      unique-opened router
+      :default-active="onRoutes" :collapse="collapse">
       <template v-for="item in items">
         <template v-if="item.subs">
           <el-submenu :index="item.index" :key="item.index">
@@ -18,25 +11,17 @@
               <span slot="title">{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.subs">
-              <el-submenu
-                v-if="subItem.subs"
-                :index="subItem.index"
-                :key="subItem.index"
-              >
+              <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                 <template slot="title">{{ subItem.title }}</template>
-                <el-menu-item
-                  v-for="(threeItem, i) in subItem.subs"
-                  :key="i"
-                  :index="threeItem.index"
-                  >{{ threeItem.title }}</el-menu-item
-                >
+                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i"
+                  :index="threeItem.index">{{ threeItem.title }}</el-menu-item>
               </el-submenu>
-              <el-menu-item
-                v-else
-                :index="subItem.index"
-                :key="subItem.index"
-                >{{ subItem.title }}</el-menu-item
-              >
+              <el-menu-item v-else :index="subItem.index" :key="subItem.index">
+                <template slot="title">
+                  <i :class="subItem.icon"></i>
+                  <span slot="title">{{ subItem.title }}</span>
+                </template>
+              </el-menu-item>
             </template>
           </el-submenu>
         </template>
@@ -52,7 +37,6 @@
 </template>
 
 <script>
-import bus from "../common/bus";
 export default {
   data() {
     return {
@@ -64,18 +48,21 @@ export default {
           title: "个人管理",
           subs: [
             {
-              index: "personbaseform",
+              icon: "el-icon-user",
+              index: "personbasetable",
               title: "个人管理",
             },
             {
-              index: "personbasetable",
+              icon: "el-icon-c-scale-to-original",
+              index: "personbasetablefamily",
               title: "家庭查询",
             },
             {
-              index: "personbasetable",
+              icon: "el-icon-document-copy",
+              index: "personbasetablejob",
               title: "就业查询",
-            }
-          ]
+            },
+          ],
         },
         {
           icon: "el-icon-user",
@@ -89,8 +76,8 @@ export default {
             {
               index: "limitsperson",
               title: "账号管理",
-            }
-          ]
+            },
+          ],
         },
         /**
         {

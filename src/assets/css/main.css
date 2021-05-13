@@ -27,7 +27,6 @@ a {
     right: 0;
     top: 70px;
     bottom: 0;
-    padding-bottom: 30px;
     -webkit-transition: left .3s ease-in-out;
     transition: left .3s ease-in-out;
     background: #fff;
@@ -178,7 +177,7 @@ a {
 
 /** 表单主要样式 */
 .form-container{
-  width: 1075px;
+  width: 1035px;
 }
 .form-container .form-item{
   padding-top: 15px;

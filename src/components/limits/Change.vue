@@ -96,7 +96,7 @@ export default {
       let {id, name, city, area, town, village, phone_number} = {...this.user}
       let res = await this.$api.userSave({id, name, city, area, town, village, phone_number})
       if(res.status != 0) return
-      this.$message.success('创建成功')
+      this.$message.success('修改成功')
       setTimeout(() => {
         this.visible = false
         this.$emit('success')

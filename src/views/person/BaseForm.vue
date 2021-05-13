@@ -1,23 +1,20 @@
 <template>
-  <div class="person-container">
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          当前位置：登记管理
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>信息登记</el-breadcrumb-item>
-      </el-breadcrumb>
+  <el-dialog width="1095px" class="baseform-dialog"
+    :visible.sync="visible"
+    :append-to-body="true">
+    <div class="person-container">
+      <Pcensus ref="Pcensus"></Pcensus>
+      <Pbasic></Pbasic>
+      <Pjob></Pjob>
+      <Psocial></Psocial>
+      <Ptrain></Ptrain>
+      <Psystem></Psystem>
+      <div class="footer">
+        <el-button @click="saveInfo()" type="primary">保 存</el-button>
+        <el-button @click="close()" plain>取 消</el-button>
+      </div>
     </div>
-    <Pcensus ref="Pcensus"></Pcensus>
-    <Pbasic></Pbasic>
-    <Pjob></Pjob>
-    <Psocial></Psocial>
-    <Ptrain></Ptrain>
-    <Psystem></Psystem>
-    <div class="footer">
-      <el-button @click="saveInfo()" type="primary">保 存</el-button>
-    </div>
-  </div>
+  </el-dialog>
 </template>
 
 <script>
@@ -31,7 +28,7 @@ export default {
   name: "baseform",
   data() {
     return {
-      
+      visible: false
     };
   },
   methods: {
@@ -70,12 +67,25 @@ export default {
       }
       delete body.work.start_end_time
       
-      console.log(body)
-      
       let res = await this.$api.censusCreate(body)
-      if(res.status != 0) return
-      if(res.data.status == 0) return this.$message.success('保存成功')
-      this.$message.error(res.data.message)
+      if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
+      if(res.data.hasOwnProperty('status')){
+        this.$message.error(res.data.message)
+      }else{
+        this.$message.success('录入成功')
+        this.$emit('success')
+        this.visible = false
+      }
+    },
+
+    // 打开弹窗
+    show(){
+      this.visible = true
+    },
+
+    // 关闭弹窗
+    close(){
+      this.visible = false
     }
   },
   components: {
@@ -85,15 +95,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.baseform-dialog{
+  ::v-deep .el-dialog{
+    margin-top: 5vh !important;
+  }
+  ::v-deep .el-dialog__header{
+    padding: 0;
+  }
+  ::v-deep .el-dialog__body{
+    padding: 0 5px 20px 20px;
+  }
+}
 .container{
   padding-bottom: 12px;
 }
 .person-container{
-  width: 1205px;
-  margin: 0 auto;
+  height: 85vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 .form{
-  width: 1205px;
+  width: 1075px;
   .form-item{
     padding-top: 15px;
     margin-bottom: 15px;

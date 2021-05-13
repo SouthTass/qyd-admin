@@ -20,14 +20,19 @@ export default new Router({
           meta: { title: '系统首页' }
         },
         {
-          path: '/personbaseform',
-          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseForm.vue'),
-          meta: { title: '个人信息登记' }
-        },
-        {
           path: '/personbasetable',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTable.vue'),
-          meta: { title: '个人信息注销' }
+          meta: { title: '个人管理' }
+        },
+        {
+          path: '/personbasetablefamily',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableFamily.vue'),
+          meta: { title: '家庭查询' }
+        },
+        {
+          path: '/personbasetablejob',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableJob.vue'),
+          meta: { title: '家庭查询' }
         },
         {
           path: '/limitsperson',
