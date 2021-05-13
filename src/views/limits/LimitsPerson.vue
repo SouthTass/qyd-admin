@@ -25,20 +25,24 @@
       <el-table-column label="操作" width="260" align="center">
         <template slot-scope="scope">
           <el-button type="danger" @click="delUser(scope.row)">删除</el-button>
-          <el-button type="info" @click="openAddUserDialog('changeInfo', scope.row)">修改信息</el-button>
-          <el-button type="warning" @click="handleDelete('changepWD', scope.row)">修改密码</el-button>
+          <el-button type="info" @click="$refs.cChangeUser.show(scope.row)">修改信息</el-button>
+          <el-button type="warning" @click="$refs.cPwdUser.show(scope.row)">修改密码</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <AddUser ref="cAddUser" @success="userList"></AddUser>
+    <ChangeUser ref="cChangeUser" @success="userList"></ChangeUser>
+    <PwdUser ref="cPwdUser"></PwdUser>
   </div>
 </template>
 
 <script>
 import AddUser from '@/components/limits/AddUser'
+import ChangeUser from '@/components/limits/Change'
+import PwdUser from '@/components/limits/Pwd'
 export default {
-  components: {AddUser},
+  components: {AddUser, ChangeUser, PwdUser},
   data() {
     return {
       tableData: [],
@@ -71,7 +75,7 @@ export default {
       if(res.status != 0) return
       this.$message.success('删除成功')
       setTimeout(() => {this.userList()}, 300);
-    }
+    },
   }
 };
 </script>

@@ -61,15 +61,19 @@ export default {
         {
           icon: "el-icon-lx-home",
           index: "1",
-          title: "登记管理",
+          title: "个人管理",
           subs: [
             {
               index: "personbaseform",
-              title: "个人信息登记",
+              title: "个人管理",
             },
             {
               index: "personbasetable",
-              title: "个人信息注销",
+              title: "家庭查询",
+            },
+            {
+              index: "personbasetable",
+              title: "就业查询",
             }
           ]
         },
@@ -78,10 +82,10 @@ export default {
           index: "2",
           title: "权限管理",
           subs: [
-            {
-              index: "personbaseform",
-              title: "数据",
-            },
+            // {
+            //   index: "personbaseform",
+            //   title: "数据",
+            // },
             {
               index: "limitsperson",
               title: "账号管理",
