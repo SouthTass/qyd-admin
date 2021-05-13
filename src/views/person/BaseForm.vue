@@ -89,11 +89,11 @@ export default {
   padding-bottom: 12px;
 }
 .person-container{
-  width: 1000px;
+  width: 1205px;
   margin: 0 auto;
 }
 .form{
-  width: 1000px;
+  width: 1205px;
   .form-item{
     padding-top: 15px;
     margin-bottom: 15px;
