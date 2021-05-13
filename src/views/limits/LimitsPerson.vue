@@ -7,29 +7,31 @@
         <el-breadcrumb-item>账号管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="add-button">
-      <el-button type="primary" @click="$refs.cAddUser.show()">添加成员</el-button>
-    </div>
 
     <!-- 用户列表 -->
-    <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-      <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-      <el-table-column prop="account" label="账号" width="180"></el-table-column>
-      <el-table-column label="权限" width="60" align="center">
-        <template slot-scope="scope">
-          <el-tag>{{ scope.row.level | level }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="phone_number" label="联系电话" width="110" align="center"></el-table-column>
-      <el-table-column prop="address" label="辖区"></el-table-column>
-      <el-table-column label="操作" width="260" align="center">
-        <template slot-scope="scope">
-          <el-button type="danger" @click="delUser(scope.row)">删除</el-button>
-          <el-button type="info" @click="$refs.cChangeUser.show(scope.row)">修改信息</el-button>
-          <el-button type="warning" @click="$refs.cPwdUser.show(scope.row)">修改密码</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="container">
+      <div class="add-button">
+        <el-button type="primary" @click="$refs.cAddUser.show()">添加成员</el-button>
+      </div>
+      <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
+        <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+        <el-table-column prop="account" label="账号" width="180"></el-table-column>
+        <el-table-column label="权限" width="60" align="center">
+          <template slot-scope="scope">
+            <el-tag>{{ scope.row.level | level }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="phone_number" label="联系电话" width="110" align="center"></el-table-column>
+        <el-table-column prop="address" label="辖区"></el-table-column>
+        <el-table-column label="操作" width="260" align="center">
+          <template slot-scope="scope">
+            <el-button type="danger" @click="delUser(scope.row)">删除</el-button>
+            <el-button type="info" @click="$refs.cChangeUser.show(scope.row)">修改信息</el-button>
+            <el-button type="warning" @click="$refs.cPwdUser.show(scope.row)">修改密码</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
 
     <AddUser ref="cAddUser" @success="userList"></AddUser>
     <ChangeUser ref="cChangeUser" @success="userList"></ChangeUser>
