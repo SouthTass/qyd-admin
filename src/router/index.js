@@ -15,6 +15,11 @@ export default new Router({
       meta: { title: '自述文件' },
       children: [
         {
+          path: '/dashboard',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
+          meta: { title: '系统首页' }
+        },
+        {
           path: '/personbaseform',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseForm.vue'),
           meta: { title: '个人信息登记' }
@@ -25,9 +30,9 @@ export default new Router({
           meta: { title: '个人信息注销' }
         },
         {
-          path: '/dashboard',
-          component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
-          meta: { title: '系统首页' }
+          path: '/limitsperson',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/limits/LimitsPerson.vue'),
+          meta: { title: '账号管理' }
         },
         {
           path: '/icon',

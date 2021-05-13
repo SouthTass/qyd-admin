@@ -26,7 +26,7 @@ class Api {
    * @param {string} account        用户名
    * @param {string} password       密码
    */
-   async userLogin(account, password){
+  async userLogin(account, password){
     return _axios.post(`/api/user/login`, {
       account, password
     });
@@ -35,22 +35,38 @@ class Api {
   /** 
    * 用户退出
    */
-   async userLogout(){
+  async userLogout(){
     return _axios.post(`/api/user/logout`);
   }
 
   /** 
-   * 查询信息列表
+   * 登记管理查询信息列表
    */
-   async censusList(){
+  async censusList(){
     return _axios.get(`/api/census/list`);
   }
 
   /** 
-   * 用户退出
+   * 登记管理个人信息录入
    */
-   async censusCreate(body){
+  async censusCreate(body){
     return _axios.post(`/api/census/create`, body);
   }
+
+  /** 
+   * 权限管理-账号管理-用户信息列表
+   */
+  async userList(){
+    return _axios.get(`/api/user/list`);
+  }
+
+  /** 
+   * 权限管理-账号管理-修改用户
+   */
+  async userSave(body){
+    return _axios.post(`/api/user/save`, body);
+  }
+
+  
 }
 export default new Api();

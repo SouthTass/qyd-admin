@@ -8,6 +8,9 @@ import './components/common/directives';
 import 'babel-polyfill';
 import baseConfig from '@/common/config'
 
+// 引入全局过滤器
+import '@/common/filter'
+
 import Dayjs from 'dayjs'
 Vue.prototype.$dayjs = Dayjs
 

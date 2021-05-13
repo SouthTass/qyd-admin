@@ -73,6 +73,21 @@ export default {
             }
           ]
         },
+        {
+          icon: "el-icon-user",
+          index: "2",
+          title: "权限管理",
+          subs: [
+            {
+              index: "personbaseform",
+              title: "数据",
+            },
+            {
+              index: "limitsperson",
+              title: "账号管理",
+            }
+          ]
+        },
         /**
         {
           icon: "el-icon-lx-home",
