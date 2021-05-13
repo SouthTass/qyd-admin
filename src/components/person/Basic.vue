@@ -114,7 +114,7 @@
           <el-form-item label="户口地址" prop="domicile_address">
             <el-cascader class="from-width-l3"
               filterable
-              v-model="test"
+              v-model="$root.user.census.domicile_address"
               :options="$DefaultArea"
               :props="props"
               @change="computedDomicileAddress"></el-cascader>
@@ -126,7 +126,8 @@
               filterable
               v-model="$root.user.census.census_address"
               :options="$DefaultArea"
-              :props="props"></el-cascader>
+              :props="props"
+              @change="computedCensusAddress"></el-cascader>
           </el-form-item>
           <el-form-item>
             <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
@@ -152,7 +153,6 @@ export default {
 
     };
     return {
-      test: ["北京市" ,"丰台区" ,"大红门" ,"海户屯"],
       props: {
         value: 'name',
         label: 'name',
@@ -220,6 +220,14 @@ export default {
       this.$root.user.census.domicile_area = item[1]
       this.$root.user.census.domicile_town = item[2]
       this.$root.user.census.domicile_village = item[3]
+    },
+
+    // 处理居住地址
+    computedCensusAddress(item){
+      this.$root.user.census.census_city = item[0]
+      this.$root.user.census.census_area = item[1]
+      this.$root.user.census.census_town = item[2]
+      this.$root.user.census.census_village = item[3]
     },
 
     // 输入身份证号码之后，计算性别、出生日期、年龄

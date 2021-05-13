@@ -61,10 +61,12 @@ let config = {
     domicile_area: "大兴区",//户籍区
     domicile_town: "青石店镇",//户籍镇
     domicile_village: "东孙村",//户籍村
+    domicile_address: [],
     census_city: "北京市",//居住市
     census_area: "大兴区",//居住区
     census_town: "青石店镇",//居住镇
     census_village: "东孙村",//居住村
+    census_address: [],
     house_number: "001"//门牌号
   },
   //工作
@@ -118,23 +120,6 @@ let config = {
       }
     ]
   },
-//   "job":[{
-//     "job_hunting":"是",//是否求职
-//     "job_position":"金融民工",//求职岗位
-//     "job_salary":"5000-7000",//薪资要求
-//     "job_area":"北京市大兴区",//就业区域
-//     "is_skill":"否",
-//     "skill_name":"",
-//     "skill_level":""
-// },{
-//     "job_hunting":"否",
-//     "job_position":"",
-//     "job_salary":"",
-//     "job_area":"",
-//     "is_skill":"是",//是否培训
-//     "skill_name":"英语",//技能名称
-//     "skill_level":"四"//技能等级
-// }],
   //系统
   record: {
     employment_number: "10010001",//转移就业证号

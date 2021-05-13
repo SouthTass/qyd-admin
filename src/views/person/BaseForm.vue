@@ -65,8 +65,8 @@ export default {
 
       // 计算劳动合同时间
       if(body.work.start_end_time.length >= 2){
-        body.word.start_time = body.work.start_end_time[0]
-        body.word.end_time = body.work.start_end_time[1]
+        body.work.start_time = body.work.start_end_time[0]
+        body.work.end_time = body.work.start_end_time[1]
       }
       delete body.work.start_end_time
       

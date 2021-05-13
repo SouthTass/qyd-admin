@@ -39,10 +39,24 @@ new Vue({
     async initUserInfo(){
       // 基本信息中用身份证号码算出性别，出生日期，年龄
       let str = this.$root.user.census.card_number
-      console.log('之心', this.$root.user.census)
       this.$root.user.census.sex = str.slice(16, 17) % 2 ? '男' : '女' 
       this.$root.user.census.birthday = `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
       this.$root.user.census.age = this.$dayjs().format('YYYY') - str.slice(6,10)
+
+      // 整理基本信息中的户口地址和居住地址
+      this.$root.user.census.domicile_address.push(this.$root.user.census.domicile_city)
+      this.$root.user.census.domicile_address.push(this.$root.user.census.domicile_area)
+      this.$root.user.census.domicile_address.push(this.$root.user.census.domicile_town)
+      this.$root.user.census.domicile_address.push(this.$root.user.census.domicile_village)
+      this.$root.user.census.census_address.push(this.$root.user.census.census_city)
+      this.$root.user.census.census_address.push(this.$root.user.census.census_area)
+      this.$root.user.census.census_address.push(this.$root.user.census.census_town)
+      this.$root.user.census.census_address.push(this.$root.user.census.census_village)
+
+      // 工作状态work_status为自主创业时，将工作状态格式化
+      if(this.$root.user.work.work_status == '自主创业'){
+        this.$root.user.work.accord = JSON.parse(this.$root.user.work.work_desc)
+      }
     }
   },
   router,
