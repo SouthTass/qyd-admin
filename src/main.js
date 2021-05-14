@@ -11,15 +11,19 @@ import baseConfig from '@/common/config'
 // 引入全局过滤器
 import '@/common/filter'
 
+// 引入dayjs
 import Dayjs from 'dayjs'
 Vue.prototype.$dayjs = Dayjs
 
+// 引入北京市地理位置
 import DefaultArea from '@/common/area'
 Vue.prototype.$DefaultArea = DefaultArea
 
+// 引入API文档
 import ApiConfig from '@/api/index'
 Vue.prototype.$api = ApiConfig
 
+// 修改element-ui默认样式
 Vue.use(ElementUI, {size: 'small'});
 ElementUI.Dialog.props.closeOnClickModal.default = false
 ElementUI.Dialog.props.closeOnPressEscape.default = false
@@ -67,8 +71,13 @@ new Vue({
 
       // 工作状态work_status为自主创业时，将工作状态格式化
       if(this.$root.user.work.work_status == '自主创业'){
-        this.$root.user.work.accord = JSON.parse(this.$root.user.work.work_desc)
+        let config = JSON.parse(this.$root.user.work.work_configs)
+        Object.assign(this.$root.user.work.accord, config)
       }
+
+      // 整理劳动合同时间
+      this.$root.user.work.start_end_time.push(this.$root.user.work.start_time)
+      this.$root.user.work.start_end_time.push(this.$root.user.work.end_time)
     }
   },
   router,

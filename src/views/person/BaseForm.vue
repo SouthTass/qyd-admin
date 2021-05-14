@@ -9,10 +9,10 @@
       <Psocial></Psocial>
       <Ptrain></Ptrain>
       <Psystem></Psystem>
-      <div class="footer">
-        <el-button @click="saveInfo()" type="primary">保 存</el-button>
-        <el-button @click="close()" plain>取 消</el-button>
-      </div>
+    </div>
+    <div class="footer">
+      <el-button @click="saveInfo()" type="primary">保 存</el-button>
+      <el-button @click="close()" plain>取 消</el-button>
     </div>
   </el-dialog>
 </template>
@@ -31,7 +31,11 @@ export default {
       visible: false
     };
   },
+  created() {
+    this.categoryList()
+  },
   methods: {
+    // 保存信息
     async saveInfo(){
       let body = JSON.parse(JSON.stringify(this.$root.user))
 
@@ -57,7 +61,7 @@ export default {
 
       // work_status就业状态为自主创业时，将work.accord中的信息保存在work_desc中
       if(body.work_status == '自主创业'){
-        body.work_desc = JSON.stringify(body.work.accord)
+        body.work_configs = JSON.stringify(body.work.accord)
       }
 
       // 计算劳动合同时间
@@ -76,6 +80,20 @@ export default {
         this.$emit('success')
         this.visible = false
       }
+    },
+
+    // 获取分类列表
+    async categoryList(){
+      let str = '与户主关系,特殊身份,学历,民族,政治面貌,婚姻状况,健康状况,残疾等级,就业状态,人员身份,社保信息,薪酬要求,就业区域,技能等级'
+      let index = ['item11', 'item12', 'item13', 'item14', 'item15', 'item16', 'item17', 'item18', 'work_status',
+        'item4', 'item5', 'item7', 'item8', 'item9']
+      let res = await this.$api.categoryList(str)
+      if(res.status != 0) return
+      res.data.map((e, sh) => {
+        let arr = []
+        e.list.map(item => arr.push(item.name))
+        this.$root.user[`${index[sh]}`] = arr
+      })
     },
 
     // 打开弹窗
@@ -103,14 +121,14 @@ export default {
     padding: 0;
   }
   ::v-deep .el-dialog__body{
-    padding: 0 5px 20px 20px;
+    padding: 0 5px 0 20px;
   }
 }
 .container{
   padding-bottom: 12px;
 }
 .person-container{
-  height: 85vh;
+  height: calc(85vh - 96px);
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -127,6 +145,7 @@ export default {
 }
 .footer{
   text-align: center;
-  margin-top: 40px;
+  margin-top: 32px;
+  padding-bottom: 32px;
 }
 </style>

@@ -71,7 +71,7 @@ export default {
     async censusList(){
       let res = await this.$api.censusList()
       if(res.status != 0) return
-      this.tableData = res.data
+      this.tableData = res.data.list
     },
 
     // 计算年龄

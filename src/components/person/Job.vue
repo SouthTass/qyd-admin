@@ -43,32 +43,35 @@
         <template v-if="$root.user.work.work_status == '自主创业'">
           <div>
             <el-form-item label="创业项目名称">
-              <el-input v-model="$root.user.work.accord.name" class="from-width-l2"></el-input>
+              <el-input v-model="$root.user.work.accord.name" placeholder="请输入创业项目名称" class="from-width-l2"></el-input>
             </el-form-item>
           </div>
           <div>
             <el-form-item label="创业项目地址">
-              <el-select v-model="$root.user.work.accord.address" class="from-width-l1" placeholder="请选择地址">
-                <el-option v-for="item in $root.user.gender"
-                  :key="item" :label="item" :value="item"></el-option>
-              </el-select>
+              <el-cascader style="width: 297px"
+                filterable
+                v-model="$root.user.work.accord.address_array"
+                :options="$DefaultArea"
+                :props="props"
+                @change="computedDomicileAddress"></el-cascader>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="$root.user.work.accord.address" placeholder="请输入具体地址" style="width: 525px"></el-input>
+              <el-input v-model="$root.user.work.accord.address_desc" 
+                placeholder="请输入具体地址" style="width: 458px"></el-input>
             </el-form-item>
           </div>
           <div>
             <el-form-item label="创业项目性质">
-              <el-input v-model="$root.user.work.accord.type"></el-input>
+              <el-input v-model="$root.user.work.accord.type" placeholder="请输入创业项目性质"></el-input>
             </el-form-item>
             <el-form-item label="带动就业人数">
-              <el-input v-model="$root.user.work.accord.number"></el-input>
+              <el-input type="number" v-model.number="$root.user.work.accord.number" placeholder="请输入带动就业人数"></el-input>
             </el-form-item>
           </div>
           <div>
             <el-form-item label="创业项目内容">
-              <el-input class="from-width-l2"
-                v-model="$root.user.work.accord.type" type="textarea" :rows="5"></el-input>
+              <el-input class="from-width-l2" placeholder="请输入创业项目内容"
+                v-model="$root.user.work.accord.desc" type="textarea" :rows="5"></el-input>
             </el-form-item>
           </div>
         </template>
@@ -139,6 +142,11 @@
 export default {
   data() {
     return {
+      props: {
+        value: 'name',
+        label: 'name',
+        children: 'list',
+      },
       rules: {
 
       }
@@ -150,6 +158,11 @@ export default {
   methods: {
     onSubmit() {
       this.$message.success("提交成功！");
+    },
+    // 处理户口地址
+    computedDomicileAddress(item){
+      this.$root.user.work.accord.address = ''
+      item.map(e => this.$root.user.work.accord.address += e)
     },
   },
 };

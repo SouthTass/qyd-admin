@@ -86,16 +86,18 @@ let config = {
     work_shape: "全日制",//用工性质
     company_type: "企业",//单位性质
     company_industry: "三产",//单位产业
-    start_time: "2021年1月31",//劳务合同开始时间
-    end_time: "2021年12月31",//劳务合同结束时间
+    start_time: "2021-10-31",//劳务合同开始时间
+    end_time: "2022-12-31",//劳务合同结束时间
     start_end_time: [],
     contact_person: "小A",//单位联系人
     company_number: "111",//联系方式
     is_charitable: "否",//是否公益性质
+    work_configs: "{}", //work_status为自主创时
     accord: {
       name: "",
       address: "",
       address_desc: "",
+      address_array: [],
       desc: "",
       type: "",
       number: ""

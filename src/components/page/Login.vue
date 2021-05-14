@@ -56,6 +56,7 @@ export default {
       if(res.status != 0) return
       localStorage.setItem("qyd_id", res.data.id)
       localStorage.setItem("qyd_username", res.data.name)
+      localStorage.setItem("qyd_level", res.data.level)
       this.$router.push('/');
     },
   },

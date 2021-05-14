@@ -10,7 +10,7 @@
 
     <!-- 用户列表 -->
     <div class="container">
-      <div class="add-button">
+      <div class="add-button" v-if="level">
         <el-button type="primary" @click="$refs.cAddUser.show()">添加成员</el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
@@ -53,6 +53,15 @@ export default {
   },
   created() {
     this.userList()
+  },
+  computed: {
+    level: function() {
+      if(localStorage.getItem("qyd_level") == 1){
+        return true
+      }else{
+        return false
+      }
+    }
   },
   methods: {
     // 获取账号列表

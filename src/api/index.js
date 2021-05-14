@@ -40,6 +40,13 @@ class Api {
   }
 
   /** 
+   * 分类列表
+   */
+   async categoryList(name){
+    return _axios.get(`/api/category/list?category_names=${name}`);
+  }
+
+  /** 
    * 登记管理查询信息列表
    */
   async censusList(){

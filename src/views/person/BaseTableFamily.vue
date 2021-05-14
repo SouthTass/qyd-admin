@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import { fetchData } from '../../api/index'
 import ComponentsLogout from '@/components/person/Logout'
 import ComponentsBaseForm from '@/views/person/BaseForm'
 export default {
@@ -77,7 +76,7 @@ export default {
     async censusList(){
       let res = await this.$api.censusList()
       if(res.status != 0) return
-      this.tableData = res.data
+      this.tableData = res.data.list
     },
 
     // 计算年龄
