@@ -11,6 +11,10 @@ import baseConfig from '@/common/config'
 // 引入全局过滤器
 import '@/common/filter'
 
+// 引入默认option
+import dafaultOption from '@/common/option'
+Vue.prototype.$option = dafaultOption
+
 // 引入dayjs
 import Dayjs from 'dayjs'
 Vue.prototype.$dayjs = Dayjs

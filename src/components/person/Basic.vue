@@ -9,7 +9,7 @@
         <div>
           <el-form-item label="户主关系" prop="rapport">
             <el-select v-model="$root.user.census.rapport" class="from-width-l1">
-              <el-option v-for="item in $root.user.item11" 
+              <el-option v-for="item in $option.item11" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -23,7 +23,7 @@
           </el-form-item>
           <el-form-item label="性别" prop="sex">
             <el-select v-model="$root.user.census.sex" class="from-width-l1" :disabled="true">
-              <el-option v-for="item in $root.user.gender" 
+              <el-option v-for="item in $option.gender" 
                 :key="item.type" :label="item.name" :value="item.type"></el-option>
             </el-select>
           </el-form-item>
@@ -37,7 +37,7 @@
           </el-form-item>
           <el-form-item label="户籍性质" prop="census_domicile_type">
             <el-select v-model="$root.user.census.census_domicile_type"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item10" 
+              <el-option v-for="item in $option.item10" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -45,7 +45,7 @@
         <div>
           <el-form-item label="是否就业登记" prop="work_register">
             <el-select v-model="$root.user.census.work_register"  class="from-width-l1">
-              <el-option v-for="item in $root.user.yesorno" 
+              <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -54,7 +54,7 @@
           </el-form-item>
           <el-form-item label="特殊身份" prop="census_identity">
             <el-select v-model="$root.user.census.census_identity"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item12" 
+              <el-option v-for="item in $option.item12" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -62,7 +62,7 @@
         <div>
           <el-form-item label="学历" prop="education">
             <el-select v-model="$root.user.census.education"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item13" 
+              <el-option v-for="item in $option.item13" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -73,19 +73,19 @@
         <div>
           <el-form-item label="民族" prop="nation">
             <el-select v-model="$root.user.census.nation"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item14" 
+              <el-option v-for="item in $option.item14" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="政治面貌" prop="political_status">
             <el-select v-model="$root.user.census.political_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item15" 
+              <el-option v-for="item in $option.item15" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="婚姻状况" prop="marriage_status">
             <el-select v-model="$root.user.census.marriage_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item16" 
+              <el-option v-for="item in $option.item16" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -93,19 +93,19 @@
         <div>
           <el-form-item label="健康状况" prop="health_status">
             <el-select v-model="$root.user.census.health_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item17" 
+              <el-option v-for="item in $option.item17" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="残疾等级" prop="handicap_level">
             <el-select v-model="$root.user.census.handicap_level"  class="from-width-l1">
-              <el-option v-for="item in $root.user.item18" 
+              <el-option v-for="item in $option.item18" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="是否低保" prop="allowance_status">
             <el-select v-model="$root.user.census.allowance_status"  class="from-width-l1">
-              <el-option v-for="item in $root.user.yesorno" 
+              <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>

@@ -10,7 +10,7 @@
         <div>
           <el-form-item label="就业状态" prop="work_status">
             <el-select v-model="$root.user.work.work_status" class="from-width-l1">
-              <el-option v-for="item in $root.user.work_status" 
+              <el-option v-for="item in $option.work_status" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -20,7 +20,7 @@
         <div v-if="$root.user.work.work_status == '无就业需求'">
           <el-form-item label="说明" prop="work_status">
             <el-select v-model="$root.user.work.work_desc" class="from-width-l1">
-              <el-option v-for="item in $root.user.work_none_desc" 
+              <el-option v-for="item in $option.work_none_desc" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -77,7 +77,7 @@
         </template>
 
         <!-- 状态为其他 -->
-        <template v-if="$root.user.work.work_status != '无就业需求'
+        <template v-if="$root.user.work.work_status && $root.user.work.work_status != '无就业需求'
           && $root.user.work.work_status != '灵活就业'
           && $root.user.work.work_status != '无业求职'
           && $root.user.work.work_status != '自主创业'">
@@ -89,13 +89,13 @@
           <div>
             <el-form-item label="用工形式">
               <el-select v-model="$root.user.work.work_shape" placeholder="请选择" class="from-width-l1">
-                <el-option v-for="item in $root.user.item1" 
+                <el-option v-for="item in $option.item1" 
                   :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="单位性质">
               <el-select v-model="$root.user.work.company_type" placeholder="请选择" class="from-width-l1">
-                <el-option v-for="item in $root.user.item2" 
+                <el-option v-for="item in $option.item2" 
                   :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
@@ -103,7 +103,7 @@
           <div>
             <el-form-item label="单位产业">
               <el-select v-model="$root.user.work.company_industry" placeholder="请选择" class="from-width-l1">
-                <el-option v-for="item in $root.user.item3" 
+                <el-option v-for="item in $option.item3" 
                   :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
@@ -127,7 +127,7 @@
             </el-form-item>
             <el-form-item label="是否公益性就业">
               <el-select v-model="$root.user.work.is_charitable" placeholder="请选择" class="from-width-l1">
-                <el-option v-for="item in $root.user.yesorno" 
+                <el-option v-for="item in $option.yesorno" 
                   :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>

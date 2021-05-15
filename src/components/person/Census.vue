@@ -14,7 +14,7 @@
         </el-form-item>
         <el-form-item label="户籍性质" prop="domicile_type">
           <el-select v-model="$root.user.domicile.domicile_type" placeholder="请选择" class="from-width-l1">
-            <el-option v-for="item in $root.user.domicileType" :key="item" :label="item" :value="item"></el-option>
+            <el-option v-for="item in $option.domicileType" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="住址" prop="domicile_address">

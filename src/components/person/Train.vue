@@ -9,7 +9,7 @@
         <div>
           <el-form-item label="是否求职">
             <el-select v-model="$root.user.job.hunting" class="from-width-l1">
-              <el-option v-for="item in $root.user.yesorno" 
+              <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -22,13 +22,13 @@
               </el-form-item>
               <el-form-item label="薪酬要求">
                 <el-select v-model="item.job_salary" class="from-width-l1">
-                  <el-option v-for="item in $root.user.item7" 
+                  <el-option v-for="item in $option.item7" 
                     :key="item" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="就业区域">
                 <el-select v-model="item.job_area" class="from-width-l1">
-                  <el-option v-for="item in $root.user.item8" 
+                  <el-option v-for="item in $option.item8" 
                     :key="item" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
@@ -45,7 +45,7 @@
         <div>
           <el-form-item label="是否培训">
             <el-select v-model="$root.user.job.skill" class="from-width-l1">
-              <el-option v-for="item in $root.user.yesorno" 
+              <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -58,7 +58,7 @@
               </el-form-item>
               <el-form-item label="技能等级">
                 <el-select v-model="item.skill_level" class="from-width-l1">
-                  <el-option v-for="item in $root.user.item9" 
+                  <el-option v-for="item in $option.item9" 
                     :key="item" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>

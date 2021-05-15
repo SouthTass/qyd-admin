@@ -1,5 +1,6 @@
 <template>
-  <el-form ref="pSystem" 
+  <el-form ref="pSystem"
+    :rules="rules"
     :inline="true"
     :model="$root.user.record"
     label-width="120px" 
@@ -10,13 +11,15 @@
         <el-form-item label="转移就业证号" prop="employment_number">
           <el-input v-model="$root.user.record.employment_number" class="from-width-l1"></el-input>
         </el-form-item>
-        <el-form-item label="系统状态" prop="employment_status">
+        <el-form-item label="系统状态" prop="employment_status"
+          :required="$root.user.record.employment_number.length > 0">
           <el-select v-model="$root.user.record.employment_status" class="from-width-l1">
-            <el-option v-for="item in $root.user.yesorno" 
+            <el-option v-for="item in $option.item21" 
               :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="查询时间" prop="employment_time">
+        <el-form-item label="查询时间" prop="employment_time"
+          :required="$root.user.record.employment_number.length > 0">
           <el-date-picker class="from-width-l1"
             v-model="$root.user.record.employment_time"
             type="date"
@@ -26,13 +29,15 @@
         <el-form-item label="转移就业证号" prop="unemployment_number">
           <el-input v-model="$root.user.record.unemployment_number" class="from-width-l1"></el-input>
         </el-form-item>
-        <el-form-item label="系统状态" prop="unemployment_status">
+        <el-form-item label="系统状态" prop="unemployment_status"
+          :required="$root.user.record.unemployment_number.length > 0">
           <el-select v-model="$root.user.record.unemployment_status" class="from-width-l1">
-            <el-option v-for="item in $root.user.yesorno" 
+            <el-option v-for="item in $option.item22" 
               :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="查询时间">
+        <el-form-item label="查询时间" 
+          :required="$root.user.record.unemployment_number.length > 0">
           <el-date-picker class="from-width-l1"
             v-model="$root.user.record.unemployment_time"
             type="date"
@@ -48,7 +53,9 @@
 export default {
   data() {
     return {
-      
+      rules: {
+
+      }
     };
   },
 };
