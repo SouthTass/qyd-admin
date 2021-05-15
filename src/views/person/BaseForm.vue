@@ -100,7 +100,7 @@ export default {
     // 打开弹窗
     show(){
       this.visible = true
-      Object.assign(this.$root.user, Approve)
+      // Object.assign(this.$root.user, Approve)
     },
 
     // 关闭弹窗

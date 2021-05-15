@@ -30,11 +30,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="phone_number" label="联系电话" width="100" align="center"></el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleDelete(scope.$index, scope.row)">查看</el-button>
-            <el-button type="danger" size="mini"
-              @click="$refs.componentsLogout.show(scope.row)">家庭关联</el-button>
           </template>
         </el-table-column>
       </el-table>
