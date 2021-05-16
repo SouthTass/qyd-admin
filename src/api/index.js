@@ -68,6 +68,13 @@ class Api {
   }
 
   /** 
+   * 个人信息注销
+   */
+  async censusDestroy(body){
+    return _axios.post(`/api/census/destroy`, body);
+  }
+
+  /** 
    * 家庭查询
    */
   async domicileMemberList(params){

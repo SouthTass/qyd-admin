@@ -1,6 +1,8 @@
 <template>
   <el-dialog title="注销" :visible.sync="visiable" width="800px" center>
-    <el-form label-width="80px" class="form-container">
+    <el-form label-width="80px" class="form-container" ref="personLogout"
+      :model="user"
+      :rules="rules">
       <table class="dialog-table" border="1">
         <tr style="text-align: center">
           <td colspan="6">个人信息</td>
@@ -31,14 +33,14 @@
         </tr>
       </table>
       <div class="form-item">
-        <el-form-item label="注销原因" required>
+        <el-form-item label="注销原因" prop="text">
           <el-select v-model="user.text" placeholder="请选择注销原因" class="from-width-l1">
             <el-option v-for="item in $option.item20" 
               :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="user.desc" type="textarea" :rows="6" placeholder="请填写备注（非必填）"></el-input>
+        <el-form-item label="备注" prop="desc">
+          <el-input v-model="user.desc" type="textarea" :rows="6" placeholder="请填写备注"></el-input>
         </el-form-item>
       </div>
     </el-form>
@@ -58,6 +60,10 @@ export default {
       user: {
         text: '',
         desc: ''
+      },
+      rules:{
+        'text': [{ required: true, message: '请选择注销原因', trigger: 'blur' }],
+        'desc': [{ required: true, message: '请填写备注', trigger: 'blur' }]
       }
     };
   },
@@ -69,10 +75,18 @@ export default {
     },
 
     // 注销
-    logout(){
-      this.$emit('success')
-      this.$message.success('注销成功')
-      this.visiable = false
+    async logout(){
+      let val = await this.$refs.personLogout.validate()
+      if(!val) return
+      let res = await this.$api.censusDestroy({
+        id: this.info.id,
+        destroy_reason: this.user.text,
+        destroy_desc: this.user.desc
+      })
+      if(res.status == 0){
+        this.$message.success('注销成功')
+        this.visiable = false
+      }
     }
   }
 };

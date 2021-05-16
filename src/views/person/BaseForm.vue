@@ -102,9 +102,9 @@ export default {
 
     // 获取分类列表
     async categoryList(){
-      let str = '与户主关系,特殊身份,学历,民族,政治面貌,婚姻状况,健康状况,残疾等级,就业状态,人员身份,社保信息,薪酬要求,就业区域,技能等级'
+      let str = '与户主关系,特殊身份,学历,民族,政治面貌,婚姻状况,健康状况,残疾等级,就业状态,人员身份,社保信息,薪酬要求,就业区域,技能等级,注销原因'
       let index = ['item11', 'item12', 'item13', 'item14', 'item15', 'item16', 'item17', 'item18', 'work_status',
-        'item4', 'item5', 'item7', 'item8', 'item9']
+        'item4', 'item5', 'item7', 'item8', 'item9', 'item20']
       let res = await this.$api.categoryList(str)
       if(res.status != 0) return
       res.data.map((e, sh) => {
