@@ -99,6 +99,5 @@ export default {
 .table {
   width: 100%;
   font-size: 14px;
-  margin-top: 30px;
 }
 </style>

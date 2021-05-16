@@ -61,6 +61,13 @@ class Api {
   }
 
   /** 
+   * 家庭查询
+   */
+  async domicileMemberList(params){
+    return _axios.get(`/api/domicile/member/list`, {params: params});
+  }
+
+  /** 
    * 权限管理-账号管理-用户信息列表
    */
   async userList(){
