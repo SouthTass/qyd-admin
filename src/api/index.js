@@ -68,6 +68,13 @@ class Api {
   }
 
   /** 
+   * 就业查询
+   */
+  async workList(params){
+    return _axios.get(`/api/work/list`, {params: params});
+  }
+
+  /** 
    * 权限管理-账号管理-用户信息列表
    */
   async userList(){

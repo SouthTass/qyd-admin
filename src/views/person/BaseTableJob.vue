@@ -8,23 +8,17 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-input v-model="query.name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
+        <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">检索</el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
         <el-table-column prop="card_number" label="身份证号" width="170" align="center"></el-table-column>
         <el-table-column prop="census_name" label="姓名" width="100"></el-table-column>
-        <el-table-column prop="sex" label="就业状态" width="100" align="center"></el-table-column>
-        <el-table-column prop="sex" label="劳动合同开始时间" width="140" align="center"></el-table-column>
-        <el-table-column prop="sex" label="劳动合同结束时间" width="140" align="center"></el-table-column>
-        <el-table-column prop="name" label="就业单位地址">
-          <template slot-scope="scope">
-            {{scope.row.census_city}}
-            {{scope.row.census_area}}
-            {{scope.row.census_town}}
-            {{scope.row.census_village}}
-            {{scope.row.house_number}}
-          </template>
+        <el-table-column prop="work_status" label="就业状态" width="100" align="center"></el-table-column>
+        <el-table-column prop="start_time" label="劳动合同开始时间" width="140" align="center"></el-table-column>
+        <el-table-column prop="end_time" label="劳动合同结束时间" width="140" align="center"></el-table-column>
+        <el-table-column label="就业单位地址">
+          <template slot-scope="scope">{{computedAddress(scope.row)}}</template>
         </el-table-column>
         <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
@@ -34,9 +28,9 @@
       </el-table>
       <div class="pagination">
         <el-pagination background layout="total, prev, pager, next"
-          :current-page="query.pageIndex"
-          :page-size="query.pageSize"
-          :total="tableData.length"></el-pagination>
+          :current-page="query.index"
+          :page-size="query.number"
+          :total="pageTotal"></el-pagination>
       </div>
     </div>
 
@@ -46,20 +40,18 @@
 </template>
 
 <script>
-import { fetchData } from '../../api/index'
 import ComponentsLogout from '@/components/person/Logout'
 import ComponentsBaseForm from '@/views/person/BaseForm'
 export default {
   components: {ComponentsLogout, ComponentsBaseForm},
   data() {
     return {
-      value: '',
       query: {
-        address: '',
-        name: '',
-        pageIndex: 1,
-        pageSize: 10
+        user_name: '',
+        page_index: 1,
+        page_number: 10
       },
+      pageTotal: 0,
       tableData: [],
     };
   },
@@ -69,25 +61,26 @@ export default {
   methods: {
     // 获取信息列表
     async censusList(){
-      let res = await this.$api.censusList()
+      let res = await this.$api.workList(this.query)
       if(res.status != 0) return
       this.tableData = res.data.list
+      this.pageTotal = res.data.total_rows
     },
 
-    // 计算年龄
-    computedAge(item){
-      let birthday = item.birthday + ''
-      return this.$dayjs().format('YYYY') - birthday.slice(0, 4)
+    // 计算就业单位地址
+    computedAddress(item){
+      if(item.work_status == '自主创业'){
+        let config = JSON.parse(item.work_configs)
+        return `${config.accord.address}${config.accord.address_desc}`
+      }else{
+        return `${item.company_address}`
+      }
     },
 
-    // 触发搜索按钮
+    // 检索
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-    },
-
-    // 删除操作
-    handleDelete(index, row) {
-      this.editVisible = true
+      this.query.page_index = 1
+      this.censusList()
     }
   }
 };
