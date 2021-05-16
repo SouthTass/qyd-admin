@@ -89,7 +89,7 @@
             <el-button
               type="primary"
               size="mini"
-              @click="checkPerson(scope.row)"
+              @click="$refs.componentsInfo.show(scope.row)"
               >查看</el-button
             >
             <el-button
@@ -118,6 +118,7 @@
       </div>
     </div>
 
+    <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
     <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
     <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
@@ -125,11 +126,12 @@
 </template>
 
 <script>
+import ComponentsInfo from '@/components/person/Info'
 import ComponentsCheck from "@/components/person/Check";
 import ComponentsLogout from "@/components/person/Logout";
 import ComponentsBaseForm from "@/views/person/BaseForm";
 export default {
-  components: { ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
   data() {
     return {
       pageTotal: 0,

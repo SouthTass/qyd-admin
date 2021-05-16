@@ -3,12 +3,12 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div class="person-container">
-      <Pcensus ref="Pcensus"></Pcensus>
+      <Pcensus ref="Pcensus" :out="out"></Pcensus>
       <Pbasic></Pbasic>
       <Pjob></Pjob>
       <Psocial></Psocial>
       <Ptrain></Ptrain>
-      <Psystem></Psystem>
+      <Psystem v-if="!out"></Psystem>
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
@@ -29,7 +29,8 @@ export default {
   name: "baseform",
   data() {
     return {
-      visible: false
+      visible: false,
+      out: false
     };
   },
   created() {
@@ -114,7 +115,8 @@ export default {
     },
 
     // 打开弹窗
-    show(){
+    show(out){
+      if(out) this.out = true
       this.visible = true
       // Object.assign(this.$root.user, Approve)
     },

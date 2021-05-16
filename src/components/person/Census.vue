@@ -4,7 +4,7 @@
     :model="$root.user.domicile"
     :rules="rules" label-width="120px" class="form-container">
     <div class="form-item">
-      <h3 class="form-item-title">户籍信息</h3>
+      <h3 class="form-item-title">{{out ? '户主信息' : '户籍信息'}}</h3>
       <div class="container">
         <el-form-item label="身份证号" prop="identity_number">
           <el-input v-model="$root.user.domicile.identity_number" maxlength="18"></el-input>
@@ -12,7 +12,10 @@
         <el-form-item label="户主姓名" prop="domicile_name">
           <el-input v-model="$root.user.domicile.domicile_name"></el-input>
         </el-form-item>
-        <el-form-item label="户籍性质" prop="domicile_type">
+        <el-form-item label="户主电话" prop="domicile_type" v-if="out">
+          <el-input v-model="$root.user.domicile.domicile_name"></el-input>
+        </el-form-item>
+        <el-form-item label="户籍性质" prop="domicile_type" v-else>
           <el-select v-model="$root.user.domicile.domicile_type" placeholder="请选择" class="from-width-l1">
             <el-option v-for="item in $option.domicileType" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -27,6 +30,7 @@
 
 <script>
 export default {
+  props: ['out'],
   data() {
     return {
       rules: {

@@ -11,7 +11,7 @@
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show()"
+          @click="$refs.componentsBaseForm.show('out')"
           style="float: right"
           >录入信息</el-button
         >
@@ -89,7 +89,7 @@
             <el-button
               type="primary"
               size="mini"
-              @click="checkPerson(scope.row)"
+              @click="$refs.componentsInfo.show(scope.row)"
               >查看</el-button
             >
             <el-button
@@ -117,7 +117,7 @@
           @current-change="censusList"></el-pagination>
       </div>
     </div>
-
+    <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
     <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
     <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
@@ -125,11 +125,12 @@
 </template>
 
 <script>
+import ComponentsInfo from '@/components/person/Info'
 import ComponentsCheck from "@/components/person/Check";
 import ComponentsLogout from "@/components/person/Logout";
 import ComponentsBaseForm from "@/views/person/BaseForm";
 export default {
-  components: { ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
   data() {
     return {
       pageTotal: 0,
