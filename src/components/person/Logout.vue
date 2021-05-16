@@ -33,7 +33,7 @@
       <div class="form-item">
         <el-form-item label="注销原因" required>
           <el-select v-model="user.text" placeholder="请选择注销原因" class="from-width-l1">
-            <el-option v-for="item in $root.user.item20" 
+            <el-option v-for="item in $option.item20" 
               :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -56,7 +56,7 @@ export default {
       visiable: false,
       info: {},
       user: {
-        text: '注销原因一',
+        text: '',
         desc: ''
       }
     };

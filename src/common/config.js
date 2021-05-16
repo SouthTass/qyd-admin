@@ -39,7 +39,7 @@ let config = {
   },
   //工作
   work: {
-    work_status: "单位就业",//就业状态
+    work_status: "无就业需求",//就业状态
     work_desc: "",//说明
     company_name: "QL",//就业单位全称
     company_address: "北京大兴",//就业单位地址

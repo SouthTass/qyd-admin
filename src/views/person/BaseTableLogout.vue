@@ -2,32 +2,14 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>当前位置：登记管理</el-breadcrumb-item>
-        <el-breadcrumb-item>个人管理</el-breadcrumb-item>
+        <el-breadcrumb-item>当前位置：个人管理</el-breadcrumb-item>
+        <el-breadcrumb-item>注销管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show()"
-          style="float: right"
-          >录入信息</el-button
-        >
-        <el-button
-          type="danger"
-          icon="el-icon-download"
-          plain
-          style="float: right"
-          >导出数据</el-button
-        >
-        <el-button
-          icon="el-icon-upload2"
-          plain
-          style="float: right"
-          >导入数据</el-button
-        >
       </div>
       <el-table
         :data="tableData"
@@ -84,25 +66,13 @@
           width="100"
           align="center"
         ></el-table-column>
-        <el-table-column label="操作" width="210" align="center">
+        <el-table-column label="操作" width="80" align="center">
           <template slot-scope="scope">
             <el-button
               type="primary"
               size="mini"
               @click="checkPerson(scope.row)"
               >查看</el-button
-            >
-            <el-button
-              type="warning"
-              size="mini"
-              @click="handleDelete(scope.$index, scope.row)"
-              >修改</el-button
-            >
-            <el-button
-              type="danger"
-              size="mini"
-              @click="$refs.componentsLogout.show(scope.row)"
-              >注销</el-button
             >
           </template>
         </el-table-column>

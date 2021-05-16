@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>当前位置：登记管理</el-breadcrumb-item>
-        <el-breadcrumb-item>个人管理</el-breadcrumb-item>
+        <el-breadcrumb-item>外来人员管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">

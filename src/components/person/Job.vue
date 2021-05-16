@@ -132,6 +132,16 @@
               </el-select>
             </el-form-item>
           </div>
+          <div>
+            <el-form-item label="就业单位全称">
+              <el-input v-model="$root.user.work.company_name" class="from-width-l2"></el-input>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item label="就业单位地址">
+              <el-input v-model="$root.user.work.company_address" class="from-width-l2"></el-input>
+            </el-form-item>
+          </div>
         </template>
       </div>
     </div>

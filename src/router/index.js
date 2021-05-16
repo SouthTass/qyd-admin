@@ -25,6 +25,11 @@ export default new Router({
           meta: { title: '个人管理' }
         },
         {
+          path: '/personbasetableout',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableOut.vue'),
+          meta: { title: '外来人员' }
+        },
+        {
           path: '/personbasetablefamily',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableFamily.vue'),
           meta: { title: '家庭查询' }
@@ -32,7 +37,12 @@ export default new Router({
         {
           path: '/personbasetablejob',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableJob.vue'),
-          meta: { title: '家庭查询' }
+          meta: { title: '就业查询' }
+        },
+        {
+          path: '/personbasetablelogout',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableLogout.vue'),
+          meta: { title: '注销管理' }
         },
         {
           path: '/limitsperson',

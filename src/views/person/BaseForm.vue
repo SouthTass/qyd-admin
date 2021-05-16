@@ -50,10 +50,26 @@ export default {
       // 整理培训求职信息
       let job = []
       if(body.job.hunting == '是'){
-        body.job.hunting_list.map(e => job.push({job_hunting: '是', ...e}))
+        body.job.hunting_list.map(e => job.push({
+          job_hunting: "是",
+          job_position: e.job_position,
+          job_salary: e.job_salary,
+          job_area: e.job_area,
+          is_skill: "否",
+          skill_name: "",
+          skill_level: ""
+        }))
       }
       if(body.job.skill == '是'){
-        body.job.skill_list.map(e => job.push({job_hunting: '是', ...e}))
+        body.job.skill_list.map(e => job.push({
+          job_hunting: "否",
+          job_position: "",
+          job_salary: "",
+          job_area: "",
+          is_skill: "是",
+          skill_name: e.skill_name,
+          skill_level: e.skill_level
+        }))
       }
       body.job = job
 
@@ -61,8 +77,8 @@ export default {
       body.census.birthday = body.census.birthday.replace(/-/g, '')
 
       // work_status就业状态为自主创业时，将work.accord中的信息保存在work_desc中
-      if(body.work_status == '自主创业'){
-        body.work_configs = JSON.stringify(body.work.accord)
+      if(body.work.work_status == '自主创业'){
+        body.work.work_configs = body.work.accord
       }
 
       // 计算劳动合同时间

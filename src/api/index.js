@@ -49,8 +49,15 @@ class Api {
   /** 
    * 登记管理查询信息列表
    */
-  async censusList(){
-    return _axios.get(`/api/census/list`);
+  async censusList(params){
+    return _axios.get(`/api/census/list`, {params: params});
+  }
+
+  /** 
+   * 查询个人信息详情
+   */
+  async censusGet(id){
+    return _axios.get(`/api/census/get?cencus_id=${id}`);
   }
 
   /** 
