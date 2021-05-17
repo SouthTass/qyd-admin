@@ -26,7 +26,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="转移就业证号" prop="unemployment_number">
+        <el-form-item label="就失业登记证号" prop="unemployment_number">
           <el-input v-model="$root.user.record.unemployment_number" class="from-width-l1"></el-input>
         </el-form-item>
         <el-form-item label="系统状态" prop="unemployment_status"

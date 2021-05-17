@@ -232,7 +232,7 @@
           <td class="table-text">{{info.record_res.employment_time}}</td>
         </tr>
         <tr>
-          <td class="table-label" style="width: 120px">就失业等级证号</td>
+          <td class="table-label" style="width: 120px">就失业登记证号</td>
           <td class="table-text">{{info.record_res.unemployment_number}}</td>
           <td class="table-label">系统状态</td>
           <td class="table-text">{{info.record_res.unemployment_status}}</td>
