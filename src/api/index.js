@@ -61,6 +61,13 @@ class Api {
   }
 
   /** 
+   * 查询个人变更记录
+   */
+  async censusLog(id){
+    return _axios.get(`/api/census/log?census_id=${id}`);
+  }
+
+  /** 
    * 登记管理个人信息录入
    */
   async censusCreate(body){

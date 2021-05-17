@@ -3,31 +3,13 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>当前位置：登记管理</el-breadcrumb-item>
-        <el-breadcrumb-item>外来人员管理</el-breadcrumb-item>
+        <el-breadcrumb-item>异常管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show('out')"
-          style="float: right"
-          >录入信息</el-button
-        >
-        <el-button
-          type="danger"
-          icon="el-icon-download"
-          plain
-          style="float: right"
-          >导出数据</el-button
-        >
-        <el-button
-          icon="el-icon-upload2"
-          plain
-          style="float: right"
-          >导入数据</el-button
-        >
       </div>
       <el-table
         :data="tableData"
@@ -66,7 +48,7 @@
         <el-table-column
           prop="work_status"
           label="是否就业"
-          width="100"
+          width="120"
           align="center"
         ></el-table-column>
         <el-table-column prop="name" label="居住地址">
@@ -81,10 +63,10 @@
         <el-table-column
           prop="phone_number"
           label="联系电话"
-          width="90"
+          width="100"
           align="center"
         ></el-table-column>
-        <el-table-column label="操作" width="310" align="center">
+        <!-- <el-table-column label="操作" width="210" align="center">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -104,10 +86,8 @@
               @click="$refs.componentsLogout.show(scope.row)"
               >注销</el-button
             >
-            <el-button type="primary" size="mini"
-              @click="$refs.componentsChangeRecord.show(scope.row)">变更记录</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -119,11 +99,11 @@
           @current-change="censusList"></el-pagination>
       </div>
     </div>
+
     <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
     <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
     <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
-    <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
 
@@ -132,9 +112,8 @@ import ComponentsInfo from '@/components/person/Info'
 import ComponentsCheck from "@/components/person/Check";
 import ComponentsLogout from "@/components/person/Logout";
 import ComponentsBaseForm from "@/views/person/BaseForm";
-import ComponentsChangeRecord from "@/components/person/ChangeRecord";
 export default {
-  components: { ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
   data() {
     return {
       pageTotal: 0,
@@ -142,7 +121,8 @@ export default {
       query: {
         user_name: '',
         page_index: 1,
-        page_number: 10
+        page_number: 10,
+        census_status: 0
       },
     };
   },
@@ -157,18 +137,6 @@ export default {
       if (res.status != 0) return
       this.tableData = res.data.list
       this.pageTotal = res.data.total_rows
-    },
-
-    // 计算年龄
-    computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
     },
 
     // 查看个人信息

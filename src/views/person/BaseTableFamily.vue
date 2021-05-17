@@ -61,7 +61,8 @@ export default {
       query: {
         user_name: '',
         page_index: 1,
-        page_number: 10
+        page_number: 10,
+        census_status: 1
       },
       pageTotal: 0,
       tableData: []

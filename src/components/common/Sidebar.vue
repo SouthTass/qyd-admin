@@ -68,6 +68,11 @@ export default {
               title: "就业查询",
             },
             {
+              icon: "el-icon-warning-outline",
+              index: "personbasetableerror",
+              title: "异常管理",
+            },
+            {
               icon: "el-icon-delete",
               index: "personbasetablelogout",
               title: "注销管理",

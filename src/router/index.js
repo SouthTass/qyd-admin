@@ -40,6 +40,11 @@ export default new Router({
           meta: { title: '就业查询' }
         },
         {
+          path: '/personbasetableerror',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableError.vue'),
+          meta: { title: '异常管理' }
+        },
+        {
           path: '/personbasetablelogout',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/person/BaseTableLogout.vue'),
           meta: { title: '注销管理' }
