@@ -82,7 +82,19 @@ new Vue({
       // 整理劳动合同时间
       this.$root.user.work.start_end_time.push(this.$root.user.work.start_time)
       this.$root.user.work.start_end_time.push(this.$root.user.work.end_time)
-    }
+    },
+
+    // 根据身份证号码计算年龄
+    computedAge(str){
+      return this.$dayjs().format('YYYY') - str.slice(6,10)
+    },
+
+    // 根据身份证号码计算性别
+    computedSex(str){
+      return str.slice(16, 17) % 2 ? '男' : '女'
+    },
+
+    // 根据身份证号码计算出生日期
   },
   router,
   render: h => h(App)

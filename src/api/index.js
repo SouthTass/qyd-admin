@@ -47,7 +47,7 @@ class Api {
   }
 
   /** 
-   * 登记管理查询信息列表
+   * 人员、异常、注销列表
    */
   async censusList(params){
     return _axios.get(`/api/census/list`, {params: params});

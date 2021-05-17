@@ -1,14 +1,11 @@
 <template>
-  <el-dialog title="查看个人信息" :visible.sync="visiable" width="800px" center>
+  <el-dialog title="注销信息" :visible.sync="visiable" width="800px" center>
     <table class="dialog-table" border="1">
-      <tr style="text-align: center">
-        <td colspan="6">个人信息</td>
-      </tr>
       <tr>
         <td style="width: 70px">姓名</td>
         <td style="width: 180px">{{info.census_name}}</td>
         <td style="width: 70px">年龄</td>
-        <td style="width: 180px">{{$dayjs().format('YYYY') - ('' + info.birthday).slice(0, 4)}}</td>
+        <td style="width: 180px">{{info.age}}</td>
         <td style="width: 70px">性别</td>
         <td style="width: 180px">{{info.sex}}</td>
       </tr>
@@ -27,6 +24,14 @@
       <tr>
         <td>居住地址</td>
         <td colspan="5">{{`${info.census_city}${info.census_area}${info.census_town}${info.census_village}${info.house_number}`}}</td>
+      </tr>
+      <tr>
+        <td>注销原因</td>
+        <td colspan="5">{{info.destroy_reason}}</td>
+      </tr>
+      <tr>
+        <td>备注</td>
+        <td colspan="5">{{info.destroy_desc}}</td>
       </tr>
     </table>
     <span slot="footer" class="dialog-footer">
@@ -50,6 +55,8 @@ export default {
   methods: {
     // 打开弹窗
     show(item){
+      item.age = this.$root.computedAge(item.card_number)
+      item.sex = this.$root.computedSex(item.card_number)
       this.info = item
       this.visiable = true
     },

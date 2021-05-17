@@ -34,17 +34,14 @@
           label="性别"
           width="50"
           align="center"
-        ><template slot-scope="scope">{{computedSex(scope.row)}}</template>
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           prop="census_domicile_type"
           label="户籍性质"
           width="80"
           align="center"
         ></el-table-column>
-        <el-table-column prop="date" label="年龄" width="50" align="center">
-          <template slot-scope="scope">{{ computedAge(scope.row) }}</template>
-        </el-table-column>
+        <!-- <el-table-column prop="age" label="年龄" width="50" align="center"></el-table-column> -->
         <el-table-column
           prop="work_status"
           label="是否就业"
@@ -107,7 +104,8 @@ export default {
       query: {
         user_name: '',
         page_index: 1,
-        page_number: 10
+        page_number: 10,
+        census_status: '-1'
       },
     };
   },
@@ -120,20 +118,12 @@ export default {
       this.query.page_index = index || 1
       let res = await this.$api.censusList(this.query)
       if (res.status != 0) return
+      res.data.list.map((e) => {
+        e.age = this.$root.computedAge(e.card_number)
+        e.sex = this.$root.computedSex(e.card_number)
+      })
       this.tableData = res.data.list
       this.pageTotal = res.data.total_rows
-    },
-
-    // 计算年龄
-    computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
     },
 
     // 查看个人信息

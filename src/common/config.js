@@ -4,6 +4,7 @@ let config = {
     identity_number: "110000197905100002",
     domicile_name: "张三",
     domicile_type: "农业",
+    domicile_number: "",
     domicile_address: "北京市大兴区青云店镇东店村001号"
   },
   //个人信息
