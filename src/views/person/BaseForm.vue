@@ -25,12 +25,14 @@ import Ptrain from '@/components/person/Train'
 import Psocial from '@/components/person/Social'
 import Psystem from '@/components/person/System'
 import Approve from '@/common/approve'
+import baseConfig from '@/common/config'
 export default {
   name: "baseform",
   data() {
     return {
       visible: false,
-      out: false
+      out: false,
+      type: ''
     };
   },
   created() {
@@ -42,11 +44,11 @@ export default {
       let body = JSON.parse(JSON.stringify(this.$root.user))
 
       // 删除无用数据
-      let keyArray = ['gender', 'domicileType','yesorno','work_status','work_none_desc']
-      keyArray.forEach(e => delete body[e])
-      for(let i = 1; i <= 18; i++){
-        delete body[`item${i}`]
-      }
+      // let keyArray = ['gender', 'domicileType','yesorno','work_status','work_none_desc']
+      // keyArray.forEach(e => delete body[e])
+      // for(let i = 1; i <= 18; i++){
+      //   delete body[`item${i}`]
+      // }
 
       // 整理培训求职信息
       let job = []
@@ -78,16 +80,16 @@ export default {
       body.census.birthday = body.census.birthday.replace(/-/g, '')
 
       // work_status就业状态为自主创业时，将work.accord中的信息保存在work_desc中
-      if(body.work.work_status == '自主创业'){
-        body.work.work_configs = body.work.accord
-      }
+      body.work.work_configs = body.work.accord
 
       // 计算劳动合同时间
-      if(body.work.start_end_time.length >= 2){
+      if(body.work.work_status == '单位就业' && body.work.start_end_time.length >= 2){
         body.work.start_time = body.work.start_end_time[0]
         body.work.end_time = body.work.start_end_time[1]
       }
       delete body.work.start_end_time
+
+      if(this.type == 'change') return this.censusUpdate(body)
       
       let res = await this.$api.censusCreate(body)
       if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
@@ -95,6 +97,19 @@ export default {
         this.$message.error(res.data.message)
       }else{
         this.$message.success('录入成功')
+        this.$emit('success')
+        this.visible = false
+      }
+    },
+
+    // 修改信息
+    async censusUpdate(body){
+      let res = await this.$api.censusUpdate(body)
+      if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
+      if(res.data.hasOwnProperty('status')){
+        this.$message.error(res.data.message)
+      }else{
+        this.$message.success('修改成功')
         this.$emit('success')
         this.visible = false
       }
@@ -115,10 +130,73 @@ export default {
     },
 
     // 打开弹窗
-    show(out){
-      if(out) this.out = true
+    show(type, item){
+      this.type = type
+      if(type == 'true') this.out = true
+      if(type == 'change') {
+        return this.censusGet(item.id)
+      }else{
+        this.$root.user = JSON.parse(JSON.stringify(baseConfig))
+      }
       this.visible = true
-      // Object.assign(this.$root.user, Approve)
+    },
+
+    // 查询个人信息
+    async censusGet(id){
+      let res = await this.$api.censusGet(id)
+      if(res.status != 0) return
+      this.$root.user.domicile = res.data.domicile_res
+
+      // 处理年龄，性别，出生日期，户籍地址，居住地址
+      res.data.census_res.age = this.$root.computedAge(res.data.census_res.card_number)
+      res.data.census_res.sex = this.$root.computedSex(res.data.census_res.card_number)
+      res.data.census_res.birthday = this.$root.computedBirthday(res.data.census_res.card_number)
+      res.data.census_res.domicile_address = []
+      if(res.data.census_res.domicile_city) res.data.census_res.domicile_address.push(res.data.census_res.domicile_city)
+      if(res.data.census_res.domicile_area) res.data.census_res.domicile_address.push(res.data.census_res.domicile_area)
+      if(res.data.census_res.domicile_town) res.data.census_res.domicile_address.push(res.data.census_res.domicile_town)
+      if(res.data.census_res.domicile_village) res.data.census_res.domicile_address.push(res.data.census_res.domicile_village)
+      res.data.census_res.census_address = []
+      if(res.data.census_res.census_city) res.data.census_res.census_address.push(res.data.census_res.census_city)
+      if(res.data.census_res.census_area) res.data.census_res.census_address.push(res.data.census_res.census_area)
+      if(res.data.census_res.census_town) res.data.census_res.census_address.push(res.data.census_res.census_town)
+      if(res.data.census_res.census_village) res.data.census_res.census_address.push(res.data.census_res.census_village)
+      this.$root.user.census = res.data.census_res
+
+      // 处理就业信息
+      if(res.data.work_res.work_configs && res.data.work_res.work_configs.length > 20){
+        res.data.work_res.accord = JSON.parse(res.data.work_res.work_configs)
+      }else{
+        res.data.work_res.accord = {
+          name: "",
+          address: "",
+          address_desc: "",
+          address_array: [],
+          desc: "",
+          type: "",
+          number: ""
+        }
+      }
+      this.$root.user.work = res.data.work_res
+
+      // 处理社会保险信息
+      this.$root.user.social = res.data.social_res
+
+      // 处理培训求职信息
+      this.$root.user.job.hunting_list = []
+      this.$root.user.job.skill_list = []
+      res.data.job_res.map((e) => {
+        if(e.job_hunting == '是'){
+          this.$root.user.job.hunting_list.push(e)
+        }else{
+          this.$root.user.job.skill_list.push(e)
+        }
+      })
+
+      // 处理系统信息
+      this.$root.user.record = res.data.record_res
+      
+      this.visible = true
     },
 
     // 关闭弹窗

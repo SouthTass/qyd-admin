@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   data() {
     return{
-      user: baseConfig
+      user: JSON.parse(JSON.stringify(baseConfig))
     }
   },
   created(){
@@ -95,6 +95,9 @@ new Vue({
     },
 
     // 根据身份证号码计算出生日期
+    computedBirthday(str){
+      return `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
+    },
   },
   router,
   render: h => h(App)

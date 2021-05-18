@@ -95,7 +95,7 @@
             <el-button
               type="warning"
               size="mini"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="$refs.componentsBaseForm.show('change', scope.row)"
               >修改</el-button
             >
             <el-button

@@ -95,7 +95,7 @@
             <el-button
               type="warning"
               size="mini"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="$refs.componentsBaseForm.show('change', scope.row)"
               >修改</el-button
             >
             <el-button
@@ -142,7 +142,7 @@ export default {
       query: {
         user_name: '',
         page_index: 1,
-        page_number: 10
+        page_number: 7
       },
     };
   },

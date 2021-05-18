@@ -75,6 +75,13 @@ class Api {
   }
 
   /** 
+   * 修改个人信息
+   */
+   async censusUpdate(body){
+    return _axios.post(`/api/census/update`, body);
+  }
+
+  /** 
    * 个人信息注销
    */
   async censusDestroy(body){

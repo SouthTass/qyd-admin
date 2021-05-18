@@ -216,18 +216,18 @@ export default {
   methods: {
     // 处理户口地址
     computedDomicileAddress(item){
-      this.$root.user.census.domicile_city = item[0]
-      this.$root.user.census.domicile_area = item[1]
-      this.$root.user.census.domicile_town = item[2]
-      this.$root.user.census.domicile_village = item[3]
+      this.$root.user.census.domicile_city = item[0] || ''
+      this.$root.user.census.domicile_area = item[1] || ''
+      this.$root.user.census.domicile_town = item[2] || ''
+      this.$root.user.census.domicile_village = item[3] || ''
     },
 
     // 处理居住地址
     computedCensusAddress(item){
-      this.$root.user.census.census_city = item[0]
-      this.$root.user.census.census_area = item[1]
-      this.$root.user.census.census_town = item[2]
-      this.$root.user.census.census_village = item[3]
+      this.$root.user.census.census_city = item[0] || ''
+      this.$root.user.census.census_area = item[1] || ''
+      this.$root.user.census.census_town = item[2] || ''
+      this.$root.user.census.census_village = item[3] || ''
     },
 
     // 输入身份证号码之后，计算性别、出生日期、年龄
