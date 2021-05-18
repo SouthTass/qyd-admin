@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="个人信息" :visible.sync="visiable" width="830px" center>
+  <el-dialog title="个人信息" :visible.sync="visiable" width="830px" center class="table-from">
     <!-- 户籍信息 -->
     <div class="dialog" v-if="info.domicile_res">
       <h3 class="dialog-title">户籍信息</h3>
@@ -357,6 +357,15 @@ export default {
   .dialog-title{
     text-align: center;
     margin-bottom: 15px;
+  }
+}
+.table-from{
+  ::v-deep .el-dialog__body{
+    max-height: 66vh;
+    overflow-y: scroll;
+  }
+  ::v-deep .el-dialog{
+    margin-top: 5vh!important;
   }
 }
 </style>
