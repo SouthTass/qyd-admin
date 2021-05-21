@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="pBasic" 
+  <el-form ref="pBasic"
     :inline="true"
     :model="$root.user.census"
     :rules="rules" label-width="120px" class="form-container">
@@ -149,9 +149,6 @@ export default {
         callback(new Error('电话号码只能为8位或11位'))
       }
     };
-    let checkDomicileAddress = (rule, value, callback) => {
-
-    };
     return {
       props: {
         value: 'name',
@@ -207,8 +204,13 @@ export default {
           { required: true, message: '请选择是否为低保户', trigger: 'blur' }
         ],
         'domicile_address': [
-          { required: true, message: '请选择户口地址', trigger: 'blur' },
-          { validator: checkDomicileAddress, trigger: 'blur' }
+          { required: true, message: '请选择户口地址', trigger: 'blur' }
+        ],
+        'census_address': [
+          { required: true, message: '请选择居住地址', trigger: 'blur' }
+        ],
+        'census_address': [
+          { required: true, message: '请选择居住地址', trigger: 'blur' }
         ]
       }
     };

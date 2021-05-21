@@ -8,7 +8,7 @@
       <Pjob></Pjob>
       <Psocial></Psocial>
       <Ptrain></Ptrain>
-      <Psystem v-if="!out"></Psystem>
+      <Psystem v-if="!out" ref="Psystem"></Psystem>
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
@@ -41,6 +41,20 @@ export default {
   methods: {
     // 保存信息
     async saveInfo(){
+      // 校验户主、房主信息
+      let census = await this.$refs['Pcensus'].$refs['census'].validate()
+      if(!census) return
+
+      // 校验系统信息
+      let system = await this.$refs['Psystem'].$refs['system'].validate()
+      if(!system) {
+        return
+      }else{
+        console.log('成功')
+      }
+      
+
+
       let body = JSON.parse(JSON.stringify(this.$root.user))
 
       // 删除无用数据
@@ -131,8 +145,9 @@ export default {
 
     // 打开弹窗
     show(type, item){
+      console.log('type', type)
       this.type = type
-      if(type == 'true') this.out = true
+      if(type == 'out') this.out = true
       if(type == 'change') {
         return this.censusGet(item.id)
       }else{

@@ -1,5 +1,5 @@
 let config = {
-  //户籍
+  // 户籍
   domicile: {
     identity_number: "110000197905100002",
     domicile_name: "张三",
@@ -7,7 +7,7 @@ let config = {
     domicile_number: "",
     domicile_address: "北京市大兴区青云店镇东店村001号"
   },
-  //个人信息
+  // 个人信息
   census: {
     rapport: "兄弟",
     census_name: "张四",
@@ -38,7 +38,7 @@ let config = {
     census_address: [],
     house_number: "001"//门牌号
   },
-  //工作
+  // 工作
   work: {
     work_status: "无就业需求",//就业状态
     work_desc: "",//说明
@@ -65,7 +65,7 @@ let config = {
       number: ""
     }
   },
-  //社保
+  // 社保
   social: {
     identity_type: "超龄人员",//人员身份
     social_one: "城乡基本养老",//社保信息（一）
@@ -73,7 +73,7 @@ let config = {
     is_rest: "否",//是否退休
     social_desc: "在职职工退休"//退休描述
   },
-  //求职和培训，，，求职和培训相互冲突
+  // 求职和培训，，，求职和培训相互冲突
   job: {
     hunting: "是",
     hunting_list: [
@@ -91,14 +91,21 @@ let config = {
       }
     ]
   },
-  //系统
+  // 系统
   record: {
-    employment_number: "10010001",//转移就业证号
-    employment_status: "无业求职",//系统状态
-    employment_time: "2021-04-10",//查询时间
-    unemployment_number: "30010001",//就失业等级证号
-    unemployment_status: "失业",//系统状态
-    unemployment_time: "2021-03-20"//查询时间
+    // employment_number: "10010001",//转移就业证号
+    // employment_status: "无业求职",//系统状态
+    // employment_time: "2021-04-10",//查询时间
+    // unemployment_number: "30010001",//就失业等级证号
+    // unemployment_status: "失业",//系统状态
+    // unemployment_time: "2021-03-20"//查询时间
+
+    employment_number: "",//转移就业证号
+    employment_status: "",//系统状态
+    employment_time: "",//查询时间
+    unemployment_number: "",//就失业等级证号
+    unemployment_status: "",//系统状态
+    unemployment_time: ""//查询时间
   }
 }
 
