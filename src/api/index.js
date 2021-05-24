@@ -115,7 +115,5 @@ class Api {
   async userSave(body){
     return _axios.post(`/api/user/save`, body);
   }
-
-  
 }
 export default new Api();

@@ -11,7 +11,7 @@
           <td style="width: 70px">姓名</td>
           <td style="width: 180px">{{info.census_name}}</td>
           <td style="width: 70px">年龄</td>
-          <td style="width: 180px">{{$dayjs().format('YYYY') - ('' + info.birthday).slice(0, 4)}}</td>
+          <td style="width: 180px">{{info.age}}</td>
           <td style="width: 70px">性别</td>
           <td style="width: 180px">{{info.sex}}</td>
         </tr>
@@ -70,6 +70,8 @@ export default {
   methods: {
     // 打开弹窗
     show(item){
+      item.age = this.$root.computedAge(item.card_number)
+      item.sex = this.$root.computedSex(item.card_number)
       this.info = item
       this.visiable = true
     },

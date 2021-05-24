@@ -20,14 +20,12 @@
           icon="el-icon-download"
           plain
           style="float: right"
-          >导出数据</el-button
+          @click="censusExport">导出数据</el-button
         >
-        <el-button
-          icon="el-icon-upload2"
-          plain
-          style="float: right"
-          >导入数据</el-button
-        >
+        <el-upload action="https://jsonplaceholder.typicode.com/posts/">
+          <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
+        </el-upload>
+        
       </div>
       <el-table
         :data="tableData"
@@ -81,7 +79,7 @@
         <el-table-column
           prop="phone_number"
           label="联系电话"
-          width="90"
+          width="110"
           align="center"
         ></el-table-column>
         <el-table-column label="操作" width="310" align="center">
@@ -176,6 +174,11 @@ export default {
     checkPerson(item) {
       this.$refs.componentsCheck.show(item);
     },
+
+    // 导出数据
+    censusExport(){
+      location.href = `http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1`
+    }
   },
 };
 </script>

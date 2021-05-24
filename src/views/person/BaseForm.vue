@@ -192,6 +192,7 @@ export default {
           number: ""
         }
       }
+      res.data.work_res.start_end_time = [res.data.work_res.start_time || '', res.data.work_res.end_time || '']
       this.$root.user.work = res.data.work_res
 
       // 处理社会保险信息
