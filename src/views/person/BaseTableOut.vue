@@ -22,12 +22,10 @@
           style="float: right"
           >导出数据</el-button
         >
-        <el-button
-          icon="el-icon-upload2"
-          plain
-          style="float: right"
-          >导入数据</el-button
-        >
+        <el-upload action="http://47.93.185.110:7008/api/census/export?census_type=2&census_status=1" 
+          class="upload-file-button">
+          <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
+        </el-upload>
       </div>
       <el-table
         :data="tableData"

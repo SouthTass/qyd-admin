@@ -202,3 +202,15 @@ a {
 .from-width-l4{
   width: 325px !important;
 }
+
+.upload-file-button{
+  float: right;
+  margin-left: 15px;
+}
+.upload-file-button .el-upload{
+  display: inherit;
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0;
+}
