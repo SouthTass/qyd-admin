@@ -10,7 +10,7 @@
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsBase.show()" 
+        <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsTrain.show()" 
           style="float: right">录入信息</el-button>
         <el-button type="danger" icon="el-icon-download" @click="censusExport" 
           plain style="float: right">导出数据</el-button>
@@ -45,28 +45,14 @@
       </div>
     </div>
 
-    <ComponentsBase ref="componentsBase"></ComponentsBase>
-
-
-    <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
-    <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
-    <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
-    <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
-    <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
+    <ComponentsTrain ref="componentsTrain"></ComponentsTrain>
   </div>
 </template>
 
 <script>
-import ComponentsInfo from '@/components/person/Info'
-import ComponentsCheck from "@/components/person/Check";
-import ComponentsLogout from "@/components/person/Logout";
-import ComponentsBaseForm from "@/views/person/BaseForm";
-import ComponentsChangeRecord from "@/components/person/ChangeRecord";
-
-import ComponentsBase from "@/components/company/Base"
+import ComponentsTrain from "@/components/company/Train"
 export default {
-  components: { ComponentsBase,
-    ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsTrain },
   data() {
     return {
       pageTotal: 0,
