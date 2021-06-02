@@ -50,6 +50,16 @@ export default new Router({
           meta: { title: '注销管理' }
         },
         {
+          path: '/companybase',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/company/Base.vue'),
+          meta: { title: '基本信息' }
+        },
+        {
+          path: '/querysynt',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/Query/Synt.vue'),
+          meta: { title: '综合查询' }
+        },
+        {
           path: '/limitsperson',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/limits/LimitsPerson.vue'),
           meta: { title: '账号管理' }

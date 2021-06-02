@@ -82,17 +82,24 @@ export default {
         {
           icon: "el-icon-user",
           index: "2",
-          title: "权限管理",
+          title: "企业管理",
           subs: [
-            // {
-            //   index: "personbaseform",
-            //   title: "数据",
-            // },
             {
-              index: "limitsperson",
-              title: "账号管理",
+              icon: "el-icon-document",
+              index: "companybase",
+              title: "基本信息",
             },
           ],
+        },
+        {
+          icon: "el-icon-user",
+          index: "querysynt",
+          title: "综合查询"
+        },
+        {
+          icon: "el-icon-office-building",
+          index: "limitsperson",
+          title: "权限管理"
         },
         /**
         {
