@@ -52,7 +52,22 @@ export default new Router({
         {
           path: '/companybase',
           component: () => import(/* webpackChunkName: "dashboard" */ '../views/company/Base.vue'),
-          meta: { title: '基本信息' }
+          meta: { title: '企业基本信息' }
+        },
+        {
+          path: '/companypeople',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/company/People.vue'),
+          meta: { title: '人力资源信息' }
+        },
+        {
+          path: '/companytrain',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/company/Train.vue'),
+          meta: { title: '企业培训需求' }
+        },
+        {
+          path: '/companyrecrult',
+          component: () => import(/* webpackChunkName: "dashboard" */ '../views/company/Recrult.vue'),
+          meta: { title: '用工招聘需求' }
         },
         {
           path: '/querysynt',

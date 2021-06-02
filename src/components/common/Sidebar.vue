@@ -87,7 +87,22 @@ export default {
             {
               icon: "el-icon-document",
               index: "companybase",
-              title: "基本信息",
+              title: "企业基本信息",
+            },
+            {
+              icon: "el-icon-document",
+              index: "companypeople",
+              title: "人力资源信息",
+            },
+            {
+              icon: "el-icon-document",
+              index: "companytrain",
+              title: "员工培训需求",
+            },
+            {
+              icon: "el-icon-document",
+              index: "companyrecrult",
+              title: "用工招聘需求",
             },
           ],
         },

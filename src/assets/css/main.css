@@ -202,6 +202,9 @@ a {
 .from-width-l4{
   width: 325px !important;
 }
+.from-width-l5{
+  width: 208px !important;
+}
 
 .upload-file-button{
   float: right;
