@@ -1,10 +1,10 @@
 <template>
   <el-dialog width="1000px" center
-    title="企业信息录入"
+    title="企业信息"
     :visible.sync="visible"
     :append-to-body="true">
     <div style="margin-left: 70px">
-      <el-form inline :model="form" :rules="rules" label-width="155px">
+      <el-form inline :model="form" :rules="rules" label-width="155px" :disabled="status == '查看'">
         <el-form-item label="企业名称" prop="company_name">
           <el-input v-model="form.company_name" class="from-width-l3" placeholder="请输入企业名称"></el-input>
         </el-form-item>
@@ -47,34 +47,44 @@
       </el-form>
     </div>
     <div class="footer">
-      <el-button @click="censusUpdate()" type="primary">保 存</el-button>
+      <el-button @click="saveUpdate()" type="primary">保 存</el-button>
       <el-button @click="visible = false" plain>取 消</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+const DFORM = {
+  // company_name: "",
+  // credit_code: "",
+  // business_entity: "",
+  // entity_phone: "",
+  // resource_name: "",
+  // resource_phone: "",
+  // register_address: ['', '', '', '', ''],
+  // work_address: ['', '', '', '', ''],
+  company_name: "公司名称",
+  credit_code: "11100011100001002",
+  business_entity: "企业法人",
+  entity_phone: "18810080001",
+  resource_name: "人力资源负责人",
+  resource_phone: "18810086002",
+  register_address: ['', '', '', '', ''],
+  work_address: ['', '', '', '', ''],
+  configs: {
+    register_address: ['', '', ''],
+    register_address_desc: '',
+    work_address: ['', '', ''],
+    work_address_desc: ''
+  }
+}
 import addressDefault from '@/common/country-level3-data.js'
 export default {
   data() {
     return {
+      status: '创建',
       visible: false,
-      form: {
-        company_name: "公司名称",
-        credit_code: "11100011100001002",
-        business_entity: "企业法人",
-        entity_phone: "18810080001",
-        resource_name: "人力资源负责人",
-        resource_phone: "18810086002",
-        register_address: ['', '', '', '', ''],
-        work_address: ['', '', '', '', ''],
-        configs: {
-          register_address: ['', '', ''],
-          register_address_desc: '',
-          work_address: ['', '', ''],
-          work_address_desc: ''
-        },
-      },
+      form: JSON.parse(JSON.stringify(DFORM)),
       formAddress: addressDefault,
       rules: {
         company_name: [
@@ -104,25 +114,46 @@ export default {
       }
     };
   },
-  created() {
-    
-  },
   methods: {
-    show(item){
+    // 打开弹窗、处理信息
+    show(item, status){
+      this.status = status
+      if(item && item.id){
+        let tmpitem = JSON.parse(JSON.stringify(item))
+        tmpitem.register_address = JSON.parse(tmpitem.register_address)
+        tmpitem.work_address = JSON.parse(tmpitem.work_address)
+        if(tmpitem.configs && tmpitem.configs.length > 10){
+          tmpitem.configs = JSON.parse(tmpitem.configs)
+        }else{
+          tmpitem.configs = JSON.parse(JSON.stringify(DFORM.configs))
+        }
+        this.form = tmpitem
+      }else{
+        this.form = JSON.parse(JSON.stringify(DFORM))
+      }
       this.visible = true
     },
-    // 修改信息
-    async censusUpdate(body){
-      console.log(this.form)
-      // let res = await this.$api.censusUpdate(body)
-      // if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
-      // if(res.data.hasOwnProperty('status')){
-      //   this.$message.error(res.data.message)
-      // }else{
-      //   this.$message.success('修改成功')
-      //   this.$emit('success')
-      //   this.visible = false
-      // }
+
+    // 保存或修改
+    async saveUpdate(){
+      let tmpform = JSON.parse(JSON.stringify(this.form))
+      if(tmpform.id) tmpform.company_id = tmpform.id
+      delete tmpform.id
+      tmpform.configs.register_address.map((e, index) => {
+        if(e) tmpform.register_address[index] = e
+      })
+      tmpform.register_address[4] = tmpform.configs.register_address_desc
+      tmpform.register_address = JSON.stringify(tmpform.register_address)
+      tmpform.configs.work_address.map((e, index) => {
+        if(e) tmpform.work_address[index] = e
+      })
+      tmpform.work_address[4] = tmpform.configs.work_address_desc
+      tmpform.work_address = JSON.stringify(tmpform.work_address)
+      let res = await this.$api.companySave(tmpform)
+      if(res.status != 0) return
+      this.$emit('success')
+      this.$message.success('保存成功')
+      this.visible = false
     },
   }
 };

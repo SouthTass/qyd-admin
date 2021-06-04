@@ -130,5 +130,13 @@ class Api {
   async companyAll(){
     return _axios.get(`/api/company/all`);
   }
+
+  /** 
+   * 企业管理-企业保存/修改
+   */
+   async companySave(body){
+    return _axios.post(`/api/company/save`, body);
+  }
+  
 }
 export default new Api();
