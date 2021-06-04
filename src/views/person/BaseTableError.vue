@@ -143,6 +143,23 @@ export default {
     checkPerson(item) {
       this.$refs.componentsCheck.show(item);
     },
+
+    // 计算年龄
+    computedAge(item) {
+      let str = item.card_number
+      return this.$dayjs().format('YYYY') - str.slice(6,10)
+    },
+
+    // 计算性别
+    computedSex(item){
+      let str = item.card_number
+      return str.slice(16, 17) % 2 ? '男' : '女' 
+    },
+
+    // 查看个人信息
+    checkPerson(item) {
+      this.$refs.componentsCheck.show(item);
+    },
   },
 };
 </script>
