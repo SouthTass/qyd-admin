@@ -115,5 +115,20 @@ class Api {
   async userSave(body){
     return _axios.post(`/api/user/save`, body);
   }
+
+  /** 
+   * 企业管理-查询所有的企业列表（搜索用）
+   * @param {string} company_name                 企业名称
+   */
+  async companyList(params){
+    return _axios.get(`/api/company/list`, {params: params});
+  }
+
+  /** 
+   * 企业管理-查询所有的企业列表（搜索用）
+   */
+  async companyAll(){
+    return _axios.get(`/api/company/all`);
+  }
 }
 export default new Api();

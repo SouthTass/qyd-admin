@@ -8,7 +8,12 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
+        <el-select v-model="companyId" filterable placeholder="请选择/搜索您要查询的企业" class="table-search-select">
+          <el-option v-for="item in companyList" :key="item.id"
+            :label="item.company_name"
+            :value="item.id">
+          </el-option>
+        </el-select>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsPeople.show()" 
           style="float: right">录入信息</el-button>
@@ -75,6 +80,12 @@ export default {
       if (res.status != 0) return
       this.tableData = res.data.list
       this.pageTotal = res.data.total_rows
+    },
+
+    async companyAll() {
+      let res = await this.$api.companyAll()
+      if (res.status != 0) return
+      this.companyList = res.data
     },
 
     // 计算年龄

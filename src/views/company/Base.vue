@@ -8,29 +8,29 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
+        <el-input v-model="query.company_name" placeholder="请输入企业名称" 
+          class="mr10 from-width-l4"></el-input>
+        <el-button type="primary" icon="el-icon-search" @click="companyList()">检索</el-button>
         <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsBase.show()" 
           style="float: right">录入信息</el-button>
-        <el-button type="danger" icon="el-icon-download" @click="censusExport" 
+        <!-- <el-button type="danger" icon="el-icon-download" @click="censusExport" 
           plain style="float: right">导出数据</el-button>
         <el-upload class="upload-file-button" 
           action="http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1">
           <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
-        </el-upload>
+        </el-upload> -->
       </div>
       <el-table :data="tableData" border class="table" header-cell-class-name="table-header">
-        <el-table-column label="企业名称"></el-table-column>
-        <el-table-column label="统一社会信用代码"></el-table-column>
-        <el-table-column label="法定代表人"></el-table-column>
-        <el-table-column label="联系电话"></el-table-column>
-        <el-table-column label="人力资源负责人"></el-table-column>
-        <el-table-column label="联系电话"></el-table-column>
-        <el-table-column label="注册地址"></el-table-column>
-        <el-table-column label="经营地址"></el-table-column>
-        <el-table-column label="操作" width="80" align="center">
+        <el-table-column label="企业名称" prop="company_name"></el-table-column>
+        <el-table-column label="统一社会信用代码" prop="credit_code" width="175"></el-table-column>
+        <el-table-column label="法定代表人" prop="business_entity"></el-table-column>
+        <el-table-column label="联系电话" prop="entity_phone" width="115"></el-table-column>
+        <el-table-column label="人力资源负责人" prop="resource_name"></el-table-column>
+        <el-table-column label="联系电话" prop="resource_phone" width="115"></el-table-column>
+        <el-table-column label="操作" width="105" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
+            <el-button type="primary" size="mini" 
+              @click="$refs.componentsBase.show(scope.row)">查看/修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -41,71 +41,40 @@
           :current-page="query.page_index"
           :page-size="query.page_number"
           :total="pageTotal"
-          @current-change="censusList"></el-pagination>
+          @current-change="companyList"></el-pagination>
       </div>
     </div>
 
     <ComponentsBase ref="componentsBase"></ComponentsBase>
-
-
-    <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
-    <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
-    <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
-    <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
-    <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
 
 <script>
-import ComponentsInfo from '@/components/person/Info'
-import ComponentsCheck from "@/components/person/Check";
-import ComponentsLogout from "@/components/person/Logout";
-import ComponentsBaseForm from "@/views/person/BaseForm";
-import ComponentsChangeRecord from "@/components/person/ChangeRecord";
-
 import ComponentsBase from "@/components/company/Base"
 export default {
-  components: { ComponentsBase,
-    ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsBase },
   data() {
     return {
       pageTotal: 0,
       tableData: [],
       query: {
-        user_name: '',
         page_index: 1,
-        page_number: 7
-      },
+        page_number: 7,
+        company_name: ''
+      }
     };
   },
   created() {
-    this.censusList();
+    this.companyList();
   },
   methods: {
     // 获取信息列表
-    async censusList(index) {
+    async companyList(index) {
       this.query.page_index = index || 1
-      let res = await this.$api.censusList(this.query)
+      let res = await this.$api.companyList(this.query)
       if (res.status != 0) return
       this.tableData = res.data.list
       this.pageTotal = res.data.total_rows
-    },
-
-    // 计算年龄
-    computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
-    },
-
-    // 查看个人信息
-    checkPerson(item) {
-      this.$refs.componentsCheck.show(item);
     },
 
     // 导出数据
@@ -120,37 +89,7 @@ export default {
 .handle-box {
   margin-bottom: 20px;
 }
-
-.handle-select {
-  width: 120px;
-}
-
-.handle-input {
-  width: 300px;
-  display: inline-block;
-}
-.table {
-  width: 100%;
-  font-size: 14px;
-}
-.red {
-  color: #ff0000;
-}
 .mr10 {
   margin-right: 10px;
-}
-.table-td-thumb {
-  display: block;
-  margin: auto;
-  width: 40px;
-  height: 40px;
-}
-.dialog-table {
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.15);
-  td {
-    padding: 5px;
-  }
 }
 </style>

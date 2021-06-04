@@ -4,50 +4,50 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div style="margin-left: 70px">
-      <el-form ref="pSystem" inline :model="form" :rules="rules" label-width="155px">
-        <el-form-item label="企业名称">
-          <el-input v-model="form.name" class="from-width-l3" placeholder="请输入企业名称"></el-input>
+      <el-form inline :model="form" :rules="rules" label-width="155px">
+        <el-form-item label="企业名称" prop="company_name">
+          <el-input v-model="form.company_name" class="from-width-l3" placeholder="请输入企业名称"></el-input>
         </el-form-item>
-        <el-form-item label="统一社会信用代码">
-          <el-input v-model="form.number" maxlength="18" class="from-width-l3"
+        <el-form-item label="统一社会信用代码" prop="credit_code">
+          <el-input v-model="form.credit_code" maxlength="18" class="from-width-l3"
             placeholder="请输入18位统一社会信用代码"></el-input>
         </el-form-item>
-        <el-form-item label="法定代表人">
-          <el-input v-model="form.name1" class="from-width-l5" placeholder="请输入法定代表人姓名"></el-input>
+        <el-form-item label="法定代表人" prop="business_entity">
+          <el-input v-model="form.business_entity" class="from-width-l5" placeholder="请输入法定代表人姓名"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="form.tel1" class="from-width-l5" placeholder="请输入法定代表人电话"></el-input>
+        <el-form-item prop="entity_phone">
+          <el-input v-model="form.entity_phone" class="from-width-l5" placeholder="请输入法定代表人电话"></el-input>
         </el-form-item>
-        <el-form-item label="人力资源负责人">
-          <el-input v-model="form.name2" class="from-width-l5" placeholder="请输入人力资源负责人姓名"></el-input>
+        <el-form-item label="人力资源负责人" prop="resource_name">
+          <el-input v-model="form.resource_name" class="from-width-l5" placeholder="请输入人力资源负责人姓名"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="form.tel2" class="from-width-l5" placeholder="请输入人力资源负责人电话"></el-input>
+        <el-form-item prop="resource_phone">
+          <el-input v-model="form.resource_phone" class="from-width-l5" placeholder="请输入人力资源负责人电话"></el-input>
         </el-form-item>
-        <el-form-item label="注册地址">
+        <el-form-item label="注册地址" prop="configs.register_address">
           <el-cascader class="from-width-l5"
-            v-model="address1arr"
+            v-model="form.configs.register_address"
             placeholder="请选择"
             :options="formAddress"
             clearable></el-cascader>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.address1" class="from-width-l4" placeholder="请输入详细地址"></el-input>
+          <el-input v-model="form.configs.register_address_desc" class="from-width-l4" placeholder="请输入详细地址"></el-input>
         </el-form-item>
-        <el-form-item label="经营地址">
+        <el-form-item label="经营地址" prop="configs.work_address">
           <el-cascader class="from-width-l5"
-            v-model="address2arr"
+            v-model="form.configs.work_address"
             placeholder="请选择"
             :options="formAddress"
             clearable></el-cascader>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.address2" class="from-width-l4" placeholder="请输入详细地址"></el-input>
+          <el-input v-model="form.configs.work_address_desc" class="from-width-l4" placeholder="请输入详细地址"></el-input>
         </el-form-item>
       </el-form>
     </div>
     <div class="footer">
-      <el-button @click="saveInfo()" type="primary">保 存</el-button>
+      <el-button @click="censusUpdate()" type="primary">保 存</el-button>
       <el-button @click="visible = false" plain>取 消</el-button>
     </div>
   </el-dialog>
@@ -60,20 +60,47 @@ export default {
     return {
       visible: false,
       form: {
-        name: '',
-        number: '',
-        name1: '',
-        tel1: '',
-        name2: '',
-        tel2: '',
-        address1: '',
-        address1arr: '',
-        address2: '',
-        address2arr: ''
+        company_name: "公司名称",
+        credit_code: "11100011100001002",
+        business_entity: "企业法人",
+        entity_phone: "18810080001",
+        resource_name: "人力资源负责人",
+        resource_phone: "18810086002",
+        register_address: ['', '', '', '', ''],
+        work_address: ['', '', '', '', ''],
+        configs: {
+          register_address: ['', '', ''],
+          register_address_desc: '',
+          work_address: ['', '', ''],
+          work_address_desc: ''
+        },
       },
       formAddress: addressDefault,
       rules: {
-        
+        company_name: [
+          { required: true, message: '请输入公司名称', trigger: 'blur' }
+        ],
+        credit_code: [
+          { required: true, message: '请输入企业统一社会信用代码', trigger: 'blur' }
+        ],
+        business_entity: [
+          { required: true, message: '请输入法定代表人姓名', trigger: 'blur' }
+        ],
+        entity_phone: [
+          { required: true, message: '请输入法定代表人电话', trigger: 'blur' }
+        ],
+        resource_name: [
+          { required: true, message: '请输入人力资源负责人姓名', trigger: 'blur' }
+        ],
+        resource_phone: [
+          { required: true, message: '请输入人力资源负责人电话', trigger: 'blur' }
+        ],
+        'configs.register_address': [
+          { required: true, message: '请选择企业注册地址', trigger: 'blur' }
+        ],
+        'configs.work_address': [
+          { required: true, message: '请选择企业经营地址', trigger: 'blur' }
+        ]
       }
     };
   },
@@ -81,20 +108,21 @@ export default {
     
   },
   methods: {
-    show(){
+    show(item){
       this.visible = true
     },
     // 修改信息
     async censusUpdate(body){
-      let res = await this.$api.censusUpdate(body)
-      if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
-      if(res.data.hasOwnProperty('status')){
-        this.$message.error(res.data.message)
-      }else{
-        this.$message.success('修改成功')
-        this.$emit('success')
-        this.visible = false
-      }
+      console.log(this.form)
+      // let res = await this.$api.censusUpdate(body)
+      // if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
+      // if(res.data.hasOwnProperty('status')){
+      //   this.$message.error(res.data.message)
+      // }else{
+      //   this.$message.success('修改成功')
+      //   this.$emit('success')
+      //   this.visible = false
+      // }
     },
   }
 };
