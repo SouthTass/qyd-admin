@@ -12,12 +12,12 @@
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsRecrult.show()" 
           style="float: right">录入信息</el-button>
-        <el-button type="danger" icon="el-icon-download" @click="censusExport" 
+        <!-- <el-button type="danger" icon="el-icon-download" @click="censusExport" 
           plain style="float: right">导出数据</el-button>
         <el-upload class="upload-file-button" 
           action="http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1">
           <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
-        </el-upload>
+        </el-upload> -->
       </div>
       <el-table :data="tableData" border class="table" header-cell-class-name="table-header">
         <el-table-column label="企业名称"></el-table-column>
