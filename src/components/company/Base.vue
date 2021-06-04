@@ -1,10 +1,10 @@
 <template>
   <el-dialog width="1000px" center
-    title="企业信息"
+    title="企业基本信息"
     :visible.sync="visible"
     :append-to-body="true">
     <div style="margin-left: 70px">
-      <el-form inline :model="form" :rules="rules" label-width="155px" :disabled="status == '查看'">
+      <el-form ref="form" inline :model="form" :rules="rules" label-width="155px" :disabled="status == '查看'">
         <el-form-item label="企业名称" prop="company_name">
           <el-input v-model="form.company_name" class="from-width-l3" placeholder="请输入企业名称"></el-input>
         </el-form-item>
@@ -47,7 +47,7 @@
       </el-form>
     </div>
     <div class="footer">
-      <el-button @click="saveUpdate()" type="primary">保 存</el-button>
+      <el-button @click="saveUpdate()" type="primary" v-if="status != '查看'">保 存</el-button>
       <el-button @click="visible = false" plain>取 消</el-button>
     </div>
   </el-dialog>
@@ -72,9 +72,11 @@ const DFORM = {
   register_address: ['', '', '', '', ''],
   work_address: ['', '', '', '', ''],
   configs: {
-    register_address: ['', '', ''],
+    // register_address: ['', '', ''],
+    register_address: '',
     register_address_desc: '',
-    work_address: ['', '', ''],
+    // work_address: ['', '', ''],
+    work_address: '',
     work_address_desc: ''
   }
 }
@@ -132,10 +134,13 @@ export default {
         this.form = JSON.parse(JSON.stringify(DFORM))
       }
       this.visible = true
+      this.$refs.form.resetFields()
     },
 
     // 保存或修改
     async saveUpdate(){
+      let validate = await this.$refs.form.validate()
+      if(!validate) return
       let tmpform = JSON.parse(JSON.stringify(this.form))
       if(tmpform.id) tmpform.company_id = tmpform.id
       delete tmpform.id
