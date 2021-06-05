@@ -40,7 +40,7 @@
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="openDialog(scope.row, '查看')">查看</el-button>
             <el-button type="warning" size="mini" @click="openDialog(scope.row), '修改'">修改</el-button>
-            <el-button type="danger"  size="mini" @click="$refs.componentsBase.show(scope.row, '修改')">删除</el-button>
+            <el-button type="danger"  size="mini" @click="deleteData(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -119,6 +119,19 @@ export default {
       let index = this.companyList.findIndex(item => item.id == e)
       this.query.company_name = this.companyList[index].company_name
       this.companyMemberList()
+    },
+
+    // 删除数据
+    async deleteData(item){
+      let dialog = await this.$confirm(`此操作将永久删除《${item.member_name}》, 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      if(dialog != 'confirm') return
+      let res = await this.$api.companyMemberRemove()
+      if(res.status != 0) return
+      this.$message.success('删除成功')
     },
 
     // 计算年龄

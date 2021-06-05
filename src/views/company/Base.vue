@@ -34,7 +34,7 @@
             <el-button type="warning" size="mini" 
               @click="$refs.componentsBase.show(scope.row, '修改')">修改</el-button>
             <el-button type="danger" size="mini" 
-              @click="$refs.componentsBase.show(scope.row, '修改')">删除</el-button>
+              @click="deleteData(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,6 +79,19 @@ export default {
       if (res.status != 0) return
       this.tableData = res.data.list
       this.pageTotal = res.data.total_rows
+    },
+
+    // 删除数据
+    async deleteData(item){
+      let dialog = await this.$confirm(`此操作将永久删除企业《${item.company_name}》, 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      if(dialog != 'confirm') return
+      let res = await this.$api.companyRemove()
+      if(res.status != 0) return
+      this.$message.success('删除成功')
     },
 
     // 导出数据

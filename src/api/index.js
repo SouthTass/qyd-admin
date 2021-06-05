@@ -137,6 +137,13 @@ class Api {
   async companySave(body){
     return _axios.post(`/api/company/save`, body);
   }
+
+  /** 
+   * 企业管理-企业删除
+   */
+  async companyRemove(body){
+    return _axios.post(`/api/company/remove`, body);
+  }
   
   /** 
    * 企业管理-企业员工列表
@@ -162,6 +169,13 @@ class Api {
   }
 
   /** 
+   * 企业管理-企业员工删除
+   */
+  async companyMemberRemove(body){
+    return _axios.post(`/api/company/member/remove`, body);
+  }
+
+  /** 
    * 企业管理-企业招聘/培训列表
    * @param {string} company_id               企业ID
    * @param {string} type                     类型：1培训，2招聘
@@ -175,6 +189,13 @@ class Api {
    */
   async companyRecruitSave(body){
     return _axios.post(`/api/company/recruit/save`, body);
+  }
+
+  /** 
+   * 企业管理-企业招聘/培训信息删除
+   */
+  async companyRecruitRemove(body){
+    return _axios.post(`/api/company/recruit/remove`, body);
   }
 }
 export default new Api();
