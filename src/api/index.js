@@ -166,12 +166,8 @@ class Api {
    * @param {string} company_id               企业ID
    * @param {string} type                     类型：1培训，2招聘
    */
-  async companyRecruitList(member_id){
-    return _axios.get(`/api/company/recruit/list`, {
-      params: {
-        member_id: member_id
-      }
-    });
+  async companyRecruitList(params){
+    return _axios.get(`/api/company/recruit/list`, {params: params});
   }
 
   /** 

@@ -1,10 +1,11 @@
 <template>
   <el-dialog width="1000px" center
-    title="企业人力资源信息录入"
+    title="企业人力资源信息"
     :visible.sync="visible"
     :append-to-body="true">
     <div>
       <el-form ref="form" inline :model="form" :rules="rules" label-width="100px" :disabled="status == '查看'">
+        <div><el-form-item label="公司名称：">{{company_name}}</el-form-item></div>
         <el-form-item label="姓名" prop="member_name">
           <el-input v-model="form.member_name" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -12,11 +13,11 @@
           <el-input v-model="form.card_number" maxlength="18" @blur="computedData"
             placeholder="请输入18位身份证号码"></el-input>
         </el-form-item>
-        <el-form-item label="性别" disabled>
-          <el-input v-model="form.sex"></el-input>
+        <el-form-item label="性别">
+          <el-input v-model="form.sex" disabled></el-input>
         </el-form-item>
-        <el-form-item label="年龄" disabled>
-          <el-input v-model="form.age"></el-input>
+        <el-form-item label="年龄">
+          <el-input v-model="form.age" disabled></el-input>
         </el-form-item>
         <el-form-item label="籍贯" prop="member_domicile">
           <el-input v-model="form.member_domicile" placeholder="请输入籍贯"></el-input>
@@ -52,16 +53,26 @@
 
 <script>
 const DFORM = {
-  member_name: "张三",
-  card_number: "110110198901012221",
-  sex: "男",
+  // member_name: "张三",
+  // card_number: "110110198901012221",
+  // sex: "男",
+  // age: 0,
+  // birthday: "19890101",
+  // member_domicile: "北京",
+  // member_address: ['', '', '', '', ''],
+  // start_time: "2021-01-01",
+  // member_position: "程序员",
+  // member_identity: "无",
+  member_name: "",
+  card_number: "",
+  sex: "",
   age: 0,
-  birthday: "19890101",
-  member_domicile: "北京",
+  birthday: "",
+  member_domicile: "",
   member_address: ['', '', '', '', ''],
-  start_time: "2021-01-01",
-  member_position: "程序员",
-  member_identity: "无",
+  start_time: "",
+  member_position: "",
+  member_identity: "",
   configs: {
     member_address: '',
     member_address_desc: ''
@@ -76,6 +87,7 @@ export default {
       form: JSON.parse(JSON.stringify(DFORM)),
       formAddress: addressDefault,
       company_id: '',
+      company_name: '',
       rules: {
         member_name: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
@@ -106,7 +118,7 @@ export default {
     
   },
   methods: {
-    show(item, cid, status){
+    show(item, cid, cname, status){
       this.status = status
       if(item && item.id){
         let tmpitem = JSON.parse(JSON.stringify(item))
@@ -117,6 +129,7 @@ export default {
       }
       if(cid){
         this.company_id = cid
+        this.company_name = cname
       }else{
         this.$message.error('请先选择企业')
       }

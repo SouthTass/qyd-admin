@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>当前位置：企业管理</el-breadcrumb-item>
-        <el-breadcrumb-item>基本信息</el-breadcrumb-item>
+        <el-breadcrumb-item>企业基本信息</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
@@ -27,12 +27,14 @@
         <el-table-column label="联系电话" prop="entity_phone" width="115"></el-table-column>
         <el-table-column label="人力资源负责人" prop="resource_name"></el-table-column>
         <el-table-column label="联系电话" prop="resource_phone" width="115"></el-table-column>
-        <el-table-column label="操作" width="150" align="center">
+        <el-table-column label="操作" width="210" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" 
               @click="$refs.componentsBase.show(scope.row, '查看')">查看</el-button>
             <el-button type="warning" size="mini" 
               @click="$refs.componentsBase.show(scope.row, '修改')">修改</el-button>
+            <el-button type="danger" size="mini" 
+              @click="$refs.componentsBase.show(scope.row, '修改')">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -93,5 +95,9 @@ export default {
 }
 .mr10 {
   margin-right: 10px;
+}
+.table {
+  width: 100%;
+  font-size: 14px;
 }
 </style>

@@ -3,14 +3,14 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>当前位置：企业管理</el-breadcrumb-item>
-        <el-breadcrumb-item>基本信息</el-breadcrumb-item>
+        <el-breadcrumb-item>人力资源信息</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="handle-box">
         <el-select v-model="query.company_id" filterable 
           placeholder="请选择/搜索您要查询的企业" class="table-search-select"
-          @change="query.company_id = $event">
+          @change="changeCompany">
           <el-option v-for="item in companyList" :key="item.id"
             :label="item.company_name"
             :value="item.id">
@@ -36,10 +36,11 @@
         <el-table-column label="职务" prop="member_position" width="150"></el-table-column>
         <el-table-column label="特殊身份" prop="member_identity" width="150"></el-table-column>
         <el-table-column label="现住址" prop="tmpaddress"></el-table-column>
-        <el-table-column label="操作" width="150" align="center">
+        <el-table-column label="操作" width="210" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="openDialog(scope.row, '查看')">查看</el-button>
-            <el-button type="danger" size="mini" @click="openDialog(scope.row), '修改'">修改</el-button>
+            <el-button type="warning" size="mini" @click="openDialog(scope.row), '修改'">修改</el-button>
+            <el-button type="danger"  size="mini" @click="$refs.componentsBase.show(scope.row, '修改')">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,6 +69,7 @@ export default {
       tableData: [],
       query: {
         company_id: '',
+        company_name: '',
         page_index: 1,
         page_number: 7
       },
@@ -108,7 +110,15 @@ export default {
     // 打开录入信息的弹窗
     openDialog(item, status){
       if(!this.query.company_id) return this.$message.error('请先选择公司')
-      this.$refs.componentsPeople.show(item || '空', this.query.company_id, status)
+      this.$refs.componentsPeople.show(item || '空', this.query.company_id, this.query.company_name, status)
+    },
+
+    // 选中的公司处理
+    changeCompany(e){
+      this.query.company_id = e
+      let index = this.companyList.findIndex(item => item.id == e)
+      this.query.company_name = this.companyList[index].company_name
+      this.companyMemberList()
     },
 
     // 计算年龄
