@@ -134,9 +134,51 @@ class Api {
   /** 
    * 企业管理-企业保存/修改
    */
-   async companySave(body){
+  async companySave(body){
     return _axios.post(`/api/company/save`, body);
   }
   
+  /** 
+   * 企业管理-企业员工列表
+   * @param {string} company_id               企业ID
+   */
+  async companyMemberList(params){
+    return _axios.get(`/api/company/member/list`, {params: params});
+  }
+
+  /** 
+   * 企业管理-企业员工详情
+   * @param {string} member_id                员工ID
+   */
+  async companyMemberGet(member_id){
+    return _axios.get(`/api/company/member/get`, {params: {member_id: member_id}});
+  }
+
+  /** 
+   * 企业管理-企业员工保存/修改
+   */
+  async companyMemberSave(body){
+    return _axios.post(`/api/company/member/save`, body);
+  }
+
+  /** 
+   * 企业管理-企业招聘/培训列表
+   * @param {string} company_id               企业ID
+   * @param {string} type                     类型：1培训，2招聘
+   */
+  async companyRecruitList(member_id){
+    return _axios.get(`/api/company/recruit/list`, {
+      params: {
+        member_id: member_id
+      }
+    });
+  }
+
+  /** 
+   * 企业管理-企业招聘/培训信息修改/保存
+   */
+  async companyRecruitSave(body){
+    return _axios.post(`/api/company/recruit/save`, body);
+  }
 }
 export default new Api();

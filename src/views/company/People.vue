@@ -8,14 +8,16 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-select v-model="companyId" filterable placeholder="请选择/搜索您要查询的企业" class="table-search-select">
+        <el-select v-model="query.company_id" filterable 
+          placeholder="请选择/搜索您要查询的企业" class="table-search-select"
+          @change="query.company_id = $event">
           <el-option v-for="item in companyList" :key="item.id"
             :label="item.company_name"
             :value="item.id">
           </el-option>
         </el-select>
-        <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="$refs.componentsPeople.show()" 
+        <el-button type="primary" icon="el-icon-search" @click="companyMemberList()">检索</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="openDialog()" 
           style="float: right">录入信息</el-button>
         <!-- <el-button type="danger" icon="el-icon-download" @click="censusExport" 
           plain style="float: right">导出数据</el-button>
@@ -25,32 +27,34 @@
         </el-upload> -->
       </div>
       <el-table :data="tableData" border class="table" header-cell-class-name="table-header">
-        <el-table-column label="企业名称"></el-table-column>
-        <el-table-column label="统一社会信用代码"></el-table-column>
-        <el-table-column label="法定代表人"></el-table-column>
-        <el-table-column label="联系电话"></el-table-column>
-        <el-table-column label="人力资源负责人"></el-table-column>
-        <el-table-column label="联系电话"></el-table-column>
-        <el-table-column label="注册地址"></el-table-column>
-        <el-table-column label="经营地址"></el-table-column>
-        <el-table-column label="操作" width="80" align="center">
+        <el-table-column label="身份证号码" prop="card_number" width="180"></el-table-column>
+        <el-table-column label="姓名" prop="member_name" width="120"></el-table-column>
+        <el-table-column label="性别" prop="sex" width="50" align="center"></el-table-column>
+        <el-table-column label="年龄" prop="age" width="50" align="center"></el-table-column>
+        <el-table-column label="籍贯" prop="member_domicile" width="120"></el-table-column>
+        <el-table-column label="入职时间" prop="start_time" width="120"></el-table-column>
+        <el-table-column label="职务" prop="member_position" width="150"></el-table-column>
+        <el-table-column label="特殊身份" prop="member_identity" width="150"></el-table-column>
+        <el-table-column label="现住址" prop="tmpaddress"></el-table-column>
+        <el-table-column label="操作" width="150" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(scope.row, '查看')">查看</el-button>
+            <el-button type="danger" size="mini" @click="openDialog(scope.row), '修改'">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination">
+      <!-- <div class="pagination">
         <el-pagination
           background
           layout="total, prev, pager, next"
           :current-page="query.page_index"
           :page-size="query.page_number"
           :total="pageTotal"
-          @current-change="censusList"></el-pagination>
-      </div>
+          @current-change="companyMemberList"></el-pagination>
+      </div> -->
     </div>
 
-    <ComponentsPeople ref="componentsPeople"></ComponentsPeople>
+    <ComponentsPeople ref="componentsPeople" @success="companyMemberList"></ComponentsPeople>
   </div>
 </template>
 
@@ -63,29 +67,48 @@ export default {
       pageTotal: 0,
       tableData: [],
       query: {
-        user_name: '',
+        company_id: '',
         page_index: 1,
         page_number: 7
       },
+      companyList: []
     };
   },
   created() {
-    this.censusList();
+    this.companyAll();
   },
   methods: {
     // 获取信息列表
-    async censusList(index) {
+    async companyMemberList(index) {
+      if(!this.query.company_id){
+        return this.$message.error('请选择您要查询的企业')
+      }
       this.query.page_index = index || 1
-      let res = await this.$api.censusList(this.query)
+      let res = await this.$api.companyMemberList(this.query)
       if (res.status != 0) return
-      this.tableData = res.data.list
-      this.pageTotal = res.data.total_rows
+      res.data.map((e) => {
+        e.age = this.$root.computedAge(e.card_number)
+        e.start_time = this.$dayjs(e.start_time).format('YYYY-MM-DD')
+        e.tmpaddress = ''
+        e.member_address = JSON.parse(e.member_address)
+        e.member_address.map(item => e.tmpaddress += item || '')
+      })
+      this.tableData = res.data
+      // this.tableData = res.data.list
+      // this.pageTotal = res.data.total_rows
     },
 
+    // 获取所有的公司
     async companyAll() {
       let res = await this.$api.companyAll()
       if (res.status != 0) return
       this.companyList = res.data
+    },
+
+    // 打开录入信息的弹窗
+    openDialog(item, status){
+      if(!this.query.company_id) return this.$message.error('请先选择公司')
+      this.$refs.componentsPeople.show(item || '空', this.query.company_id, status)
     },
 
     // 计算年龄
