@@ -132,6 +132,7 @@ export default {
       let res = await this.$api.companyMemberRemove({member_id: item.id})
       if(res.status != 0) return
       this.$message.success('删除成功')
+      this.companyMemberList()
     },
 
     // 计算年龄

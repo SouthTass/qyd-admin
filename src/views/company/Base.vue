@@ -89,9 +89,10 @@ export default {
         type: 'warning'
       })
       if(dialog != 'confirm') return
-      let res = await this.$api.companyRemove()
+      let res = await this.$api.companyRemove({company_id: item.id})
       if(res.status != 0) return
       this.$message.success('删除成功')
+      this.companyList()
     },
 
     // 导出数据

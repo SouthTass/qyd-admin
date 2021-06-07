@@ -121,6 +121,7 @@ export default {
       let res = await this.$api.companyRecruitRemove({recruit_id: item.id})
       if(res.status != 0) return
       this.$message.success('删除成功')
+      this.companyRecruitList()
     },
   },
 };
