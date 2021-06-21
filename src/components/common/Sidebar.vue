@@ -53,11 +53,6 @@ export default {
               title: "个人管理",
             },
             {
-              icon: "el-icon-user",
-              index: "personbasetableout",
-              title: "外来人员",
-            },
-            {
               icon: "el-icon-c-scale-to-original",
               index: "personbasetablefamily",
               title: "家庭查询",
@@ -75,9 +70,14 @@ export default {
             {
               icon: "el-icon-delete",
               index: "personbasetablelogout",
-              title: "注销管理",
+              title: "注销查询",
             }
           ],
+        },
+        {
+          icon: "el-icon-user",
+          index: "personbasetableout",
+          title: "外来管理",
         },
         {
           icon: "el-icon-user",

@@ -11,7 +11,7 @@
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show('out')"
+          @click="$refs.componentsBaseFormOut.show('out')"
           style="float: right"
           >录入信息</el-button
         >
@@ -120,7 +120,7 @@
     <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
     <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
-    <ComponentsBaseForm ref="componentsBaseForm" @success="censusList"></ComponentsBaseForm>
+    <ComponentsBaseFormOut ref="componentsBaseFormOut" @success="censusList"></ComponentsBaseFormOut>
     <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
@@ -129,10 +129,10 @@
 import ComponentsInfo from '@/components/person/Info'
 import ComponentsCheck from "@/components/person/Check";
 import ComponentsLogout from "@/components/person/Logout";
-import ComponentsBaseForm from "@/views/person/BaseForm";
+import ComponentsBaseFormOut from "@/views/person/BaseFormOut";
 import ComponentsChangeRecord from "@/components/person/ChangeRecord";
 export default {
-  components: { ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: { ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseFormOut },
   data() {
     return {
       pageTotal: 0,

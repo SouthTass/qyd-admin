@@ -4,16 +4,16 @@
     :model="$root.user.census"
     :rules="rules" label-width="120px" class="form-container">
     <div class="form-item">
-      <h3 class="form-item-title">{{out ? '租户信息' : '家庭成员基本信息'}}</h3>
+      <h3 class="form-item-title">租户信息</h3>
       <div class="container">
-        <div>
+        <!-- <div>
           <el-form-item label="户主关系" prop="rapport">
             <el-select v-model="$root.user.census.rapport" class="from-width-l1">
               <el-option v-for="item in $option.item11" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
-        </div>
+        </div> -->
         <div>
           <el-form-item label="身份证号" prop="card_number">
             <el-input v-model="$root.user.census.card_number" maxlength="18" @blur="computedIdentity"></el-input>
@@ -43,12 +43,12 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="是否就业登记" prop="work_register">
+          <!-- <el-form-item label="是否就业登记" prop="work_register">
             <el-select v-model="$root.user.census.work_register"  class="from-width-l1">
               <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="电话" prop="phone_number">
             <el-input v-model="$root.user.census.phone_number"></el-input>
           </el-form-item>
@@ -103,12 +103,12 @@
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="是否低保" prop="allowance_status">
+          <!-- <el-form-item label="是否低保" prop="allowance_status">
             <el-select v-model="$root.user.census.allowance_status"  class="from-width-l1">
               <el-option v-for="item in $option.yesorno" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
         </div>
         <div>
           <el-form-item label="户口地址" prop="domicile_address">
@@ -120,7 +120,7 @@
               @change="computedDomicileAddress"></el-cascader>
           </el-form-item>
         </div>
-        <div>
+        <!-- <div>
           <el-form-item label="居住地址" prop="census_address">
             <el-cascader class="from-width-l3"
               filterable
@@ -133,7 +133,7 @@
             <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
               style="margin-left: 120px" class="from-width-l3"></el-input>
           </el-form-item>
-        </div>
+        </div> -->
       </div>
     </div>
   </el-form>

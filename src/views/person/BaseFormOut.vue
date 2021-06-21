@@ -3,12 +3,12 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div class="person-container">
-      <Pcensus ref="Pcensus" :out="out"></Pcensus>
-      <Pbasic :out="out"></Pbasic>
+      <Pcensus ref="Pcensus"></Pcensus>
+      <Pbasic></Pbasic>
       <Pjob></Pjob>
       <Psocial></Psocial>
       <Ptrain></Ptrain>
-      <Psystem v-if="!out && $root.user.census.work_register == '是'" ref="Psystem"></Psystem>
+      <Psystem v-if="$root.user.census.work_register == '是'" ref="Psystem"></Psystem>
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
@@ -18,13 +18,12 @@
 </template>
 
 <script>
-import Pcensus from '@/components/person/Census'
-import Pbasic from '@/components/person/Basic'
-import Pjob from '@/components/person/Job'
-import Ptrain from '@/components/person/Train'
-import Psocial from '@/components/person/Social'
-import Psystem from '@/components/person/System'
-import Approve from '@/common/approve'
+import Pcensus from '@/components/personout/Census'
+import Pbasic from '@/components/personout/Basic'
+import Pjob from '@/components/personout/Job'
+import Ptrain from '@/components/personout/Train'
+import Psocial from '@/components/personout/Social'
+import Psystem from '@/components/personout/System'
 import baseConfig from '@/common/config'
 export default {
   name: "baseform",
