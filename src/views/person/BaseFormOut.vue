@@ -12,7 +12,7 @@
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
-      <el-button @click="close()" plain>取 消</el-button>
+      <el-button @click="close()" plain>关 闭</el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,8 +51,7 @@ export default {
       }else{
         console.log('成功')
       }
-      
-
+    
 
       let body = JSON.parse(JSON.stringify(this.$root.user))
 

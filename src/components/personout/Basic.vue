@@ -111,13 +111,23 @@
           </el-form-item> -->
         </div>
         <div>
-          <el-form-item label="户口地址" prop="domicile_address">
+          <!-- <el-form-item label="户口地址" prop="domicile_address">
             <el-cascader class="from-width-l3"
               filterable
               v-model="$root.user.census.domicile_address"
               :options="$DefaultArea"
               :props="props"
               @change="computedDomicileAddress"></el-cascader>
+          </el-form-item> -->
+          <el-form-item label="户口地址" prop="domicile_address">
+            <el-cascader class="from-width-l3"
+              v-model="$root.user.census.domicile_address"
+              :options="fromAddress"
+              clearable></el-cascader>
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
+              style="margin-left: 120px" class="from-width-l3"></el-input>
           </el-form-item>
         </div>
         <!-- <div>
@@ -140,6 +150,7 @@
 </template>
 
 <script>
+import addressDefault from '@/common/country-level3-data.js'
 export default {
   props: ['out'],
   data() {
@@ -151,6 +162,7 @@ export default {
       }
     };
     return {
+      fromAddress: addressDefault,
       isEducation: false,
       props: {
         value: 'name',

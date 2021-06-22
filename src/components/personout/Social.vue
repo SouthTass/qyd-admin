@@ -6,7 +6,7 @@
     class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">社会保险信息</h3>
-      <div class="container">
+      <!-- <div class="container">
         <el-form-item label="人员身份" prop="identity_type">
           <el-select v-model="$root.user.social.identity_type" class="from-width-l1">
             <el-option v-for="item in $option.item4" 
@@ -37,7 +37,7 @@
               :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-      </div>
+      </div> -->
     </div>
   </el-form>
 </template>

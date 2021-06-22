@@ -46,23 +46,13 @@
     </div>
     <div class="footer">
       <el-button @click="saveUpdate()" type="primary" v-if="status != '查看'">保 存</el-button>
-      <el-button @click="visible = false" plain>取 消</el-button>
+      <el-button @click="visible = false" plain>关 闭</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
 const DFORM = {
-  // member_name: "张三",
-  // card_number: "110110198901012221",
-  // sex: "男",
-  // age: 0,
-  // birthday: "19890101",
-  // member_domicile: "北京",
-  // member_address: ['', '', '', '', ''],
-  // start_time: "2021-01-01",
-  // member_position: "程序员",
-  // member_identity: "无",
   member_name: "",
   card_number: "",
   sex: "",
@@ -114,19 +104,19 @@ export default {
       }
     };
   },
-  created() {
-    
-  },
   methods: {
     show(item, cid, cname, status){
+      console.log('123')
       this.status = status
       if(item && item.id){
+        console.log('dsadas')
         let tmpitem = JSON.parse(JSON.stringify(item))
         tmpitem.configs = JSON.parse(tmpitem.configs)
         this.form = tmpitem
-      }else{
-        this.form = JSON.parse(JSON.stringify(DFORM))
       }
+      // else{
+      //   this.form = JSON.parse(JSON.stringify(DFORM))
+      // }
       if(cid){
         this.company_id = cid
         this.company_name = cname
@@ -134,7 +124,7 @@ export default {
         this.$message.error('请先选择企业')
       }
       this.visible = true
-      this.$refs.form.resetFields()
+      this.$nextTick(() => {this.$refs.form.resetFields()})
     },
 
     // 保存或修改
@@ -161,6 +151,11 @@ export default {
       if(this.form.card_number.length != 18) return
       this.form.age = this.$root.computedAge(this.form.card_number)
       this.form.sex = this.$root.computedSex(this.form.card_number)
+    },
+
+    // 关闭弹窗
+    closeDialog(){
+      
     }
   }
 };
