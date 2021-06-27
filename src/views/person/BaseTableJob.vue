@@ -9,6 +9,10 @@
     <div class="container">
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
+        <el-select v-model="query.work_status" clearable class="from-width-l1 handle-input mr10">
+          <el-option v-for="item in work_status_list" 
+            :key="item.name" :label="item.name" :value="item.name"></el-option>
+        </el-select>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
@@ -48,17 +52,26 @@ export default {
     return {
       query: {
         user_name: '',
+        work_status: '',
         page_index: 1,
         page_number: 10
       },
       pageTotal: 0,
       tableData: [],
+      work_status_list: []
     };
   },
   created() {
-    this.censusList()
+    this.categoryList()
   },
   methods: {
+    // 获取分类列表
+    async categoryList(){
+      let res = await this.$api.categoryList('就业状态')
+      if(res.status != 0) return
+      this.work_status_list = res.data[0].list
+    },
+
     // 获取信息列表
     async censusList(index){
       this.query.page_index = index || 1

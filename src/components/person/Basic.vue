@@ -98,7 +98,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="残疾等级" prop="handicap_level">
-            <el-select v-model="$root.user.census.handicap_level"  class="from-width-l1">
+            <el-select v-model="$root.user.census.handicap_level"  class="from-width-l1" :disabled="$root.user.census.health_status != '残疾'">
               <el-option v-for="item in $option.item18" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
@@ -228,6 +228,12 @@ export default {
       }else{
         this.isEducation = false
         this.$root.user.census.profession = ''
+      }
+    },
+    '$root.user.census.health_status': function(){
+      console.log(this.$root.user.census.health_status)
+      if(this.$root.user.census.health_status != '残疾'){
+        this.$root.user.census.handicap_level = '无'
       }
     }
   },

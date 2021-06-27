@@ -14,6 +14,9 @@
             <el-option v-for="item in $option.item9" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="培训人数" prop="recruit_number">
+          <el-input type="number" v-model="form.recruit_number" placeholder="请输入培训人数" class="from-width-l1"></el-input>
+        </el-form-item>
         <el-form-item label="培训内容" prop="recruit_desc">
           <el-input v-model="form.recruit_desc" placeholder="请输入培训内容" type="textarea" :autosize="{ minRows: 8 }"></el-input>
         </el-form-item>
@@ -31,7 +34,8 @@ const DFORM = {
   type: 1,
   recruit_position: "",
   recruit_desc: "",
-  recruit_level: ""
+  recruit_level: "",
+  recruit_number: ""
 }
 import addressDefault from '@/common/country-level3-data.js'
 export default {
@@ -49,6 +53,9 @@ export default {
         ],
         recruit_level: [
           { required: true, message: '请选择培训等级', trigger: 'blur' }
+        ],
+        recruit_number: [
+          { required: true, message: '请输入培训人数', trigger: 'blur' }
         ],
         recruit_desc: [
           { required: true, message: '请输入培训内容', trigger: 'blur' }

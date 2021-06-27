@@ -8,7 +8,6 @@
       <Pjob></Pjob>
       <Psocial></Psocial>
       <Ptrain></Ptrain>
-      <Psystem v-if="$root.user.census.work_register == '是'" ref="Psystem"></Psystem>
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
@@ -23,7 +22,6 @@ import Pbasic from '@/components/personout/Basic'
 import Pjob from '@/components/personout/Job'
 import Ptrain from '@/components/personout/Train'
 import Psocial from '@/components/personout/Social'
-import Psystem from '@/components/personout/System'
 import baseConfig from '@/common/config'
 export default {
   name: "baseform",
@@ -40,27 +38,12 @@ export default {
   methods: {
     // 保存信息
     async saveInfo(){
+      console.log(this.$root.user)
       // 校验户主、房主信息
       let census = await this.$refs['Pcensus'].$refs['census'].validate()
       if(!census) return
 
-      // 校验系统信息
-      let system = await this.$refs['Psystem'].$refs['system'].validate()
-      if(!system) {
-        return
-      }else{
-        console.log('成功')
-      }
-    
-
       let body = JSON.parse(JSON.stringify(this.$root.user))
-
-      // 删除无用数据
-      // let keyArray = ['gender', 'domicileType','yesorno','work_status','work_none_desc']
-      // keyArray.forEach(e => delete body[e])
-      // for(let i = 1; i <= 18; i++){
-      //   delete body[`item${i}`]
-      // }
 
       // 整理培训求职信息
       let job = []
@@ -137,7 +120,7 @@ export default {
       res.data.map((e, sh) => {
         let arr = []
         e.list.map(item => arr.push(item.name))
-        this.$root.user[`${index[sh]}`] = arr
+        this.$option[`${index[sh]}`] = arr
       })
     },
 
@@ -219,7 +202,7 @@ export default {
     }
   },
   components: {
-    Pcensus, Pbasic, Pjob, Ptrain, Psocial, Psystem
+    Pcensus, Pbasic, Pjob, Ptrain, Psocial
   }
 };
 </script>

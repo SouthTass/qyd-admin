@@ -27,12 +27,12 @@
         </div>
 
         <!-- 状态为灵活就业 -->
-        <div v-if="$root.user.work.work_status == '灵活就业'">
+        <div v-if="$root.user.work.work_status == '灵活就业' || $root.user.work.work_status == '社区村就业'">
           <el-form-item label="工作地点">
             <el-input v-model="$root.user.work.company_address" class="from-width-l2"></el-input>
           </el-form-item>
         </div>
-        <div v-if="$root.user.work.work_status == '灵活就业'">
+        <div v-if="$root.user.work.work_status == '灵活就业' || $root.user.work.work_status == '社区村就业'">
           <el-form-item label="工作内容">
             <el-input v-model="$root.user.work.work_desc" class="from-width-l2"
               type="textarea" :rows="6"></el-input>
@@ -79,6 +79,7 @@
         <!-- 状态为其他 -->
         <template v-if="$root.user.work.work_status && $root.user.work.work_status != '无就业需求'
           && $root.user.work.work_status != '灵活就业'
+          && $root.user.work.work_status != '社区村就业'
           && $root.user.work.work_status != '无业求职'
           && $root.user.work.work_status != '自主创业'">
           <div>

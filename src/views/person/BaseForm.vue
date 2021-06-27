@@ -3,16 +3,16 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div class="person-container">
-      <Pcensus ref="Pcensus" :out="out"></Pcensus>
-      <Pbasic :out="out"></Pbasic>
+      <Pcensus ref="Pcensus"></Pcensus>
+      <Pbasic></Pbasic>
       <Pjob></Pjob>
       <Psocial></Psocial>
       <Ptrain></Ptrain>
-      <Psystem v-if="!out && $root.user.census.work_register == '是'" ref="Psystem"></Psystem>
+      <Psystem ref="Psystem"></Psystem>
     </div>
     <div class="footer">
       <el-button @click="saveInfo()" type="primary">保 存</el-button>
-      <el-button @click="close()" plain>取 消</el-button>
+      <el-button @click="close()" plain>关 闭</el-button>
     </div>
   </el-dialog>
 </template>
@@ -24,14 +24,12 @@ import Pjob from '@/components/person/Job'
 import Ptrain from '@/components/person/Train'
 import Psocial from '@/components/person/Social'
 import Psystem from '@/components/person/System'
-import Approve from '@/common/approve'
 import baseConfig from '@/common/config'
 export default {
   name: "baseform",
   data() {
     return {
       visible: false,
-      out: false,
       type: ''
     };
   },
@@ -41,6 +39,7 @@ export default {
   methods: {
     // 保存信息
     async saveInfo(){
+      // return console.log(this.$root.user)
       // 校验户主、房主信息
       let census = await this.$refs['Pcensus'].$refs['census'].validate()
       if(!census) return
@@ -139,7 +138,7 @@ export default {
       res.data.map((e, sh) => {
         let arr = []
         e.list.map(item => arr.push(item.name))
-        this.$root.user[`${index[sh]}`] = arr
+        this.$option[`${index[sh]}`] = arr
       })
     },
 

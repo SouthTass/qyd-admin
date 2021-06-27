@@ -92,13 +92,13 @@
         </div>
         <div>
           <el-form-item label="健康状况" prop="health_status">
-            <el-select v-model="$root.user.census.health_status"  class="from-width-l1">
+            <el-select v-model="$root.user.census.health_status" class="from-width-l1">
               <el-option v-for="item in $option.item17" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="残疾等级" prop="handicap_level">
-            <el-select v-model="$root.user.census.handicap_level"  class="from-width-l1">
+            <el-select v-model="$root.user.census.handicap_level" class="from-width-l1" :disabled="$root.user.census.health_status != '残疾'">
               <el-option v-for="item in $option.item18" 
                 :key="item" :label="item" :value="item"></el-option>
             </el-select>
@@ -121,13 +121,15 @@
           </el-form-item> -->
           <el-form-item label="户口地址" prop="domicile_address">
             <el-cascader class="from-width-l3"
-              v-model="$root.user.census.domicile_address"
+              v-model="addressData"
               :options="fromAddress"
-              clearable></el-cascader>
+              clearable
+              @change="computedDomicileAddress"></el-cascader>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="$root.user.census.house_number" placeholder="请输入门牌号"
-              style="margin-left: 120px" class="from-width-l3"></el-input>
+            <el-input v-model="addressDescData" placeholder="请输入门牌号"
+              style="margin-left: 120px" class="from-width-l3"
+              @change="computedDomicileAddress"></el-input>
           </el-form-item>
         </div>
         <!-- <div>
@@ -226,7 +228,9 @@ export default {
         'census_address': [
           { required: true, message: '请选择居住地址', trigger: 'blur' }
         ]
-      }
+      },
+      addressData: '',
+      addressDescData: ''
     };
   },
   watch: {
@@ -241,15 +245,25 @@ export default {
         this.isEducation = false
         this.$root.user.census.profession = ''
       }
+    },
+    '$root.user.census.health_status': function(){
+      if(this.$root.user.census.health_status != '残疾'){
+        this.$root.user.census.handicap_level = '无'
+      }
     }
   },
   methods: {
     // 处理户口地址
     computedDomicileAddress(item){
-      this.$root.user.census.domicile_city = item[0] || ''
-      this.$root.user.census.domicile_area = item[1] || ''
-      this.$root.user.census.domicile_town = item[2] || ''
-      this.$root.user.census.domicile_village = item[3] || ''
+      this.$root.user.census.domicile_address[0] = this.addressData[0] || ''
+      this.$root.user.census.domicile_address[1] = this.addressData[1] || ''
+      this.$root.user.census.domicile_address[2] = this.addressData[2] || ''
+      this.$root.user.census.domicile_address[3] = this.addressData[3] || ''
+      this.$root.user.census.domicile_address[4] = this.addressDescData || ''
+
+      this.$root.user.census.domicile_city = this.addressData[0] || ''
+      this.$root.user.census.domicile_area = this.addressData[1] || ''
+      this.$root.user.census.domicile_town = this.addressData[2] || ''
     },
 
     // 处理居住地址
