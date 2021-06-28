@@ -46,7 +46,7 @@
     </div>
     <div class="footer">
       <el-button @click="saveUpdate()" type="primary" v-if="status != '查看'">保 存</el-button>
-      <el-button @click="visible = false" plain>关 闭</el-button>
+      <el-button @click="closeDialog" plain>关 闭</el-button>
     </div>
   </el-dialog>
 </template>
@@ -74,7 +74,7 @@ export default {
     return {
       status: '',
       visible: false,
-      form: JSON.parse(JSON.stringify(DFORM)),
+      form: {},
       formAddress: addressDefault,
       company_id: '',
       company_name: '',
@@ -101,29 +101,39 @@ export default {
         'configs.member_address': [
           { required: true, message: '请选择现住址', trigger: 'blur' }
         ]
-      }
+      },
+      pageItem: ''
     };
+  },
+  created(){
+    console.log('创建执行')
+    let configs = JSON.parse(JSON.stringify(DFORM.configs))
+    let tmpitem = JSON.parse(JSON.stringify(DFORM))
+    delete tmpitem.configs
+    tmpitem.configs = configs
+    this.form = tmpitem
   },
   methods: {
     show(item, cid, cname, status){
-      console.log('123')
+      console.log(this.form)
       this.status = status
+      if(item == '空'){
+        this.pageItem = '空'
+      }else{
+        this.pageItem = '有值'
+      }
       if(item && item.id){
-        console.log('dsadas')
         let tmpitem = JSON.parse(JSON.stringify(item))
         tmpitem.configs = JSON.parse(tmpitem.configs)
         this.form = tmpitem
       }
-      // else{
-      //   this.form = JSON.parse(JSON.stringify(DFORM))
-      // }
       if(cid){
         this.company_id = cid
         this.company_name = cname
       }else{
         this.$message.error('请先选择企业')
       }
-      this.visible = true
+      
       this.$nextTick(() => {this.$refs.form.resetFields()})
     },
 
@@ -155,7 +165,30 @@ export default {
 
     // 关闭弹窗
     closeDialog(){
-      
+      this.visible = false
+      if(this.pageItem == '有值'){
+        let configs = JSON.parse(JSON.stringify(DFORM.configs))
+        let tmpitem = JSON.parse(JSON.stringify(DFORM))
+        delete tmpitem.configs
+        tmpitem.configs = configs
+        this.form = new Object()
+        this.form = {
+          member_name: "",
+          card_number: "",
+          sex: "",
+          age: 0,
+          birthday: "",
+          member_domicile: "",
+          member_address: ['', '', '', '', ''],
+          start_time: "",
+          member_position: "",
+          member_identity: "",
+          configs: {
+            member_address: '',
+            member_address_desc: ''
+          }
+        }
+      }
     }
   }
 };

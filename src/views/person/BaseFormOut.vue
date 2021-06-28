@@ -126,15 +126,16 @@ export default {
 
     // 打开弹窗
     show(type, item){
-      console.log('type', type)
       this.type = type
-      if(type == 'out') this.out = true
       if(type == 'change') {
         return this.censusGet(item.id)
-      }else{
-        this.$root.user = JSON.parse(JSON.stringify(baseConfig))
       }
       this.visible = true
+      this.$nextTick(() => {
+        if(this.type == 'new'){
+          this.$refs.Pcensus.$refs.census.clearValidate()
+        }
+      })
     },
 
     // 查询个人信息
@@ -199,6 +200,9 @@ export default {
     // 关闭弹窗
     close(){
       this.visible = false
+      if(this.type == 'change') {
+        this.$root.user = JSON.parse(JSON.stringify(baseConfig))
+      }
     }
   },
   components: {

@@ -40,13 +40,6 @@
 export default {
   props: ['address', 'addressDesc'],
   data() {
-    let checkDomicileNumber = (rule, value, callback) => {
-      if(this.$root.user.domicile.domicile_number.length == 8 || this.$root.user.domicile.domicile_number.length == 11){
-        callback()
-      }else{
-        callback(new Error('电话号码只能为8位或11位'))
-      }
-    }
     let checkDomiciletype = (rule, value, callback) => {
       if(this.$root.user.domicile.domicile_type){
         callback()
@@ -64,22 +57,18 @@ export default {
     return {
       rules: {
         'identity_number': [
-          { required: true, message: '请输入18位身份证号码', trigger: 'blur' },
-          { min: 18, max: 18, message: '身份证号码不能少于18位', trigger: 'blur' }
+          { required: true, message: '请输入18位身份证号码', trigger: 'change' },
+          { min: 18, max: 18, message: '身份证号码不能少于18位', trigger: 'change' }
         ],
         'domicile_name': [
-          { required: true, message: '请输入户主姓名', trigger: 'blur' }
-        ],
-        'domicile_number': [
-          { required: this.out ? true : false, message: '请输入户主电话', trigger: 'blur' },
-          { validator: checkDomicileNumber, trigger: 'change' }
+          { required: true, message: '请输入户主姓名', trigger: 'change' }
         ],
         'domicile_type': [
-          { required: this.out ? false : true, message: '请选择户籍性质', trigger: 'blur' },
+          { required: this.out ? false : true, message: '请选择户籍性质', trigger: 'change' },
           { validator: checkDomiciletype, trigger: 'change' }
         ],
         'domicile_address': [
-          { required: true, message: '请选择住址', trigger: 'blur' },
+          { required: true, message: '请选择住址', trigger: 'change' },
           { validator: checkDomicileAddress, trigger: 'change' }
         ]
       },

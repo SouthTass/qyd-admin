@@ -2,7 +2,6 @@
   <el-form ref="pJob" 
     :inline="true" 
     :model="$root.user.work"
-    :rules="rules"
     label-width="120px" class="form-container">
     <div class="form-item">
       <h3 class="form-item-title">就业信息</h3>
@@ -29,7 +28,16 @@
         <!-- 状态为灵活就业或者社区村就业 -->
         <div v-if="$root.user.work.work_status == '灵活就业' || $root.user.work.work_status == '社区村就业'">
           <el-form-item label="工作地点">
-            <el-input v-model="$root.user.work.company_address" class="from-width-l2"></el-input>
+            <el-cascader style="width: 297px"
+              filterable
+              v-model="company_address_prop"
+              :options="$DefaultArea"
+              :props="props"
+              @change="computedCompanyAddress"></el-cascader>
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="company_address_desc_prop" placeholder="请输入具体地址" style="width: 458px"
+              @change="computedCompanyAddress"></el-input>
           </el-form-item>
         </div>
         <div v-if="$root.user.work.work_status == '灵活就业' || $root.user.work.work_status == '社区村就业'">
@@ -76,12 +84,8 @@
           </div>
         </template>
 
-        <!-- 状态为其他 -->
-        <template v-if="$root.user.work.work_status && $root.user.work.work_status != '无就业需求'
-          && $root.user.work.work_status != '灵活就业'
-          && $root.user.work.work_status != '社区村就业'
-          && $root.user.work.work_status != '无业求职'
-          && $root.user.work.work_status != '自主创业'">
+        <!-- 状态为单位就业 -->
+        <template v-if="$root.user.work.work_status == '单位就业'">
           <div>
             <el-form-item label="职业工种" prop="work_type">
               <el-input v-model="$root.user.work.work_type"></el-input>
@@ -139,8 +143,17 @@
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="就业单位地址">
-              <el-input v-model="$root.user.work.company_address" class="from-width-l2"></el-input>
+            <el-form-item label="工作地点">
+              <el-cascader style="width: 297px"
+                filterable
+                v-model="company_address_prop"
+                :options="$DefaultArea"
+                :props="props"
+                @change="computedCompanyAddress"></el-cascader>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="company_address_desc_prop" placeholder="请输入具体地址" style="width: 458px"
+                @change="computedCompanyAddress"></el-input>
             </el-form-item>
           </div>
         </template>
@@ -158,13 +171,9 @@ export default {
         label: 'name',
         children: 'list',
       },
-      rules: {
-
-      }
+      company_address_prop: ["", "", "", ""],
+      company_address_desc_prop: '',
     };
-  },
-  mounted(){
-    
   },
   methods: {
     onSubmit() {
@@ -175,6 +184,15 @@ export default {
       this.$root.user.work.accord.address = ''
       item.map(e => this.$root.user.work.accord.address += e)
     },
+    
+    // 处理工作地点
+    computedCompanyAddress(){
+      this.$root.user.work.company_address[0] = this.company_address_prop[0] || ''
+      this.$root.user.work.company_address[1] = this.company_address_prop[1] || ''
+      this.$root.user.work.company_address[2] = this.company_address_prop[2] || ''
+      this.$root.user.work.company_address[3] = this.company_address_prop[3] || ''
+      this.$root.user.work.company_address[4] = this.company_address_desc_prop || ''
+    }
   },
 };
 </script>

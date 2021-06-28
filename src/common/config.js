@@ -43,7 +43,7 @@ let config = {
     work_status: "",//就业状态
     work_desc: "",//说明
     company_name: "",//就业单位全称
-    company_address: "",//就业单位地址
+    company_address: ['', '', '', '', ''],//就业单位地址
     work_type: "",//职业工种
     work_shape: "",//用工性质
     company_type: "",//单位性质

@@ -17,7 +17,7 @@
           </el-option>
         </el-select>
         <el-button type="primary" icon="el-icon-search" @click="companyMemberList()">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="openDialog()" 
+        <el-button type="primary" icon="el-icon-plus" @click="openDialog('空')" 
           style="float: right">录入信息</el-button>
         <!-- <el-button type="danger" icon="el-icon-download" @click="censusExport" 
           plain style="float: right">导出数据</el-button>
@@ -110,7 +110,7 @@ export default {
     // 打开录入信息的弹窗
     openDialog(item, status){
       if(!this.query.company_id) return this.$message.error('请先选择公司')
-      this.$refs.componentsPeople.show(item || '空', this.query.company_id, this.query.company_name, status)
+      this.$refs.componentsPeople.show(item, this.query.company_id, this.query.company_name, status)
     },
 
     // 选中的公司处理

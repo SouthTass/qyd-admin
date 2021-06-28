@@ -11,7 +11,7 @@
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show()"
+          @click="$refs.componentsBaseForm.show('new')"
           style="float: right"
           >录入信息</el-button
         >
