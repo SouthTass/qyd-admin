@@ -133,7 +133,7 @@ export default {
       }else{
         this.$message.error('请先选择企业')
       }
-      
+      this.visible = true
       this.$nextTick(() => {this.$refs.form.resetFields()})
     },
 

@@ -126,6 +126,12 @@
             <el-option v-for="item in $option.item9" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
+        <!-- 查询纬度 -->
+        <el-form-item label="查询纬度">
+          <el-select v-model="query.skill_level" class="from-width-l1">
+            <el-option v-for="item in $option.item9" :key="item" :label="item" :value="item"></el-option>
+          </el-select>
+        </el-form-item>
         <!-- 操作按钮 -->
         <div style="padding-left: 125px">
           <el-button type="primary">查询</el-button>
@@ -209,11 +215,9 @@ export default {
 .handle-box {
   margin-bottom: 20px;
 }
-
 .handle-select {
   width: 120px;
 }
-
 .handle-input {
   width: 300px;
   display: inline-block;
