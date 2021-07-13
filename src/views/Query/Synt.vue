@@ -41,8 +41,8 @@
             <el-option v-for="item in $option.item12" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
+        <!-- 户口地址 -->
         <div>
-          <!-- 户口地址 -->
           <el-form-item label="户口地址">
             <el-cascader class="from-width-l4"
               v-model="query.hukoudizhi"
@@ -51,13 +51,24 @@
               clearable></el-cascader>
           </el-form-item>
         </div>
+        <!-- 居住地址 -->
         <div>
-          <!-- 居住地址 -->
           <el-form-item label="居住地址">
             <el-cascader class="from-width-l4"
               v-model="query.juzhudizhi"
               placeholder="请选择"
               :options="formAddress"
+              clearable></el-cascader>
+          </el-form-item>
+        </div>
+        <!-- 单位地址 -->
+        <div>
+          <el-form-item label="单位地址">
+            <el-cascader class="from-width-l4"
+              v-model="query.juzhudizhi"
+              placeholder="请选择"
+              :options="$DefaultArea"
+              :props="{ value: 'name', label: 'name', children: 'list' }"
               clearable></el-cascader>
           </el-form-item>
         </div>
@@ -72,15 +83,6 @@
           <el-select v-model="query.company_type" class="from-width-l1">
             <el-option v-for="item in $option.item2" :key="item" :label="item" :value="item"></el-option>
           </el-select>
-        </el-form-item>
-        <!-- 单位地址 -->
-        <el-form-item label="单位地址">
-          <el-cascader class="from-width-l1"
-            v-model="query.juzhudizhi"
-            placeholder="请选择"
-            :options="addresslevel2"
-            :props="{ value: 'label', label: 'label' }"
-            clearable></el-cascader>
         </el-form-item>
         <!-- 单位产业 -->
         <el-form-item label="单位产业">
@@ -128,8 +130,8 @@
         </el-form-item>
         <!-- 查询纬度 -->
         <el-form-item label="查询纬度">
-          <el-select v-model="query.skill_level" class="from-width-l1">
-            <el-option v-for="item in $option.item9" :key="item" :label="item" :value="item"></el-option>
+          <el-select v-model="query.weidu" class="from-width-l1">
+            <el-option v-for="item in $option.item23" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <!-- 操作按钮 -->
@@ -167,46 +169,14 @@ export default {
         peixun: '',
         skill_level: '',
         hukoudizhi: '',
-        juzhudizhi: ''
+        juzhudizhi: '',
+        weidu: ''
       },
       formAddress: addressDefault,
       addresslevel2: level2
     };
   },
-  created() {
-    this.censusList();
-  },
   methods: {
-    // 获取信息列表
-    async censusList(index) {
-      this.query.page_index = index || 1
-      let res = await this.$api.censusList(this.query)
-      if (res.status != 0) return
-      this.tableData = res.data.list
-      this.pageTotal = res.data.total_rows
-    },
-
-    // 计算年龄
-    computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
-    },
-
-    // 查看个人信息
-    checkPerson(item) {
-      this.$refs.componentsCheck.show(item);
-    },
-
-    // 导出数据
-    censusExport(){
-      location.href = `http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1`
-    }
   },
 };
 </script>
