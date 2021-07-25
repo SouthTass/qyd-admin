@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="住址" prop="domicile_address">
-          <el-cascader class="from-width-l3"
+          <el-cascader class="from-width-l3" placeholder="请选择住址" style="width: 297px!important"
             filterable
             v-model="addressData"
             :options="$DefaultArea"
@@ -31,7 +31,7 @@
         </el-form-item>
         <el-form-item>
           <el-input v-model="addressDescData" placeholder="请输入门牌号"
-            style="margin-left: 120px" class="from-width-l3"
+            style="width: 485px!important" class="from-width-l3"
             @change="computedAddress"></el-input>
         </el-form-item>
       </div>

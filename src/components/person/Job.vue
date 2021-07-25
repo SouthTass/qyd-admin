@@ -152,7 +152,7 @@
                 @change="computedCompanyAddress"></el-cascader>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="company_address_desc_prop" placeholder="请输入具体地址" style="width: 458px"
+              <el-input v-model="company_address_desc_prop" placeholder="请输入具体地址" style="width: 485px"
                 @change="computedCompanyAddress"></el-input>
             </el-form-item>
           </div>

@@ -6,14 +6,6 @@
     <div class="form-item">
       <h3 class="form-item-title">租户信息</h3>
       <div class="container">
-        <!-- <div>
-          <el-form-item label="户主关系" prop="rapport">
-            <el-select v-model="$root.user.census.rapport" class="from-width-l1">
-              <el-option v-for="item in $option.item11" 
-                :key="item" :label="item" :value="item"></el-option>
-            </el-select>
-          </el-form-item>
-        </div> -->
         <div>
           <el-form-item label="身份证号" prop="card_number">
             <el-input v-model="$root.user.census.card_number" maxlength="18" @blur="computedIdentity"></el-input>

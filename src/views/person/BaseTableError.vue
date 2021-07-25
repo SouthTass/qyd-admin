@@ -161,9 +161,6 @@ export default {
       this.pageTotal = res.data.total_rows;
     },
 
-    // 打开编辑信息页面
-
-
     // 计算年龄
     computedAge(item) {
       let str = item.card_number;

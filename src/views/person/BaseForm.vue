@@ -142,20 +142,6 @@ export default {
       })
     },
 
-    // 打开弹窗
-    show(type, item){
-      this.type = type
-      if(type == 'change') {
-        return this.censusGet(item.id)
-      }
-      this.visible = true
-      this.$nextTick(() => {
-        if(this.type == 'new'){
-          this.$refs.Pcensus.$refs.census.clearValidate()
-        }
-      })
-    },
-
     // 查询个人信息
     async censusGet(id){
       let res = await this.$api.censusGet(id)
@@ -221,6 +207,20 @@ export default {
       if(this.type == 'change') {
         this.$root.user = JSON.parse(JSON.stringify(baseConfig))
       }
+    },
+
+    // 打开弹窗
+    show(type, item){
+      this.type = type
+      if(type == 'change') {
+        return this.censusGet(item.id)
+      }
+      this.visible = true
+      this.$nextTick(() => {
+        if(this.type == 'new'){
+          this.$refs.Pcensus.$refs.census.clearValidate()
+        }
+      })
     }
   },
   components: {
