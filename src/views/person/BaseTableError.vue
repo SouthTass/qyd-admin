@@ -8,7 +8,10 @@
     </div>
     <div class="container">
       <div class="handle-box">
-        <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
+        <el-input
+          v-model="query.user_name"
+          placeholder="请输入身份号或姓名"
+          class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
       </div>
       <el-table
@@ -29,12 +32,8 @@
           label="姓名"
           width="100"
         ></el-table-column>
-        <el-table-column
-          prop="sex"
-          label="性别"
-          width="50"
-          align="center"
-        ><template slot-scope="scope">{{computedSex(scope.row)}}</template>
+        <el-table-column prop="sex" label="性别" width="50" align="center"
+          ><template slot-scope="scope">{{ computedSex(scope.row) }}</template>
         </el-table-column>
         <el-table-column
           prop="census_domicile_type"
@@ -66,28 +65,13 @@
           width="110"
           align="center"
         ></el-table-column>
-        <!-- <el-table-column label="操作" width="210" align="center">
+        <el-table-column label="操作" width="150" align="center">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              @click="$refs.componentsInfo.show(scope.row)"
-              >查看</el-button
-            >
-            <el-button
-              type="warning"
-              size="mini"
-              @click="handleDelete(scope.$index, scope.row)"
-              >修改</el-button
-            >
-            <el-button
-              type="danger"
-              size="mini"
-              @click="$refs.componentsLogout.show(scope.row)"
-              >注销</el-button
-            >
+            <el-button type="primary" size="mini" @click="getErrorInfo(scope.row)">查看</el-button>
+            <el-button type="warning" size="mini"
+              @click="$refs.componentsBaseForm.show('change', scope.row)">修改</el-button>
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -96,9 +80,32 @@
           :current-page="query.page_index"
           :page-size="query.page_number"
           :total="pageTotal"
-          @current-change="censusList"></el-pagination>
+          @current-change="censusList"
+        ></el-pagination>
       </div>
     </div>
+
+    <!-- 异常信息 -->
+    <el-dialog title="异常信息" :visible.sync="dialogVisible" width="830px" center class="table-from">
+      <!-- 户籍信息 -->
+      <div class="dialog">
+        <table class="dialog-table" border="1" colspan="6">
+          <tr>
+            <th style="width: 200px; text-align: left; padding-left: 5px">字段</th>
+            <th style="width: 600px; text-align: left; padding-left: 5px">原因</th>
+          </tr>
+          <tr v-for="(item, index) in errorList" :key="index">
+            <td>{{item.field_name}}</td>
+            <td>{{item.desc}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 按钮 -->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
 
     <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
     <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
@@ -108,57 +115,65 @@
 </template>
 
 <script>
-import ComponentsInfo from '@/components/person/Info'
+import ComponentsInfo from "@/components/person/Info";
 import ComponentsCheck from "@/components/person/Check";
 import ComponentsLogout from "@/components/person/Logout";
 import ComponentsBaseForm from "@/views/person/BaseForm";
 export default {
-  components: { ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseForm },
+  components: {
+    ComponentsInfo,
+    ComponentsCheck,
+    ComponentsLogout,
+    ComponentsBaseForm,
+  },
   data() {
     return {
       pageTotal: 0,
       tableData: [],
       query: {
-        user_name: '',
+        user_name: "",
         page_index: 1,
         page_number: 10,
-        census_status: 0
+        census_status: 0,
       },
+      dialogVisible: false,
+      errorList: []
     };
   },
   created() {
     this.censusList();
   },
   methods: {
-    // 获取信息列表
-    async censusList(index) {
-      this.query.page_index = index || 1
-      let res = await this.$api.censusList(this.query)
-      if (res.status != 0) return
-      this.tableData = res.data.list
-      this.pageTotal = res.data.total_rows
+    // 获取异常信息详情
+    async getErrorInfo(item){
+      if(item && item.abnormal_configs){
+        this.errorList = JSON.parse(item.abnormal_configs)
+        this.dialogVisible = true
+      }
     },
 
-    // 查看个人信息
-    checkPerson(item) {
-      this.$refs.componentsCheck.show(item);
+    // 获取信息列表
+    async censusList(index) {
+      this.query.page_index = index || 1;
+      let res = await this.$api.censusList(this.query);
+      if (res.status != 0) return;
+      this.tableData = res.data.list;
+      this.pageTotal = res.data.total_rows;
     },
+
+    // 打开编辑信息页面
+
 
     // 计算年龄
     computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
+      let str = item.card_number;
+      return this.$dayjs().format("YYYY") - str.slice(6, 10);
     },
 
     // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
-    },
-
-    // 查看个人信息
-    checkPerson(item) {
-      this.$refs.componentsCheck.show(item);
+    computedSex(item) {
+      let str = item.card_number;
+      return str.slice(16, 17) % 2 ? "男" : "女";
     },
   },
 };
