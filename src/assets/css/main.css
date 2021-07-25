@@ -205,6 +205,15 @@ a {
 .from-width-l5{
   width: 208px !important;
 }
+.from-width-l6{
+  width: 297px !important;
+}
+.from-width-l7{
+  width: 485px !important;
+}
+.from-width-l8{
+  width: 302px !important;
+}
 
 .upload-file-button{
   float: right;

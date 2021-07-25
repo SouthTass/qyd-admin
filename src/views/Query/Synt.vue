@@ -45,7 +45,7 @@
         <!-- 户口地址 -->
         <div>
           <el-form-item label="户口地址">
-            <el-cascader class="from-width-l4"
+            <el-cascader class="from-width-l8"
               v-model="query.hukoudizhi"
               placeholder="请选择户口地址"
               :options="formAddress"
@@ -55,7 +55,7 @@
         <!-- 居住地址 -->
         <div>
           <el-form-item label="居住地址">
-            <el-cascader class="from-width-l4"
+            <el-cascader class="from-width-l8"
               v-model="query.juzhudizhi"
               placeholder="请选择居住地址"
               :options="formAddress"
@@ -65,12 +65,16 @@
         <!-- 单位地址 -->
         <div>
           <el-form-item label="单位地址">
-            <el-cascader class="from-width-l4"
+            <el-cascader class="from-width-l8"
               v-model="query.juzhudizhi"
               placeholder="请选择单位地址"
               :options="$DefaultArea"
               :props="{ value: 'name', label: 'name', children: 'list' }"
               clearable></el-cascader>
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="text" placeholder="请输入具体地址" style="width: 488px!important"
+              class="from-width-l3 from-width-l7"></el-input>
           </el-form-item>
         </div>
         <!-- 现就业状态 -->
@@ -148,7 +152,6 @@
 </template>
 
 <script>
-import level2 from '@/common/level2.js'
 import addressDefault from '@/common/country-level3-data.js'
 export default {
   data() {
@@ -175,7 +178,7 @@ export default {
         weidu: ''
       },
       formAddress: addressDefault,
-      addresslevel2: level2
+      text: ''
     };
   },
   methods: {

@@ -23,8 +23,7 @@
         </el-form-item>
         <el-form-item label="住址" prop="domicile_address">
           <el-cascader class="from-width-l3" placeholder="请选择住址" style="width: 297px!important"
-            filterable
-            v-model="addressData"
+            v-model="addressData" filterable
             :options="$DefaultArea"
             :props="props"
             @change="computedAddress"></el-cascader>
