@@ -11,7 +11,7 @@ module.exports = {
     proxy: {
       '/api/': {
         target: 'http://47.93.185.110:7008',
-        changeOrigin: true, // needed for virtual hosted sites
+        changeOrigin: true,
       }
     } 
   },
