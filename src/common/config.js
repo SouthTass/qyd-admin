@@ -5,7 +5,7 @@ let config = {
     domicile_name: "",
     domicile_type: "",
     domicile_number: "",
-    domicile_address: ['', '', '', '', '']
+    domicile_address: ""
   },
   // 个人信息
   census: {

@@ -1,19 +1,19 @@
 <template>
-  <el-dialog title="个人信息" :visible.sync="visiable" width="830px" center class="table-from">
+  <el-dialog :visible.sync="visiable" width="830px" center class="table-from">
     <!-- 户籍信息 -->
     <div class="dialog" v-if="info.domicile_res">
       <h3 class="dialog-title">户籍信息</h3>
       <table class="dialog-table" border="1">
         <tr>
-          <td class="table-label">身份证号</td>
-          <td class="table-text">{{info.domicile_res.identity_number}}</td>
           <td class="table-label">户主姓名</td>
           <td class="table-text">{{info.domicile_res.domicile_name}}</td>
+          <td class="table-label">身份证号</td>
+          <td class="table-text">{{info.domicile_res.identity_number}}</td>
           <td class="table-label">户籍性质</td>
           <td class="table-text">{{info.domicile_res.domicile_type}}</td>
         </tr>
         <tr>
-          <td>住址</td><td colspan="5">{{info.domicile_res.domicile_address}}</td>
+          <td class="table-label">住址</td><td colspan="5">{{info.domicile_res.domicile_address}}</td>
         </tr>
       </table>
     </div>
@@ -23,13 +23,13 @@
       <h3 class="dialog-title">基本信息</h3>
       <table class="dialog-table" border="1">
         <tr>
-          <td>与户主关系</td><td colspan="5">{{info.census_res.rapport}}</td>
+          <td class="table-label">与户主关系</td><td colspan="5">{{info.census_res.rapport}}</td>
         </tr>
         <tr>
-          <td class="table-label">身份证号</td>
-          <td class="table-text">{{info.census_res.card_number}}</td>
           <td class="table-label">姓名</td>
           <td class="table-text">{{info.census_res.census_name}}</td>
+          <td class="table-label">身份证号</td>
+          <td class="table-text">{{info.census_res.card_number}}</td>
           <td class="table-label">性别</td>
           <td class="table-text">{{info.census_res.sex}}</td>
         </tr>
@@ -112,7 +112,7 @@
           <td class="table-text" colspan="3">{{item.social_desc}}</td>
         </tr>
         <tr v-else>
-          <td>是否退休</td><td colspan="5">否</td>
+          <td class="table-label">是否退休</td><td colspan="5">否</td>
         </tr>
       </table>
     </div>
@@ -153,10 +153,10 @@
             <td class="table-text">{{info.work_res.is_charitable}}</td>
           </tr>
           <tr>
-            <td>就业单位全称</td><td colspan="5">{{info.work_res.company_name}}</td>
+            <td class="table-label">就业单位全称</td><td colspan="5">{{info.work_res.company_name}}</td>
           </tr>
           <tr>
-            <td>就业单位地址</td><td colspan="5">{{info.work_res.company_address}}</td>
+            <td class="table-label">就业单位地址</td><td colspan="5">{{info.work_res.company_address}}</td>
           </tr>
         </template>
         <template v-if="info.work_res.work_status == '灵活就业'">
@@ -196,7 +196,8 @@
     <div class="dialog" v-if="info.job">
       <h3 class="dialog-title">培训信息</h3>
       <table class="dialog-table" border="1">
-        <tr><td colspan="6" style="text-align: center">求职信息</td></tr>
+        <tr><td colspan="6" class="table-label-head">求职信息</td></tr>
+        <tr v-if="info.job.hunting_list.length < 1"><td colspan="6" style="text-align: center">无</td></tr>
         <template v-for="(item, index) in info.job.hunting_list">
           <tr :key="`q${index}`">
             <td class="table-label">求职岗位</td>
@@ -207,7 +208,8 @@
             <td class="table-text">{{item.job_area}}</td>
           </tr>
         </template>
-        <tr><td colspan="6" style="text-align: center">培训信息</td></tr>
+        <tr><td colspan="6" class="table-label-head">培训信息</td></tr>
+        <tr v-if="info.job.hunting_list.length < 1"><td colspan="6" style="text-align: center">无</td></tr>
         <template v-for="(item, index) in info.job.skill_list">
           <tr :key="`p${index}`">
             <td class="table-label">技能名称</td>
@@ -347,10 +349,18 @@ export default {
   }
 }
 .table-label{
-  width: 100px
+  width: 100px;
+  color: #fff;
+  background-color: #999;
+}
+.table-label-head{
+  width: 800px;
+  text-align: center;
+  color: #fff;
+  background-color: #999;
 }
 .table-text{
-  width: 160px;
+  width: 170px;
 }
 .dialog{
   margin-bottom: 30px;

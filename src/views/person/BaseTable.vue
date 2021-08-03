@@ -22,8 +22,9 @@
           style="float: right"
           @click="censusExport">导出数据</el-button
         >
-        <el-upload action="http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1" 
-          class="upload-file-button">
+        <el-upload action="/api/census/import?census_type=1&census_status=1" 
+          class="upload-file-button"
+          :show-file-list="false">
           <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
         </el-upload>
       </div>

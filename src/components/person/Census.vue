@@ -19,17 +19,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="住址" prop="domicile_address">
-          <el-cascader class="from-width-l3" style="width: 297px!important" placeholder="请选择住址"
-            filterable
-            v-model="addressData"
-            :options="$DefaultArea"
-            :props="props"
-            @change="computedAddress"></el-cascader>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="addressDescData" placeholder="请输入门牌号"
-            style="width: 485px!important" class="from-width-l3"
-            @change="computedAddress"></el-input>
+          <el-input v-model="$root.user.domicile.domicile_address" placeholder="请输入住址"
+            style="width: 485px!important" class="from-width-l3"></el-input>
         </el-form-item>
       </div>
     </div>
@@ -38,22 +29,7 @@
 
 <script>
 export default {
-  props: ['address', 'addressDesc'],
   data() {
-    let checkDomiciletype = (rule, value, callback) => {
-      if(this.$root.user.domicile.domicile_type){
-        callback()
-      }else{
-        callback(new Error('请选择户籍性质'))
-      }
-    }
-    let checkDomicileAddress = (rule, value, callback) => {
-      if(this.$root.user.domicile.domicile_address[0].length < 1){
-        callback(new Error('请选择住址'))
-      }else{
-        callback()
-      }
-    }
     return {
       rules: {
         'identity_number': [
@@ -64,32 +40,15 @@ export default {
           { required: true, message: '请输入户主姓名', trigger: 'change' }
         ],
         'domicile_type': [
-          { required: this.out ? false : true, message: '请选择户籍性质', trigger: 'change' },
-          { validator: checkDomiciletype, trigger: 'change' }
+          { required: true, message: '请选择户籍性质', trigger: 'change' }
         ],
         'domicile_address': [
-          { required: true, message: '请选择住址', trigger: 'change' },
-          { validator: checkDomicileAddress, trigger: 'change' }
+          { required: true, message: '请输入住址', trigger: 'change' }
         ]
-      },
-      props: {
-        value: 'name',
-        label: 'name',
-        children: 'list',
-      },
-      addressData: '',
-      addressDescData: ''
+      }
     };
   },
   methods: {
-    // 处理地址
-    computedAddress(){
-      this.$root.user.domicile.domicile_address[0] = this.addressData[0] || ''
-      this.$root.user.domicile.domicile_address[1] = this.addressData[1] || ''
-      this.$root.user.domicile.domicile_address[2] = this.addressData[2] || ''
-      this.$root.user.domicile.domicile_address[3] = this.addressData[3] || ''
-      this.$root.user.domicile.domicile_address[4] = this.addressDescData || ''
-    },
   }
 };
 </script> 

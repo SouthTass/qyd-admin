@@ -12,9 +12,17 @@
             </template>
             <template v-for="subItem in item.subs">
               <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
-                <template slot="title">{{ subItem.title }}</template>
+                <template slot="title">
+                  <i :class="subItem.icon"></i>
+                  <span slot="title">{{ subItem.title }}</span>
+                </template>
                 <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i"
-                  :index="threeItem.index">{{ threeItem.title }}</el-menu-item>
+                  :index="threeItem.index">
+                  <template slot="title">
+                    <i :class="threeItem.icon"></i>
+                    <span slot="title">{{ threeItem.title }}</span>
+                  </template>
+                </el-menu-item>
               </el-submenu>
               <el-menu-item v-else :index="subItem.index" :key="subItem.index">
                 <template slot="title">
@@ -53,6 +61,28 @@ export default {
               index: "personbasetable",
               title: "个人管理",
             },
+            // {
+            //   icon: "el-icon-user",
+            //   index: "1-1",
+            //   title: "信息管理",
+            //   subs: [
+            //     {
+            //       icon: "el-icon-c-scale-to-original",
+            //       index: "personbasetable",
+            //       title: "查询",
+            //     },
+            //     {
+            //       icon: "el-icon-c-scale-to-original",
+            //       index: "personbasetable",
+            //       title: "录入",
+            //     },
+            //     {
+            //       icon: "el-icon-c-scale-to-original",
+            //       index: "personbasetable",
+            //       title: "修改",
+            //     }
+            //   ]
+            // },
             {
               icon: "el-icon-c-scale-to-original",
               index: "personbasetablefamily",

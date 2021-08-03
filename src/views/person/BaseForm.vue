@@ -39,7 +39,6 @@ export default {
   methods: {
     // 保存信息
     async saveInfo(){
-      // return console.log(this.$root.user)
       // 校验户主、房主信息
       let census = await this.$refs['Pcensus'].$refs['census'].validate()
       if(!census) return
@@ -48,20 +47,9 @@ export default {
       let system = await this.$refs['Psystem'].$refs['system'].validate()
       if(!system) {
         return
-      }else{
-        console.log('成功')
       }
       
-
-
       let body = JSON.parse(JSON.stringify(this.$root.user))
-
-      // 删除无用数据
-      // let keyArray = ['gender', 'domicileType','yesorno','work_status','work_none_desc']
-      // keyArray.forEach(e => delete body[e])
-      // for(let i = 1; i <= 18; i++){
-      //   delete body[`item${i}`]
-      // }
 
       // 整理培训求职信息
       let job = []
@@ -152,11 +140,6 @@ export default {
       res.data.census_res.age = this.$root.computedAge(res.data.census_res.card_number)
       res.data.census_res.sex = this.$root.computedSex(res.data.census_res.card_number)
       res.data.census_res.birthday = this.$root.computedBirthday(res.data.census_res.card_number)
-      res.data.census_res.domicile_address = []
-      if(res.data.census_res.domicile_city) res.data.census_res.domicile_address.push(res.data.census_res.domicile_city)
-      if(res.data.census_res.domicile_area) res.data.census_res.domicile_address.push(res.data.census_res.domicile_area)
-      if(res.data.census_res.domicile_town) res.data.census_res.domicile_address.push(res.data.census_res.domicile_town)
-      if(res.data.census_res.domicile_village) res.data.census_res.domicile_address.push(res.data.census_res.domicile_village)
       res.data.census_res.census_address = []
       if(res.data.census_res.census_city) res.data.census_res.census_address.push(res.data.census_res.census_city)
       if(res.data.census_res.census_area) res.data.census_res.census_address.push(res.data.census_res.census_area)

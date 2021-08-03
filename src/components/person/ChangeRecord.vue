@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="变更记录" :visible.sync="visiable" width="800px" center class="table-from">
+  <el-dialog :visible.sync="visiable" width="800px" center class="table-from">
     <p v-if="list.length < 1" class="none">暂无记录</p>
     <div v-for="item in list" :key="item.id" class="list">
       <p class="list-title">
