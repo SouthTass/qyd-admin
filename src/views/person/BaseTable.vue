@@ -11,7 +11,7 @@
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
         <el-button type="primary" icon="el-icon-plus"
-          @click="$refs.componentsBaseForm.show('new')"
+          @click="openPersonageInput()"
           style="float: right"
           >录入信息</el-button
         >
@@ -94,7 +94,7 @@
             <el-button
               type="warning"
               size="mini"
-              @click="$refs.componentsBaseForm.show('change', scope.row)"
+              @click="openPersonageInput(scope.row)"
               >修改</el-button
             >
             <el-button
@@ -179,6 +179,17 @@ export default {
     // 导出数据
     censusExport(){
       location.href = `http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1`
+    },
+
+    // 打开信息录入的新页面
+    openPersonageInput(item){
+      let query = {type: 'PersonageInput'}
+      if(item) query.id = item.id
+      let routeUrl = this.$router.resolve({
+        path: "/personageinput",
+        query: query
+      });
+      window.open(routeUrl .href, '_blank');
     }
   },
 };

@@ -1,12 +1,15 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'; // 默认主题/
-import './assets/css/icon.css';
-import './components/common/directives';
-import 'babel-polyfill';
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import './assets/css/icon.css'
+import './components/common/directives'
+import 'babel-polyfill'
+
+// 引入配置文件
 import baseConfig from '@/common/config'
+Vue.prototype.$baseConfig = baseConfig
 
 // 引入全局过滤器
 import '@/common/filter'

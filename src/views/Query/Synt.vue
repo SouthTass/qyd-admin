@@ -141,11 +141,15 @@
           </el-select>
         </el-form-item>
         <!-- 操作按钮 -->
-        <div style="padding-left: 125px">
+        <el-form-item>
+          <el-button type="primary" style="width: 100px; margin-left: 125px">查询</el-button>
+        </el-form-item>
+        <!-- 操作按钮 -->
+        <!-- <div style="padding-left: 125px">
           <el-button type="primary">查询</el-button>
           <el-button type="primary">数据图表</el-button>
           <el-button type="primary">Excel下载</el-button>
-        </div>
+        </div> -->
       </el-form>
     </div>
   </div>
@@ -187,38 +191,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.handle-box {
-  margin-bottom: 20px;
-}
-.handle-select {
-  width: 120px;
-}
-.handle-input {
-  width: 300px;
-  display: inline-block;
-}
-.table {
-  width: 100%;
-  font-size: 14px;
-}
-.red {
-  color: #ff0000;
-}
-.mr10 {
-  margin-right: 10px;
-}
-.table-td-thumb {
-  display: block;
-  margin: auto;
-  width: 40px;
-  height: 40px;
-}
-.dialog-table {
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.15);
-  td {
-    padding: 5px;
-  }
-}
+
 </style>

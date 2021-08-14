@@ -24,6 +24,11 @@ export default new Router({
           meta: { title: '个人管理' }
         },
         {
+          path: '/personageinput',
+          component: () => import(/* webpackChunkName: "person" */ '../views/person/PersonageInput.vue'),
+          meta: { title: '个人信息录入' }
+        },
+        {
           path: '/personbasetableout',
           component: () => import(/* webpackChunkName: "person" */ '../views/person/BaseTableOut.vue'),
           meta: { title: '外来人员' }

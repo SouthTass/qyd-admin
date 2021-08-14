@@ -174,7 +174,15 @@ export default {
   },
   computed: {
     onRoutes() {
-      return this.$route.path.replace("/", "");
+      if(this.$route.path == '/personageinput'){
+        if(this.$route.query.type == 'PersonageInput'){
+          return 'personbasetable'
+        }else if(this.$route.query.type == 'PersonageInputOut'){
+          return 'personbasetableout'
+        }
+      }else{
+        return this.$route.path.replace("/", "");
+      }
     },
   },
   created(){
