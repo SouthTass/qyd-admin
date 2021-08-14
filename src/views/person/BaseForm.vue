@@ -145,6 +145,11 @@ export default {
       if(res.data.census_res.census_area) res.data.census_res.census_address.push(res.data.census_res.census_area)
       if(res.data.census_res.census_town) res.data.census_res.census_address.push(res.data.census_res.census_town)
       if(res.data.census_res.census_village) res.data.census_res.census_address.push(res.data.census_res.census_village)
+      res.data.census_res.domicile_address = []
+      if(res.data.census_res.domicile_city) res.data.census_res.domicile_address.push(res.data.census_res.domicile_city)
+      if(res.data.census_res.domicile_area) res.data.census_res.domicile_address.push(res.data.census_res.domicile_area)
+      if(res.data.census_res.domicile_town) res.data.census_res.domicile_address.push(res.data.census_res.domicile_town)
+      if(res.data.census_res.domicile_village) res.data.census_res.domicile_address.push(res.data.census_res.domicile_village)
       this.$root.user.census = res.data.census_res
 
       // 处理就业信息
