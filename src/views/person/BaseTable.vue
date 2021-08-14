@@ -80,7 +80,7 @@
         <el-table-column
           prop="phone_number"
           label="联系电话"
-          width="110"
+          width="120"
           align="center"
         ></el-table-column>
         <el-table-column label="操作" width="310" align="center">
