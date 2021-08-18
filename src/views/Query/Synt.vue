@@ -133,12 +133,11 @@
         </el-form-item>
       </el-form>
 
+      <!-- 图表 -->
       <div class="echarts-container" v-if="showEcharts">
-        <!-- 饼状图 -->
         <div class="charts chart-pie">
           <div id="chart-pie" class="chart-bar-canvas"></div>
         </div>
-        <!-- 柱状图 -->
         <div class="charts chart-bar">
           <div id="chart-bar" class="chart-bar-canvas"></div>
         </div>
