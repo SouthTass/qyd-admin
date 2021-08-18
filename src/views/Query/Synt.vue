@@ -130,7 +130,8 @@
         </el-form-item>
         <!-- 操作按钮 -->
         <el-form-item>
-          <el-button type="primary" style="width: 100px; margin-left: 125px" @click="getData">查询</el-button>
+          <el-button type="primary" style="width: 80px; margin-left: 125px" @click="getData">查询</el-button>
+          <el-button type="danger" style="width: 80px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -151,28 +152,7 @@
 export default {
   data() {
     return {
-      query: {
-        sex: '',
-        census_domicile_type: '',
-        age: '',
-        health_status: '',
-        allowance_status: '',
-        census_identity: '',
-        domicile_address: ['', '', '', ''],
-        census_address: ['', '', '', '', ''],
-        company_address: ['', '', '', '', ''],
-        work_status: '',
-        company_type: '',
-        company_industry: '',
-        start_time: '',
-        is_charitable: '',
-        job_qz: '',
-        job_position: '',
-        job_salary: '',
-        job_px: '',
-        skill_level: '',
-        field_by: '健康状况'
-      },
+      query: JSON.parse(JSON.stringify(this.$option.querysynt)),
       domicileAddress: [],
       censusAddress: [],
       companyAddress: [],
@@ -223,7 +203,7 @@ export default {
           trigger: 'axis',
           axisPointer: {type: 'shadow'}
         },
-        grid: {left: '4%', right: '4%'},
+        grid: {left: '4%', right: '0'},
         xAxis: {type: 'category'},
         yAxis: {type: 'value'},
         series: [{
@@ -254,6 +234,16 @@ export default {
       };
       let myChart = this.$allecharts.init(document.getElementById('chart-pie'))
       myChart.setOption(option)
+    },
+
+    async resetForm(){
+      let dialog = await this.$confirm('此操作将重置查询条件为初始状态, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+      if(dialog != 'confirm') return
+      this.query = JSON.parse(JSON.stringify(this.$option.querysynt))
     }
   },
 };
@@ -277,10 +267,10 @@ export default {
   }
 }
 .chart-pie{
-  width: calc(40% - 60px);
+  width: 40%;
 }
 .chart-bar{
-  width: calc(60% - 120px);
-  margin-left: 30px;
+  width: 60%;
+  margin-left: 15px;
 }
 </style>

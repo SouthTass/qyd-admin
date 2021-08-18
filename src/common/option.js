@@ -54,7 +54,29 @@ let option = {
     "西杭子村", "小谷店村", "东孙村", "太平庄村", "大谷店村", "西鲍辛庄村", "东鲍辛庄村", "马凤岗村", "东赵村", 
     "北野场村", "南红门村", "北辛屯村", "北店村", "小铺头村", "曹村", "寺上村", "枣林村", "大张本村", 
     "小张本村", "泥营村", "垡上村", "西大屯村", "中大屯村", "东大屯村", "杨各庄村", "高庄村"
-  ]
+  ],
+  querysynt: {
+    sex: '',
+    census_domicile_type: '',
+    age: '',
+    health_status: '',
+    allowance_status: '',
+    census_identity: '',
+    domicile_address: ['', '', '', ''],
+    census_address: ['', '', '', '', ''],
+    company_address: ['', '', '', '', ''],
+    work_status: '',
+    company_type: '',
+    company_industry: '',
+    start_time: '',
+    is_charitable: '',
+    job_qz: '',
+    job_position: '',
+    job_salary: '',
+    job_px: '',
+    skill_level: '',
+    field_by: '健康状况'
+  }
 }
 
 module.exports = option
