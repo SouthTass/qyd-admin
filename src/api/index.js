@@ -197,5 +197,12 @@ class Api {
   async companyRecruitRemove(body){
     return _axios.post(`/api/company/recruit/remove`, body);
   }
+
+  /** 
+   * 综合查询
+   */
+  async integratedQuery(params){
+    return _axios.get(`/api/integrated/query`, {params: params});
+  }
 }
 export default new Api();

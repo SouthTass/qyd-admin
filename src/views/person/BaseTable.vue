@@ -10,9 +10,13 @@
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="openPersonageInput()" style="float:right">录入信息</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="openPersonageInput()" 
+          style="float:right">录入信息</el-button>
         <el-button type="danger" icon="el-icon-download" plain style="float: right"
           @click="censusExport">导出数据</el-button>
+        <el-select v-model="exportText" filterable style="float: right; margin-left: 10px">
+          <el-option v-for="item in $option.item24" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
         <el-upload action="/api/census/import?census_type=1&census_status=1" 
           class="upload-file-button" :show-file-list="false">
           <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
@@ -22,11 +26,11 @@
         <el-table-column prop="card_number" label="身份证号" width="170" align="center"></el-table-column>
         <el-table-column prop="census_name" label="姓名" width="100"></el-table-column>
         <el-table-column prop="sex" label="性别" width="50" align="center">
-          <template slot-scope="scope">{{computedSex(scope.row)}}</template>
+          <template slot-scope="scope">{{$root.computedSex(scope.row.card_number)}}</template>
         </el-table-column>
         <el-table-column prop="census_domicile_type" label="户籍性质" width="80" align="center"></el-table-column>
         <el-table-column prop="date" label="年龄" width="50" align="center">
-          <template slot-scope="scope">{{ computedAge(scope.row) }}</template>
+          <template slot-scope="scope">{{$root.computedAge(scope.row.card_number)}}</template>
         </el-table-column>
         <el-table-column prop="work_status" label="是否就业" width="100" align="center"></el-table-column>
         <el-table-column prop="name" label="居住地址">
@@ -85,6 +89,7 @@ export default {
         page_index: 1,
         page_number: 7
       },
+      exportText: '全部'
     };
   },
   created() {
@@ -100,21 +105,11 @@ export default {
       this.pageTotal = res.data.total_rows
     },
 
-    // 计算年龄
-    computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
-    },
-
-    // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
-    },
-
     // 导出数据
     censusExport(){
-      location.href = `http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1`
+      let query = ''
+      if(this.exportText != '全部') query = `&census_village=${this.exportText}`
+      location.href = `http://47.93.185.110:7008/api/census/export?census_type=1&census_status=1${query}`
     },
 
     // 打开信息录入的新页面
@@ -135,11 +130,9 @@ export default {
 .handle-box {
   margin-bottom: 20px;
 }
-
 .handle-select {
   width: 120px;
 }
-
 .handle-input {
   width: 300px;
   display: inline-block;

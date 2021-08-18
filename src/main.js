@@ -7,6 +7,10 @@ import './assets/css/icon.css'
 import './components/common/directives'
 import 'babel-polyfill'
 
+// 引入echarts
+var allecharts = require('echarts');
+Vue.prototype.$allecharts = allecharts
+
 // 引入配置文件
 import baseConfig from '@/common/config'
 Vue.prototype.$baseConfig = baseConfig

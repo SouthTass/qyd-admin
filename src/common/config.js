@@ -30,12 +30,12 @@ let config = {
     domicile_area: "",//户籍区
     domicile_town: "",//户籍镇
     domicile_village: "",//户籍村
-    domicile_address: [],
+    domicile_address: ['', '', '', '', ''],
     census_city: "",//居住市
     census_area: "",//居住区
     census_town: "",//居住镇
     census_village: "",//居住村
-    census_address: [],
+    census_address: ['', '', '', '', ''],
     house_number: ""//门牌号
   },
   // 工作

@@ -10,19 +10,28 @@
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" 
-          @click="openPersonageInput()" style="float: right">录入信息</el-button>
-        <el-button
-          type="danger"
-          icon="el-icon-download"
-          plain
-          style="float: right"
-          >导出数据</el-button
+        <el-button type="primary" icon="el-icon-plus" style="float: right" @click="openPersonageInput()">录入信息</el-button>
+        <el-button type="danger" icon="el-icon-download" plain style="float: right" @click="censusExport">导出数据</el-button>
+        <el-select
+          v-model="exportText"
+          filterable
+          style="float: right; margin-left: 10px"
         >
-        <el-upload action="/api/census/import?census_type=2&census_status=1" 
+          <el-option
+            v-for="item in $option.item24"
+            :key="item"
+            :label="item"
+            :value="item"
+          ></el-option>
+        </el-select>
+        <el-upload
+          action="/api/census/import?census_type=2&census_status=1"
           class="upload-file-button"
-          :show-file-list="false">
-          <el-button icon="el-icon-upload2" plain style="float: right">导入数据</el-button>
+          :show-file-list="false"
+        >
+          <el-button icon="el-icon-upload2" plain style="float: right"
+            >导入数据</el-button
+          >
         </el-upload>
       </div>
       <el-table
@@ -43,12 +52,8 @@
           label="姓名"
           width="100"
         ></el-table-column>
-        <el-table-column
-          prop="sex"
-          label="性别"
-          width="50"
-          align="center"
-        ><template slot-scope="scope">{{computedSex(scope.row)}}</template>
+        <el-table-column prop="sex" label="性别" width="50" align="center"
+          ><template slot-scope="scope">{{ computedSex(scope.row) }}</template>
         </el-table-column>
         <el-table-column
           prop="census_domicile_type"
@@ -82,13 +87,30 @@
         ></el-table-column>
         <el-table-column label="操作" width="310" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini"
-              @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
-            <el-button type="warning" size="mini" @click="openPersonageInput(scope.row)">修改</el-button>
-            <el-button type="danger" size="mini"
-              @click="$refs.componentsLogout.show(scope.row)">注销</el-button>
-            <el-button type="primary" size="mini"
-              @click="$refs.componentsChangeRecord.show(scope.row)">变更记录</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="$refs.componentsInfo.show(scope.row)"
+              >查看</el-button
+            >
+            <el-button
+              type="warning"
+              size="mini"
+              @click="openPersonageInput(scope.row)"
+              >修改</el-button
+            >
+            <el-button
+              type="danger"
+              size="mini"
+              @click="$refs.componentsLogout.show(scope.row)"
+              >注销</el-button
+            >
+            <el-button
+              type="primary"
+              size="mini"
+              @click="$refs.componentsChangeRecord.show(scope.row)"
+              >变更记录</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -99,34 +121,32 @@
           :current-page="query.page_index"
           :page-size="query.page_number"
           :total="pageTotal"
-          @current-change="censusList"></el-pagination>
+          @current-change="censusList"
+        ></el-pagination>
       </div>
     </div>
     <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
-    <ComponentsCheck ref="componentsCheck"></ComponentsCheck>
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
-    <ComponentsBaseFormOut ref="componentsBaseFormOut" @success="censusList"></ComponentsBaseFormOut>
     <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
 
 <script>
-import ComponentsInfo from '@/components/person/Info'
-import ComponentsCheck from "@/components/person/Check";
+import ComponentsInfo from "@/components/person/Info";
 import ComponentsLogout from "@/components/person/Logout";
-import ComponentsBaseFormOut from "@/views/person/BaseFormOut";
 import ComponentsChangeRecord from "@/components/person/ChangeRecord";
 export default {
-  components: { ComponentsChangeRecord, ComponentsInfo, ComponentsCheck, ComponentsLogout, ComponentsBaseFormOut },
+  components: {ComponentsChangeRecord, ComponentsInfo, ComponentsLogout},
   data() {
     return {
       pageTotal: 0,
       tableData: [],
       query: {
-        user_name: '',
+        user_name: "",
         page_index: 1,
-        page_number: 7
+        page_number: 7,
       },
+      exportText: "全部",
     };
   },
   created() {
@@ -135,23 +155,23 @@ export default {
   methods: {
     // 获取信息列表
     async censusList(index) {
-      this.query.page_index = index || 1
-      let res = await this.$api.censusList(this.query)
-      if (res.status != 0) return
-      this.tableData = res.data.list
-      this.pageTotal = res.data.total_rows
+      this.query.page_index = index || 1;
+      let res = await this.$api.censusList(this.query);
+      if (res.status != 0) return;
+      this.tableData = res.data.list;
+      this.pageTotal = res.data.total_rows;
     },
 
     // 计算年龄
     computedAge(item) {
-      let str = item.card_number
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
+      let str = item.card_number;
+      return this.$dayjs().format("YYYY") - str.slice(6, 10);
     },
 
     // 计算性别
-    computedSex(item){
-      let str = item.card_number
-      return str.slice(16, 17) % 2 ? '男' : '女' 
+    computedSex(item) {
+      let str = item.card_number;
+      return str.slice(16, 17) % 2 ? "男" : "女";
     },
 
     // 查看个人信息
@@ -160,20 +180,23 @@ export default {
     },
 
     // 导出数据
-    censusExport(){
-      location.href = `http://47.93.185.110:7008/api/census/export?census_type=2&census_status=1`
+    censusExport() {
+      let query = "";
+      if (this.exportText != "全部")
+        query = `&census_village=${this.exportText}`;
+      location.href = `http://47.93.185.110:7008/api/census/export?census_type=2&census_status=1${query}`;
     },
 
     // 打开信息录入的新页面
-    openPersonageInput(item){
-      let query = {type: 'PersonageInputOut'}
-      if(item) query.id = item.id
+    openPersonageInput(item) {
+      let query = { type: "PersonageInputOut" };
+      if (item) query.id = item.id;
       let routeUrl = this.$router.resolve({
         path: "/personageinput",
-        query: query
+        query: query,
       });
-      window.open(routeUrl .href, '_blank');
-    }
+      window.open(routeUrl.href, "_blank");
+    },
   },
 };
 </script>

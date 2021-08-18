@@ -207,8 +207,7 @@
                 filterable
                 v-model="$root.user.work.accord.address_array"
                 :options="$DefaultArea"
-                :props="props"
-                @change="computedDomicileAddress"></el-cascader>
+                :props="props"></el-cascader>
             </el-form-item>
             <el-form-item>
               <el-input v-model="$root.user.work.accord.address_desc" 
@@ -555,7 +554,7 @@ export default {
   },
   methods: {
     // 查询个人信息
-    async censusGet(id){
+    async censusGet(){
       let res = await this.$api.censusGet(this.$route.query.id)
       if(res.status != 0) return
       this.$root.user.domicile = res.data.domicile_res

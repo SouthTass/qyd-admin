@@ -15,7 +15,7 @@
         </el-form-item>
         <!-- 户籍性质 -->
         <el-form-item label="户籍性质">
-          <el-select v-model="query.domicile_type" class="from-width-l1" placeholder="请选择户籍性质">
+          <el-select v-model="query.census_domicile_type" class="from-width-l1" placeholder="请选择户籍性质">
             <el-option v-for="item in $option.domicileType" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -45,35 +45,25 @@
         <!-- 户口地址 -->
         <div>
           <el-form-item label="户口地址">
-            <el-cascader class="from-width-l8"
-              v-model="query.hukoudizhi"
-              placeholder="请选择户口地址"
-              :options="formAddress"
-              clearable></el-cascader>
+            <el-cascader class="from-width-l8" v-model="domicileAddress" placeholder="请选择户口地址"
+              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
           </el-form-item>
         </div>
         <!-- 居住地址 -->
         <div>
           <el-form-item label="居住地址">
-            <el-cascader class="from-width-l8"
-              v-model="query.juzhudizhi"
-              placeholder="请选择居住地址"
-              :options="formAddress"
-              clearable></el-cascader>
+            <el-cascader class="from-width-l8" v-model="censusAddress" placeholder="请选择居住地址"
+              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
           </el-form-item>
         </div>
         <!-- 单位地址 -->
         <div>
           <el-form-item label="单位地址">
-            <el-cascader class="from-width-l8"
-              v-model="query.juzhudizhi"
-              placeholder="请选择单位地址"
-              :options="$DefaultArea"
-              :props="{ value: 'name', label: 'name', children: 'list' }"
-              clearable></el-cascader>
+            <el-cascader class="from-width-l8" v-model="companyAddress" placeholder="请选择单位地址"
+              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="text" placeholder="请输入具体地址" style="width: 488px!important"
+            <el-input v-model="companyAddressDesc" placeholder="请输入具体地址" style="width: 488px!important"
               class="from-width-l3 from-width-l7"></el-input>
           </el-form-item>
         </div>
@@ -97,7 +87,7 @@
         </el-form-item>
         <!-- 劳动合同开始时间 -->
         <el-form-item label="劳动合同开始时间">
-          <el-date-picker class="from-width-l1" v-model="query.work_start_time" type="date"
+          <el-date-picker class="from-width-l1" v-model="query.start_time" type="date"
             placeholder="请选择劳动合同开始时间"></el-date-picker>
         </el-form-item>
         <!-- 是否公益性就业 -->
@@ -108,13 +98,13 @@
         </el-form-item>
         <!-- 是否求职 -->
         <el-form-item label="是否求职">
-          <el-select v-model="query.job" class="from-width-l1" placeholder="请选择是否求职">
+          <el-select v-model="query.job_qz" class="from-width-l1" placeholder="请选择是否求职">
             <el-option v-for="item in $option.yesorno" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <!-- 求职岗位 -->
         <el-form-item label="求职岗位">
-          <el-input v-model="query.gangwei" class="from-width-l1" placeholder="请输入求职岗位"></el-input>
+          <el-input v-model="query.job_position" class="from-width-l1" placeholder="请输入求职岗位"></el-input>
         </el-form-item>
         <!-- 薪酬要求 -->
         <el-form-item label="薪酬要求">
@@ -124,7 +114,7 @@
         </el-form-item>
         <!-- 是否培训 -->
         <el-form-item label="是否培训">
-          <el-select v-model="query.peixun" class="from-width-l1" placeholder="请选择是否培训">
+          <el-select v-model="query.job_px" class="from-width-l1" placeholder="请选择是否培训">
             <el-option v-for="item in $option.yesorno" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -136,60 +126,174 @@
         </el-form-item>
         <!-- 查询纬度 -->
         <el-form-item label="查询纬度">
-          <el-select v-model="query.weidu" class="from-width-l1" placeholder="请选择查询纬度">
-            <el-option v-for="item in $option.item23" :key="item" :label="item" :value="item"></el-option>
+          <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
+            <el-option v-for="item in $option.item23" :key="item.name" 
+              :label="item.name" :value="item.name"></el-option>
           </el-select>
         </el-form-item>
         <!-- 操作按钮 -->
         <el-form-item>
-          <el-button type="primary" style="width: 100px; margin-left: 125px">查询</el-button>
+          <el-button type="primary" style="width: 100px; margin-left: 125px" @click="getData">查询</el-button>
         </el-form-item>
-        <!-- 操作按钮 -->
-        <!-- <div style="padding-left: 125px">
-          <el-button type="primary">查询</el-button>
-          <el-button type="primary">数据图表</el-button>
-          <el-button type="primary">Excel下载</el-button>
-        </div> -->
       </el-form>
+
+      <div class="echarts" v-if="showEcharts">
+        <!-- 饼状图 -->
+        <div class="chart-bar-b">
+          <div id="chart-pie" class="chart-bar-canvas"></div>
+        </div>
+        <!-- 柱状图 -->
+        <div class="chart-bar">
+          <div id="chart-bar" class="chart-bar-canvas"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import addressDefault from '@/common/country-level3-data.js'
 export default {
   data() {
     return {
       query: {
         sex: '',
-        domicile_type: '',
+        census_domicile_type: '',
         age: '',
         health_status: '',
         allowance_status: '',
         census_identity: '',
+        domicile_address: ['', '', '', ''],
+        census_address: ['', '', '', '', ''],
+        company_address: ['', '', '', '', ''],
         work_status: '',
         company_type: '',
         company_industry: '',
-        work_start_time: '',
+        start_time: '',
         is_charitable: '',
-        job: '',
-        gangwei: '',
+        job_qz: '',
+        job_position: '',
         job_salary: '',
-        peixun: '',
+        job_px: '',
         skill_level: '',
-        hukoudizhi: '',
-        juzhudizhi: '',
-        weidu: ''
+        field_by: '健康状况'
       },
-      formAddress: addressDefault,
-      text: ''
+      domicileAddress: [],
+      censusAddress: [],
+      companyAddress: [],
+      companyAddressDesc: '',
+      showEcharts: false,
+      addressProps: { value: 'name', label: 'name', children: 'list' }
     };
   },
   methods: {
+    async getData(){
+      let params = {}
+      for(let key in this.query){
+        if(this.query[key]) params[key] = this.query[key]
+      }
+      this.domicileAddress.map((e, index) => {
+        params.domicile_address[index] = e
+      })
+      this.censusAddress.map((e, index) => {
+        params.census_address[index] = e
+      })
+      this.companyAddress.map((e, index) => {
+        params.company_address[index] = e
+      })
+      params.company_address[4] = this.companyAddressDesc
+      let res = await this.$api.integratedQuery(params)
+      if(res.status != 0) return
+      let dataBar = []
+      let dataPie = []
+      res.data.list.map((e) => {
+        dataBar.push([e[res.data.field] || '其他', e.count])
+        dataPie.push({value: e.count, name: e[res.data.field] || '其他'})
+      })
+      this.showEcharts = true
+      this.$nextTick(() => {
+        this.getBar(dataBar)
+        this.getPie(dataPie)
+      })
+    },
+
+    getBar(data){
+      let option = {
+        title: {text: '综合查询', left: 'center'},
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {type: 'shadow'}
+        },
+        grid: {left: '4%', right: '4%'},
+        xAxis: {type: 'category'},
+        yAxis: {type: 'value'},
+        series: [{
+          name: '纬度',
+          type: 'bar',
+          barWidth: '10%',
+          itemStyle: {normal: {color: '#1a9afd', label: {show: true, position: 'top'}}},
+          data: data
+        }]
+      };
+      option.dataZoom = [{xAxisIndex: [0], start: 0, end: 100}]
+      let myChart = this.$allecharts.init(document.getElementById('chart-bar'))
+      myChart.setOption(option)
+    },
+
+    getPie(dataPie){
+      let option = {
+        title: {text: '综合查询', left: 'center'},
+        color: ['#37a2da','#32c5e9','#9fe6b8','#ffdb5c','#ff9f7f','#fb7293','#e7bcf3','#8378ea'],
+        tooltip : {trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
+        series : [{
+          name: this.query.field_by,
+          type:'pie',
+          radius : [0, 130],
+          data: dataPie,
+          label: {normal: {formatter: '{b}({d}%)'}}
+        }]
+      };
+      let myChart = this.$allecharts.init(document.getElementById('chart-pie'))
+      myChart.setOption(option)
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+.echarts{
+  display: flex;
+  margin-top: 30px;
+}
+.chart-bar-b{
+  width: calc(40% - 60px);
+  height: 500px;
+  padding: 30px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  .chart-bar-canvas{
+    width: 100%;
+    height: 100%;
+  }
+}
+.chart-bar{
+  width: calc(60% - 120px);
+  height: 500px;
+  padding: 30px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-left: 30px;
+  .chart-bar-canvas{
+    width: 100%;
+    height: 100%;
+  }
+  .chart-bar-none{
+    color: #999;
+    text-align: center;
+    line-height: 500px;
+  }
+}
 </style>
