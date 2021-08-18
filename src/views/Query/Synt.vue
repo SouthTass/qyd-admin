@@ -60,8 +60,8 @@
               :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="companyAddressDesc" placeholder="请输入具体地址" style="width: 488px!important"
-              class="from-width-l3 from-width-l7"></el-input>
+            <el-input v-model="companyAddressDesc" placeholder="请输入具体地址"
+              style="width: 488px !important" clearable></el-input>
           </el-form-item>
         </div>
         <!-- 现就业状态 -->
