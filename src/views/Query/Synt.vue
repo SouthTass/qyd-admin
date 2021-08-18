@@ -133,13 +133,13 @@
         </el-form-item>
       </el-form>
 
-      <div class="echarts" v-if="showEcharts">
+      <div class="echarts-container" v-if="showEcharts">
         <!-- 饼状图 -->
-        <div class="chart-bar-b">
+        <div class="charts chart-pie">
           <div id="chart-pie" class="chart-bar-canvas"></div>
         </div>
         <!-- 柱状图 -->
-        <div class="chart-bar">
+        <div class="charts chart-bar">
           <div id="chart-bar" class="chart-bar-canvas"></div>
         </div>
       </div>
@@ -260,12 +260,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.echarts{
+.echarts-container{
   display: flex;
   margin-top: 30px;
 }
-.chart-bar-b{
-  width: calc(40% - 60px);
+.charts{
   height: 500px;
   padding: 30px;
   margin-bottom: 15px;
@@ -277,23 +276,11 @@ export default {
     height: 100%;
   }
 }
+.chart-pie{
+  width: calc(40% - 60px);
+}
 .chart-bar{
   width: calc(60% - 120px);
-  height: 500px;
-  padding: 30px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  position: relative;
   margin-left: 30px;
-  .chart-bar-canvas{
-    width: 100%;
-    height: 100%;
-  }
-  .chart-bar-none{
-    color: #999;
-    text-align: center;
-    line-height: 500px;
-  }
 }
 </style>
