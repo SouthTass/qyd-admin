@@ -43,19 +43,15 @@
           </el-select>
         </el-form-item>
         <!-- 户口地址 -->
-        <div>
-          <el-form-item label="户口地址">
-            <el-cascader class="from-width-l8" v-model="domicileAddress" placeholder="请选择户口地址"
-              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
-          </el-form-item>
-        </div>
+        <el-form-item label="户口地址" style="display: block">
+          <el-cascader class="from-width-l8" v-model="domicileAddress" placeholder="请选择户口地址"
+            :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
+        </el-form-item>
         <!-- 居住地址 -->
-        <div>
-          <el-form-item label="居住地址">
-            <el-cascader class="from-width-l8" v-model="censusAddress" placeholder="请选择居住地址"
-              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
-          </el-form-item>
-        </div>
+        <el-form-item label="居住地址" style="display: block">
+          <el-cascader class="from-width-l8" v-model="censusAddress" placeholder="请选择居住地址"
+            :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
+        </el-form-item>
         <!-- 单位地址 -->
         <div>
           <el-form-item label="单位地址">
@@ -200,11 +196,15 @@ export default {
       this.companyAddress.map((e, index) => {
         params.company_address[index] = e
       })
+      if(!this.domicileAddress[0]) delete params.domicile_address
+      if(!this.censusAddress[0]) delete params.census_address
       params.company_address[4] = this.companyAddressDesc
+      if(!this.companyAddress[0]) delete params.company_address
       let res = await this.$api.integratedQuery(params)
       if(res.status != 0) return
       let dataBar = []
       let dataPie = []
+      if(res.data.list.length < 1) return this.$message.error('暂无数据')
       res.data.list.map((e) => {
         dataBar.push([e[res.data.field] || '其他', e.count])
         dataPie.push({value: e.count, name: e[res.data.field] || '其他'})

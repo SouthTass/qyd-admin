@@ -201,8 +201,8 @@ class Api {
   /** 
    * 综合查询
    */
-  async integratedQuery(params){
-    return _axios.get(`/api/integrated/query`, {params: params});
+  async integratedQuery(body){
+    return _axios.post(`/api/integrated/query`, body);
   }
 }
 export default new Api();
