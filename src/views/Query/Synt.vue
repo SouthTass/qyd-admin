@@ -130,8 +130,9 @@
         </el-form-item>
         <!-- 操作按钮 -->
         <el-form-item>
-          <el-button type="primary" style="width: 80px; margin-left: 125px" @click="getData">查询</el-button>
-          <el-button type="danger" style="width: 80px; margin-left: 15px" plain @click="resetForm">重置</el-button>
+          <el-button type="primary" style="width: 60px; margin-left: 60px" @click="getData">查询</el-button>
+          <el-button type="primary" style="width: 60px; margin-left: 15px" @click="getData">图表</el-button>
+          <el-button type="danger" style="width: 60px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
 
