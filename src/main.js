@@ -61,17 +61,29 @@ new Vue({
   methods: {
     // 根据身份证号码计算年龄
     computedAge(str){
-      return this.$dayjs().format('YYYY') - str.slice(6,10)
+      if(str){
+        return this.$dayjs().format('YYYY') - str.slice(6,10)
+      }else{
+        return ''
+      }
     },
 
     // 根据身份证号码计算性别
     computedSex(str){
-      return str.slice(16, 17) % 2 ? '男' : '女'
+      if(str){
+        return str.slice(16, 17) % 2 ? '男' : '女'
+      }else{
+        return ''
+      }
     },
 
     // 根据身份证号码计算出生日期
     computedBirthday(str){
-      return `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
+      if(str){
+        return `${str.slice(6,10)}-${str.slice(10,12)}-${str.slice(12,14)}`
+      }else{
+        return ''
+      }
     },
   },
   router,
