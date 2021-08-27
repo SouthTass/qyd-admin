@@ -145,6 +145,7 @@ export default {
         user_name: "",
         page_index: 1,
         page_number: 7,
+        census_type: 2
       },
       exportText: "全部",
     };

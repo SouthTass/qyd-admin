@@ -41,6 +41,7 @@ class Api {
 
   /** 
    * 分类列表
+   * @param {string} name           分类名称
    */
    async categoryList(name){
     return _axios.get(`/api/category/list?category_names=${name}`);
@@ -50,7 +51,7 @@ class Api {
    * 人员、异常、注销列表
    */
   async censusList(params){
-    return _axios.get(`/api/census/list`, {params: params});
+    return _axios.get(`/api/census/list`, {params: {...params}});
   }
 
   /** 

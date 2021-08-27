@@ -624,6 +624,18 @@ export default {
       })
     },
 
+    // 修改信息
+    async censusUpdate(body, type){
+      let res = await this.$api.censusUpdate(body)
+      if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
+      if(res.data.hasOwnProperty('status')){
+        this.$message.error(res.data.message)
+      }else{
+        this.$message.success('修改成功')
+        if(type == 'formatConfig') this.foramtUserConfig()
+      }
+    },
+
     // 处理api保存数据
     async saveInfoApi(type){
       let body = JSON.parse(JSON.stringify(this.$root.user))
@@ -674,18 +686,6 @@ export default {
         this.$message.error(res.data.message)
       }else{
         this.$message.success('录入成功')
-        if(type == 'formatConfig') this.foramtUserConfig()
-      }
-    },
-
-    // 修改信息
-    async censusUpdate(body, type){
-      let res = await this.$api.censusUpdate(body)
-      if(res.status != 0) return this.$message.error('系统错误，请稍后再试')
-      if(res.data.hasOwnProperty('status')){
-        this.$message.error(res.data.message)
-      }else{
-        this.$message.success('修改成功')
         if(type == 'formatConfig') this.foramtUserConfig()
       }
     },
