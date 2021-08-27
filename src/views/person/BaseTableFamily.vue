@@ -10,7 +10,7 @@
       <!-- 检索框 -->
       <div class="handle-box">
         <el-input v-model="userName" placeholder="请输入户主身份证号或姓名"
-          :disabled="memberData.length > 0" class="handle-input mr10"></el-input>
+          :disabled="memberData.length > 0" class="handle-input"></el-input>
         <el-button type="primary" icon="el-icon-search" v-if="memberData.length < 1"
           @click="domicileList()">检索</el-button>
         <el-button type="primary" icon="el-icon-arrow-left" v-if="memberData.length > 0"
@@ -68,6 +68,8 @@
         </el-table-column>
       </el-table>
     </div>
+
+    <!-- 成员信息组件 -->
     <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
   </div>
 </template>
@@ -109,8 +111,6 @@ export default {
 .handle-input {
   width: 300px;
   display: inline-block;
-}
-.mr10 {
   margin-right: 10px;
 }
 </style>

@@ -130,8 +130,8 @@
         </el-form-item>
         <!-- 操作按钮 -->
         <el-form-item>
-          <el-button type="primary" style="width: 71px; margin-left: 60px" @click="getData">查询</el-button>
-          <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData">图表</el-button>
+          <el-button type="primary" style="width: 71px; margin-left: 60px" @click="getList()">查询</el-button>
+          <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
           <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -144,6 +144,49 @@
         <div class="charts chart-bar">
           <div id="chart-bar" class="chart-bar-canvas"></div>
         </div>
+      </div>
+      
+      <!-- 列表 -->
+      <el-table v-if="showList" border class="table" :data="list" ref="multipleTable" header-cell-class-name="table-header">
+        <el-table-column prop="card_number" label="身份证号" width="170" align="center"></el-table-column>
+        <el-table-column prop="census_name" label="姓名" width="100"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="50" align="center">
+          <template slot-scope="scope">{{$root.computedSex(scope.row.card_number)}}</template>
+        </el-table-column>
+        <el-table-column prop="census_domicile_type" label="户籍性质" width="80" align="center"></el-table-column>
+        <el-table-column prop="date" label="年龄" width="50" align="center">
+          <template slot-scope="scope">{{$root.computedAge(scope.row.card_number)}}</template>
+        </el-table-column>
+        <el-table-column prop="work_status" label="是否就业" width="100" align="center"></el-table-column>
+        <el-table-column prop="name" label="居住地址">
+          <template slot-scope="scope">
+            {{ scope.row.census_city }}
+            {{ scope.row.census_area }}
+            {{ scope.row.census_town }}
+            {{ scope.row.census_village }}
+            {{ scope.row.house_number }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="phone_number" label="联系电话" width="120" align="center"></el-table-column>
+        <!-- <el-table-column label="操作" width="310" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini"
+              @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
+            <el-button type="warning" size="mini"
+              @click="openPersonageInput(scope.row)">修改</el-button>
+            <el-button type="danger" size="mini"
+              @click="$refs.componentsLogout.show(scope.row)">注销</el-button>
+            <el-button type="primary" size="mini"
+              @click="$refs.componentsChangeRecord.show(scope.row)">变更记录</el-button>
+          </template>
+        </el-table-column> -->
+      </el-table>
+      <div class="pagination" v-if="showList">
+        <el-pagination background layout="total, prev, pager, next"
+          :current-page="pageIndex"
+          :page-size="pageNumber"
+          :total="pageTotal"
+          @current-change="getList"></el-pagination>
       </div>
     </div>
   </div>
@@ -159,29 +202,20 @@ export default {
       companyAddress: [],
       companyAddressDesc: '',
       showEcharts: false,
-      addressProps: { value: 'name', label: 'name', children: 'list' }
+      addressProps: { value: 'name', label: 'name', children: 'list' },
+      list: [],
+      showList: false,
+      pageIndex: 1,
+      pageNumber: 8,
+      pageTotal: 0
     };
   },
   methods: {
     async getData(){
-      let params = {}
-      for(let key in this.query){
-        if(this.query[key]) params[key] = this.query[key]
-      }
-      this.domicileAddress.map((e, index) => {
-        params.domicile_address[index] = e
-      })
-      this.censusAddress.map((e, index) => {
-        params.census_address[index] = e
-      })
-      this.companyAddress.map((e, index) => {
-        params.company_address[index] = e
-      })
-      if(!this.domicileAddress[0]) delete params.domicile_address
-      if(!this.censusAddress[0]) delete params.census_address
-      params.company_address[4] = this.companyAddressDesc
-      if(!this.companyAddress[0]) delete params.company_address
-      let res = await this.$api.integratedQuery(params)
+      this.showList = false
+      this.pageIndex = 1
+      this.pageTotal = 0
+      let res = await this.$api.integratedQuery(this.computedData())
       if(res.status != 0) return
       let dataBar = []
       let dataPie = []
@@ -245,6 +279,43 @@ export default {
       })
       if(dialog != 'confirm') return
       this.query = JSON.parse(JSON.stringify(this.$option.querysynt))
+    },
+    
+    computedData(){
+      let params = {}
+      for(let key in this.query){
+        if(this.query[key]) params[key] = this.query[key]
+      }
+      this.domicileAddress.map((e, index) => {
+        params.domicile_address[index] = e
+      })
+      this.censusAddress.map((e, index) => {
+        params.census_address[index] = e
+      })
+      this.companyAddress.map((e, index) => {
+        params.company_address[index] = e
+      })
+      if(!this.domicileAddress[0]) delete params.domicile_address
+      if(!this.censusAddress[0]) delete params.census_address
+      params.company_address[4] = this.companyAddressDesc
+      if(!this.companyAddress[0]) delete params.company_address
+      return params
+    },
+
+    async getList(index){
+      this.showEcharts = false
+      this.pageIndex = index || 1
+      let body = this.computedData()
+      body.page_index = this.pageIndex
+      body.page_number = this.pageNumber
+      let res = await this.$api.integratedList(body, {
+        page_index: this.pageIndex, 
+        page_number: this.pageNumber
+      })
+      if(res.status != 0) return
+      this.pageTotal = res.data.total_rows
+      this.list = res.data.list
+      this.showList = true
     }
   },
 };

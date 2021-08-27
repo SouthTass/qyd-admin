@@ -200,10 +200,19 @@ class Api {
   }
 
   /** 
-   * 综合查询
+   * 综合查询图表
    */
   async integratedQuery(body){
     return _axios.post(`/api/integrated/query`, body);
+  }
+
+  /** 
+   * 综合查询列表
+   */
+  async integratedList(body, params){
+    return _axios.post(`/api/integrated/list`, body, {
+      params: params
+    });
   }
 }
 export default new Api();
