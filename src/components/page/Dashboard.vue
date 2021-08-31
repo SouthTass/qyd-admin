@@ -10,14 +10,8 @@ export default {
       name: localStorage.getItem("qyd_username")
     }
   },
-  created: {
-
-  },
   methods: {
 
   },
 };
 </script>
-
-<style scoped>
-</style>

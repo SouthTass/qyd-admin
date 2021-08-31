@@ -25,23 +25,23 @@
           <el-input-number v-model="query.age" :min="1" :max="1000" class="from-width-l1"
             placeholder="请输入年龄"></el-input-number>
         </el-form-item>
-        <!-- 健康状况 -->
-        <el-form-item label="健康状况">
-          <el-select v-model="query.health_status" class="from-width-l1" placeholder="请选择健康状况">
-            <el-option v-for="item in $option.item17" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
-        </el-form-item>
         <!-- 是否低保 -->
         <el-form-item label="是否低保">
           <el-select v-model="query.allowance_status" class="from-width-l1" placeholder="请选择是否为低保">
             <el-option v-for="item in $option.yesorno" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
+        <!-- 健康状况 -->
+        <el-form-item label="健康状况" style="display: block">
+          <el-checkbox-group v-model="query.health_status">
+            <el-checkbox v-for="item in $option.item17" :key="item" :label="item" :value="item"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
         <!-- 特殊身份 -->
-        <el-form-item label="特殊身份">
-          <el-select v-model="query.census_identity" class="from-width-l1" placeholder="请选择特殊身份">
-            <el-option v-for="item in $option.item12" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="特殊身份" style="display: block">
+          <el-checkbox-group v-model="query.census_identity">
+            <el-checkbox v-for="item in $option.item12" :key="item" :label="item" :value="item"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <!-- 户口地址 -->
         <el-form-item label="户口地址" style="display: block">
@@ -65,22 +65,22 @@
           </el-form-item>
         </div>
         <!-- 现就业状态 -->
-        <el-form-item label="现就业状态">
-          <el-select v-model="query.work_status" class="from-width-l1" placeholder="请选择现就业状态">
-            <el-option v-for="item in $option.work_status" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="现就业状态" style="display: block">
+          <el-checkbox-group v-model="query.work_status">
+            <el-checkbox v-for="item in $option.work_status" :key="item" :label="item" :value="item"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <!-- 单位性质 -->
-        <el-form-item label="单位性质">
-          <el-select v-model="query.company_type" class="from-width-l1" placeholder="请选择单位性质">
-            <el-option v-for="item in $option.item2" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="单位性质" style="display: block">
+          <el-checkbox-group v-model="query.company_type">
+            <el-checkbox v-for="item in $option.item2" :key="item" :label="item" :value="item"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <!-- 单位产业 -->
-        <el-form-item label="单位产业">
-          <el-select v-model="query.company_industry" class="from-width-l1" placeholder="请选择单位产业">
-            <el-option v-for="item in $option.item3" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="单位产业" style="display: block">
+          <el-checkbox-group v-model="query.company_industry">
+            <el-checkbox v-for="item in $option.item3" :key="item" :label="item" :value="item"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <!-- 劳动合同开始时间 -->
         <el-form-item label="劳动合同开始时间">
@@ -219,7 +219,10 @@ export default {
       if(res.status != 0) return
       let dataBar = []
       let dataPie = []
-      if(res.data.list.length < 1) return this.$message.error('暂无数据')
+      if(res.data.list.length < 1) {
+        this.showEcharts = false
+        return this.$message.error('暂无数据')
+      }
       res.data.list.map((e) => {
         dataBar.push([e[res.data.field] || '其他', e.count])
         dataPie.push({value: e.count, name: e[res.data.field] || '其他'})
@@ -299,7 +302,19 @@ export default {
       if(!this.censusAddress[0]) delete params.census_address
       params.company_address[4] = this.companyAddressDesc
       if(!this.companyAddress[0]) delete params.company_address
-      return params
+
+      // 处理多选情况
+      params.health_status = params.health_status.join(',')
+      params.census_identity = params.census_identity.join(',')
+      params.work_status = params.work_status.join(',')
+      params.company_type = params.company_type.join(',')
+      params.company_industry = params.company_industry.join(',')
+
+      let tmp = {}
+      for(let key in params){
+        if(params[key]) tmp[key] = params[key]
+      }
+      return tmp
     },
 
     async getList(index){
@@ -344,5 +359,8 @@ export default {
 .chart-bar{
   width: 60%;
   margin-left: 15px;
+}
+.form-container ::v-deep .el-checkbox{
+  width: 80px;
 }
 </style>

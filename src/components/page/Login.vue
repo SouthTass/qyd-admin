@@ -48,6 +48,16 @@ export default {
       },
     };
   },
+  mounted(){
+    this.$nextTick( e => {
+      let dom = document.getElementById('app')
+      dom.style['background'] = '#324157'
+    })
+  },
+  destroyed(){
+    let dom = document.getElementById('app')
+    dom.style['background'] = '#fff'
+  },
   methods: {
     async submitForm() {
       let validates = await this.$refs.login.validate()

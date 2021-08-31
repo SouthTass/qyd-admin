@@ -82,7 +82,12 @@ export default new Router({
           path: '/limitsperson',
           component: () => import(/* webpackChunkName: "limitperson" */ '../views/limits/LimitsPerson.vue'),
           meta: { title: '账号管理' }
-        }
+        },
+        {
+          path: '/test',
+          component: () => import(/* webpackChunkName: "limitperson" */ '../views/Test.vue'),
+          meta: { title: '账号管理' }
+        },
       ]
     },
     {
