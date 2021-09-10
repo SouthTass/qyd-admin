@@ -22,6 +22,14 @@ a {
 
 html, body, #app {
   height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  background-image: linear-gradient(#fff, rgba(104, 147, 206, 0.5));
+}
+.wrapper{
+  height: 100vh;
+  background-color: #FFF;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 
@@ -32,6 +40,7 @@ html, body, #app {
     right: 0;
     /* top: 70px; */
     bottom: 0;
+    top: 70px;
     -webkit-transition: left .3s ease-in-out;
     transition: left .3s ease-in-out;
     background: #fff;

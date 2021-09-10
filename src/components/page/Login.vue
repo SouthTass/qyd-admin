@@ -56,7 +56,7 @@ export default {
   },
   destroyed(){
     let dom = document.getElementById('app')
-    dom.style['background'] = '#fff'
+    dom.style['background-image'] = 'linear-gradient(#fff, rgba(104, 147, 206, 0.5))'
   },
   methods: {
     async submitForm() {

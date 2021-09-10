@@ -7,7 +7,7 @@
     </div>
     <div class="container">
       <!-- 表单 -->
-      <el-form ref="census" :inline="true" label-width="125px" class="form-container">
+      <el-form ref="census" :inline="true" label-width="125px" class="form-container" :class="{'form-hidden': !fromShow}">
         <!-- 性别 -->
         <el-form-item label="性别">
           <el-select v-model="query.sex" class="from-width-l1" placeholder="请选择性别">
@@ -25,11 +25,26 @@
           <el-input-number v-model="query.age" :min="1" :max="1000" class="from-width-l1"
             placeholder="请输入年龄"></el-input-number>
         </el-form-item>
+
+        <el-button v-if="!fromShow" type="primary" plain @click="fromShow = true">展开查询</el-button>
         <!-- 是否低保 -->
         <el-form-item label="是否低保">
           <el-select v-model="query.allowance_status" class="from-width-l1" placeholder="请选择是否为低保">
             <el-option v-for="item in $option.yesorno" :key="item" :label="item" :value="item"></el-option>
           </el-select>
+        </el-form-item>
+        <!-- 查询纬度 -->
+        <el-form-item label="查询纬度" v-if="!fromShow">
+          <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
+            <el-option v-for="item in $option.item23" :key="item.name" 
+              :label="item.name" :value="item.name"></el-option>
+          </el-select>
+        </el-form-item>
+        <!-- 操作按钮 -->
+        <el-form-item v-if="!fromShow">
+          <el-button type="primary" style="width: 71px; margin-left: 125px" @click="getList()">查询</el-button>
+          <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
+          <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
         <!-- 健康状况 -->
         <el-form-item label="健康状况" style="display: block">
@@ -43,6 +58,7 @@
             <el-checkbox v-for="item in $option.item12" :key="item" :label="item" :value="item"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+        
         <!-- 户口地址 -->
         <el-form-item label="户口地址" style="display: block">
           <el-cascader class="from-width-l8" v-model="domicileAddress" placeholder="请选择户口地址"
@@ -135,6 +151,7 @@
           <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
+      
 
       <!-- 图表 -->
       <div class="echarts-container" v-if="showEcharts">
@@ -207,7 +224,8 @@ export default {
       showList: false,
       pageIndex: 1,
       pageNumber: 8,
-      pageTotal: 0
+      pageTotal: 0,
+      fromShow: true
     };
   },
   methods: {
@@ -231,6 +249,7 @@ export default {
       this.$nextTick(() => {
         this.getBar(dataBar)
         this.getPie(dataPie)
+        this.fromShow = false
       })
     },
 
@@ -331,6 +350,7 @@ export default {
       this.pageTotal = res.data.total_rows
       this.list = res.data.list
       this.showList = true
+      this.fromShow = false
     }
   },
 };
@@ -339,10 +359,10 @@ export default {
 <style lang="scss" scoped>
 .echarts-container{
   display: flex;
-  margin-top: 30px;
+  // margin-top: 30px;
 }
 .charts{
-  height: 500px;
+  height: 400px;
   padding: 30px;
   margin-bottom: 15px;
   border-radius: 4px;
@@ -362,5 +382,9 @@ export default {
 }
 .form-container ::v-deep .el-checkbox{
   width: 80px;
+}
+.form-hidden{
+  height: 200px;
+  overflow: hidden;
 }
 </style>
