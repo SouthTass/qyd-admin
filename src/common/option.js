@@ -59,6 +59,8 @@ let option = {
     sex: '',
     census_domicile_type: '',
     age: '',
+    age1: '',
+    age2: '',
     health_status: [],
     allowance_status: '',
     census_identity: [],

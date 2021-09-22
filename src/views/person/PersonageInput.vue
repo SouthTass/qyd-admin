@@ -3,6 +3,7 @@
     :rules="rules"
     :inline="true"
     :model="$root.user"
+    :disabled="$route.query.pageType == 'see'"
     label-width="120px" class="form-container">
     <!-- 户主信息 -->
     <div class="form-item">
@@ -550,7 +551,21 @@ export default {
     }
   },
   created() {
-    if(this.$route.query.id) this.censusGet()
+    if(this.$route.query.id) {
+      this.censusGet()
+    }
+  },
+  watch: {
+    '$route': {
+      handler(){
+        if(this.$route.query.menu == 'true'){
+          this.$root.user = JSON.parse(JSON.stringify(this.$baseConfig))
+          this.$nextTick(() => {
+            this.$refs['PersonageInput'].resetFields()
+          })
+        }
+      }
+    }
   },
   methods: {
     // 查询个人信息
@@ -741,7 +756,7 @@ export default {
 
 <style lang="scss" scoped>
 .form-container{
-  width: 1335px;
+  width: 1110px;
   margin-left: 30px;
 }
 .form-container .form-item{
@@ -753,8 +768,13 @@ export default {
   padding-bottom: 15px;
   text-align: center;
 }
+.form-container .form-item ::v-deep .el-form-item__label{
+  color: #000;
+  font-weight: 900;
+  font-size: 14px;
+}
 .from-width-l1{
-  width: 277px !important;
+  width: 177px !important;
 }
 .from-width-l2{
   width: 792px !important;
@@ -778,7 +798,7 @@ export default {
   width: 302px !important;
 }
 .from-width-l9{
-  width: 685px!important
+  width: 485px!important
 }
 .from-width-l10{
   width: 395px!important

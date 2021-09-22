@@ -22,29 +22,17 @@
         </el-form-item>
         <!-- 年龄 -->
         <el-form-item label="年龄">
-          <el-input-number v-model="query.age" :min="1" :max="1000" class="from-width-l1"
-            placeholder="请输入年龄"></el-input-number>
+          <el-input v-model="query.age1" style="width: 60px" 
+            @input="query.age1 = query.age1.replace(/[^\d]/g, '')"></el-input>
+            --
+          <el-input v-model="query.age2" style="width: 60px"
+            @input="query.age2 = query.age2.replace(/[^\d]/g, '')"></el-input>
         </el-form-item>
-
-        <el-button v-if="!fromShow" type="primary" plain @click="fromShow = true">展开查询</el-button>
         <!-- 是否低保 -->
         <el-form-item label="是否低保">
           <el-select v-model="query.allowance_status" class="from-width-l1" placeholder="请选择是否为低保">
             <el-option v-for="item in $option.yesorno" :key="item" :label="item" :value="item"></el-option>
           </el-select>
-        </el-form-item>
-        <!-- 查询纬度 -->
-        <el-form-item label="查询纬度" v-if="!fromShow">
-          <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
-            <el-option v-for="item in $option.item23" :key="item.name" 
-              :label="item.name" :value="item.name"></el-option>
-          </el-select>
-        </el-form-item>
-        <!-- 操作按钮 -->
-        <el-form-item v-if="!fromShow">
-          <el-button type="primary" style="width: 71px; margin-left: 125px" @click="getList()">查询</el-button>
-          <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
-          <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
         </el-form-item>
         <!-- 健康状况 -->
         <el-form-item label="健康状况" style="display: block">
@@ -58,7 +46,22 @@
             <el-checkbox v-for="item in $option.item12" :key="item" :label="item" :value="item"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        
+        <div v-if="!fromShow">
+          <!-- 查询纬度 -->
+          <el-form-item label="查询纬度">
+            <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
+              <el-option v-for="item in $option.item23" :key="item.name" 
+                :label="item.name" :value="item.name"></el-option>
+            </el-select>
+          </el-form-item>
+          <!-- 操作按钮 -->
+          <el-form-item>
+            <el-button type="primary" style="width: 71px; margin-left: 60px" @click="getList()">查询</el-button>
+            <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
+            <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
+          </el-form-item>
+          <el-button type="primary" plain @click="fromShow = true">展开查询</el-button>
+        </div>
         <!-- 户口地址 -->
         <el-form-item label="户口地址" style="display: block">
           <el-cascader class="from-width-l8" v-model="domicileAddress" placeholder="请选择户口地址"
@@ -69,22 +72,16 @@
           <el-cascader class="from-width-l8" v-model="censusAddress" placeholder="请选择居住地址"
             :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
         </el-form-item>
-        <!-- 单位地址 -->
-        <div>
-          <el-form-item label="单位地址">
-            <el-cascader class="from-width-l8" v-model="companyAddress" placeholder="请选择单位地址"
-              :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="companyAddressDesc" placeholder="请输入具体地址"
-              style="width: 488px !important" clearable></el-input>
-          </el-form-item>
-        </div>
         <!-- 现就业状态 -->
         <el-form-item label="现就业状态" style="display: block">
           <el-checkbox-group v-model="query.work_status">
             <el-checkbox v-for="item in $option.work_status" :key="item" :label="item" :value="item"></el-checkbox>
           </el-checkbox-group>
+        </el-form-item>
+        <!-- 单位地址 -->
+        <el-form-item label="单位地址" style="display: block">
+          <el-cascader class="from-width-l8" v-model="companyAddress" placeholder="请选择单位地址"
+            :options="$DefaultArea" :props="addressProps" clearable></el-cascader>
         </el-form-item>
         <!-- 单位性质 -->
         <el-form-item label="单位性质" style="display: block">
@@ -137,22 +134,23 @@
             <el-option v-for="item in $option.item9" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <!-- 查询纬度 -->
-        <el-form-item label="查询纬度">
-          <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
-            <el-option v-for="item in $option.item23" :key="item.name" 
-              :label="item.name" :value="item.name"></el-option>
-          </el-select>
-        </el-form-item>
-        <!-- 操作按钮 -->
-        <el-form-item>
-          <el-button type="primary" style="width: 71px; margin-left: 60px" @click="getList()">查询</el-button>
-          <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
-          <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
-        </el-form-item>
+        <div>
+          <!-- 查询纬度 -->
+          <el-form-item label="查询纬度">
+            <el-select v-model="query.field_by" class="from-width-l1" placeholder="请选择查询纬度">
+              <el-option v-for="item in $option.item23" :key="item.name" 
+                :label="item.name" :value="item.name"></el-option>
+            </el-select>
+          </el-form-item>
+          <!-- 操作按钮 -->
+          <el-form-item>
+            <el-button type="primary" style="width: 71px; margin-left: 60px" @click="getList()">查询</el-button>
+            <el-button type="primary" style="width: 71px; margin-left: 15px" @click="getData()">图表</el-button>
+            <el-button type="danger" style="width: 71px; margin-left: 15px" plain @click="resetForm">重置</el-button>
+          </el-form-item>
+        </div>
       </el-form>
       
-
       <!-- 图表 -->
       <div class="echarts-container" v-if="showEcharts">
         <div class="charts chart-pie">
@@ -166,7 +164,11 @@
       <!-- 列表 -->
       <el-table v-if="showList" border class="table" :data="list" ref="multipleTable" header-cell-class-name="table-header">
         <el-table-column prop="card_number" label="身份证号" width="170" align="center"></el-table-column>
-        <el-table-column prop="census_name" label="姓名" width="100"></el-table-column>
+        <el-table-column prop="census_name" label="姓名" width="100">
+          <template slot-scope="scope">
+            <span @click="openDialog(scope.row)" style="color: #0091ff; cursor: pointer">{{scope.row.census_name}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="sex" label="性别" width="50" align="center">
           <template slot-scope="scope">{{$root.computedSex(scope.row.card_number)}}</template>
         </el-table-column>
@@ -185,19 +187,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="phone_number" label="联系电话" width="120" align="center"></el-table-column>
-        <!-- <el-table-column label="操作" width="310" align="center">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini"
-              @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
-            <el-button type="warning" size="mini"
-              @click="openPersonageInput(scope.row)">修改</el-button>
-            <el-button type="danger" size="mini"
-              @click="$refs.componentsLogout.show(scope.row)">注销</el-button>
-            <el-button type="primary" size="mini"
-              @click="$refs.componentsChangeRecord.show(scope.row)">变更记录</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
+
+      <!-- 分页 -->
       <div class="pagination" v-if="showList">
         <el-pagination background layout="total, prev, pager, next"
           :current-page="pageIndex"
@@ -205,6 +197,20 @@
           :total="pageTotal"
           @current-change="getList"></el-pagination>
       </div>
+
+      <!-- 人员详情 -->
+      <el-dialog :visible.sync="dialogVisible" width="800px">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+          <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+          <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+          <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        </el-tabs>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -217,15 +223,15 @@ export default {
       domicileAddress: [],
       censusAddress: [],
       companyAddress: [],
-      companyAddressDesc: '',
       showEcharts: false,
-      addressProps: { value: 'name', label: 'name', children: 'list' },
+      addressProps: { value: 'name', label: 'name', children: 'list', checkStrictly: true },
       list: [],
       showList: false,
       pageIndex: 1,
       pageNumber: 8,
       pageTotal: 0,
-      fromShow: true
+      fromShow: true,
+      dialogVisible: false
     };
   },
   methods: {
@@ -281,6 +287,16 @@ export default {
         title: {text: '综合查询', left: 'center'},
         color: ['#37a2da','#32c5e9','#9fe6b8','#ffdb5c','#ff9f7f','#fb7293','#e7bcf3','#8378ea'],
         tooltip : {trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
+        legend: {
+          orient: 'vertical',
+          left: '70%',  //图例距离左的距离
+          y: 'bottom',  //图例上下居中
+          data: dataPie,
+          formatter: function(name){
+            let index = dataPie.findIndex(e => e.name == name)
+            if(index != -1) return `${name}(${dataPie[index].value})`
+          }
+        },
         series : [{
           name: this.query.field_by,
           type:'pie',
@@ -319,7 +335,6 @@ export default {
       })
       if(!this.domicileAddress[0]) delete params.domicile_address
       if(!this.censusAddress[0]) delete params.census_address
-      params.company_address[4] = this.companyAddressDesc
       if(!this.companyAddress[0]) delete params.company_address
 
       // 处理多选情况
@@ -333,6 +348,23 @@ export default {
       for(let key in params){
         if(params[key]) tmp[key] = params[key]
       }
+
+      // 处理年龄
+      if(this.query.age1 && this.query.age1 >= 0){
+        if(this.query.age2 && this.query.age2 >= 0){
+          if(parseInt(this.query.age1) >= parseInt(this.query.age2)){
+            return this.$message.error('请填写正确的年龄段')
+          }else{
+            tmp.age = `${this.query.age1}-${this.query.age2}`
+          }
+        }else{
+          return this.$message.error('请填写正确的年龄段')
+        }
+      }else if(this.query.age2 && this.query.age2 >= 0){
+        return this.$message.error('请填写正确的年龄段')
+      }
+      delete tmp.age1
+      delete tmp.age2
       return tmp
     },
 
@@ -351,6 +383,10 @@ export default {
       this.list = res.data.list
       this.showList = true
       this.fromShow = false
+    },
+
+    openDialog(item){
+      this.dialogVisible = true
     }
   },
 };
@@ -362,7 +398,7 @@ export default {
   // margin-top: 30px;
 }
 .charts{
-  height: 400px;
+  height: 450px;
   padding: 30px;
   margin-bottom: 15px;
   border-radius: 4px;
@@ -384,7 +420,7 @@ export default {
   width: 80px;
 }
 .form-hidden{
-  height: 200px;
+  height: 263px;
   overflow: hidden;
 }
 </style>

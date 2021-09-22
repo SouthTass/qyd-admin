@@ -10,8 +10,8 @@
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="openPersonageInput()" 
-          style="float:right">录入信息</el-button>
+        <!-- <el-button type="primary" icon="el-icon-plus" @click="openPersonageInput()" 
+          style="float:right">录入信息</el-button> -->
         <el-button type="danger" icon="el-icon-download" plain style="float: right"
           @click="censusExport">导出数据</el-button>
         <el-select v-model="exportText" filterable style="float: right; margin-left: 10px">
@@ -46,9 +46,9 @@
         <el-table-column label="操作" width="310" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini"
-              @click="$refs.componentsInfo.show(scope.row)">查看</el-button>
+              @click="openPersonageInput(scope.row, 'see')">查看</el-button>
             <el-button type="warning" size="mini"
-              @click="openPersonageInput(scope.row)">修改</el-button>
+              @click="openPersonageInput(scope.row, 'change')">修改</el-button>
             <el-button type="danger" size="mini"
               @click="$refs.componentsLogout.show(scope.row)">注销</el-button>
             <el-button type="primary" size="mini"
@@ -68,18 +68,19 @@
     </div>
     
     <!-- 个人信息、注销弹窗、变更记录 -->
-    <ComponentsInfo ref="componentsInfo"></ComponentsInfo>
+    <!-- <ComponentsInfo ref="componentsInfo"></ComponentsInfo> -->
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
     <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
 
 <script>
-import ComponentsInfo from '@/components/person/Info'
+// import ComponentsInfo from '@/components/person/Info'
 import ComponentsLogout from "@/components/person/Logout"
 import ComponentsChangeRecord from "@/components/person/ChangeRecord"
 export default {
-  components: { ComponentsChangeRecord, ComponentsInfo, ComponentsLogout },
+  // components: { ComponentsChangeRecord, ComponentsInfo, ComponentsLogout },
+  components: { ComponentsChangeRecord, ComponentsLogout },
   data() {
     return {
       pageTotal: 0,
@@ -113,14 +114,19 @@ export default {
     },
 
     // 打开信息录入的新页面
-    openPersonageInput(item){
+    openPersonageInput(item, type){
       let query = {type: 'PersonageInput'}
       if(item) query.id = item.id
-      let routeUrl = this.$router.resolve({
-        path: "/personageinput",
+      // let routeUrl = this.$router.resolve({
+      //   path: "/personageinput",
+      //   query: query
+      // });
+      // window.open(routeUrl .href, '_blank');
+      if(type) query.pageType = type
+      this.$router.push({
+        path: '/personageinput',
         query: query
-      });
-      window.open(routeUrl .href, '_blank');
+      })
     }
   },
 };

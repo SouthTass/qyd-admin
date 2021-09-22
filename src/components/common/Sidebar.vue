@@ -59,30 +59,13 @@ export default {
             {
               icon: "el-icon-user",
               index: "personbasetable",
-              title: "个人管理",
+              title: "个人信息",
             },
-            // {
-            //   icon: "el-icon-user",
-            //   index: "1-1",
-            //   title: "信息管理",
-            //   subs: [
-            //     {
-            //       icon: "el-icon-c-scale-to-original",
-            //       index: "personbasetable",
-            //       title: "查询",
-            //     },
-            //     {
-            //       icon: "el-icon-c-scale-to-original",
-            //       index: "personbasetable",
-            //       title: "录入",
-            //     },
-            //     {
-            //       icon: "el-icon-c-scale-to-original",
-            //       index: "personbasetable",
-            //       title: "修改",
-            //     }
-            //   ]
-            // },
+            {
+              icon: "el-icon-edit",
+              index: "personageinput?type=PersonageInput&menu=true",
+              title: "个人登记"
+            },
             {
               icon: "el-icon-c-scale-to-original",
               index: "personbasetablefamily",
@@ -175,13 +158,9 @@ export default {
   computed: {
     onRoutes() {
       if(this.$route.path == '/personageinput'){
-        if(this.$route.query.type == 'PersonageInput'){
-          return 'personbasetable'
-        }else if(this.$route.query.type == 'PersonageInputOut'){
-          return 'personbasetableout'
-        }
+        return this.$route.fullPath.replace('/', '')
       }else{
-        return this.$route.path.replace("/", "");
+        return this.$route.path.replace("/", "")
       }
     },
   },
