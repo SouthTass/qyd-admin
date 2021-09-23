@@ -201,10 +201,12 @@
       <!-- 人员详情 -->
       <el-dialog :visible.sync="dialogVisible" width="800px">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-          <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-          <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="户主信息" name="1"></el-tab-pane>
+          <el-tab-pane label="家庭成员基本信息" name="2"></el-tab-pane>
+          <el-tab-pane label="就业信息" name="3"></el-tab-pane>
+          <el-tab-pane label="社会保险信息" name="4"></el-tab-pane>
+          <el-tab-pane label="培训求职信息" name="5"></el-tab-pane>
+          <el-tab-pane label="系统信息" name="6"></el-tab-pane>
         </el-tabs>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -231,7 +233,9 @@ export default {
       pageNumber: 8,
       pageTotal: 0,
       fromShow: true,
-      dialogVisible: false
+      dialogVisible: false,
+      info: {},
+      activeName: '1'
     };
   },
   methods: {
@@ -385,7 +389,42 @@ export default {
       this.fromShow = false
     },
 
-    openDialog(item){
+    async openDialog(item){
+      let res = await this.$api.censusGet(item.id)
+      if(res.status != 0) return
+
+      // 将培训信息分类整理
+      let job = {
+        hunting: "是",
+        hunting_list: [],
+        skill: '是',
+        skill_list: []
+      }
+      res.data.job_res.map((e) => {
+        if(e.job_hunting == '是'){
+          job.hunting_list.push(e)
+        }else{
+          job.skill_list.push(e)
+        }
+      })
+      res.data.job = job
+
+      // 如果为自由创业，则格式化数据
+      res.data.work_res.accord = {
+        name: "",
+        address: "",
+        address_desc: "",
+        desc: "",
+        type: "",
+        number: ""
+      }
+      let config = {}
+      if(res.data.work_res.work_status && res.data.work_res.work_configs.length > 10){
+        config = JSON.parse(res.data.work_res.work_configs)
+        Object.assign(res.data.work_res.accord, config)
+      }
+
+      this.info = res.data
       this.dialogVisible = true
     }
   },
