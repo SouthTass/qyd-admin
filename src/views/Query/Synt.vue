@@ -177,6 +177,7 @@
           <template slot-scope="scope">{{$root.computedAge(scope.row.card_number)}}</template>
         </el-table-column>
         <el-table-column prop="work_status" label="是否就业" width="100" align="center"></el-table-column>
+        <el-table-column prop="phone_number" label="联系电话" width="120" align="center"></el-table-column>
         <el-table-column prop="name" label="居住地址">
           <template slot-scope="scope">
             {{ scope.row.census_city }}
@@ -186,7 +187,6 @@
             {{ scope.row.house_number }}
           </template>
         </el-table-column>
-        <el-table-column prop="phone_number" label="联系电话" width="120" align="center"></el-table-column>
       </el-table>
 
       <!-- 分页 -->
@@ -199,19 +199,116 @@
       </div>
 
       <!-- 人员详情 -->
-      <el-dialog :visible.sync="dialogVisible" width="800px">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="户主信息" name="1"></el-tab-pane>
+      <el-dialog :visible.sync="dialogVisible" width="800px" title="人员详情" show-close class="dialog-info">
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="户主信息" name="1">
+            <div class="dialog-text">
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">身份证号</div>
+                <div class="dialog-text-text">{{info.domicile_res.identity_number}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">户主姓名</div>
+                <div class="dialog-text-text">{{info.domicile_res.domicile_name}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">户籍性质</div>
+                <div class="dialog-text-text">{{info.domicile_res.social_two}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l11">
+                <div class="dialog-text-label">住址</div>
+                <div class="dialog-text-text">{{info.domicile_res.domicile_address}}</div>
+              </div>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="家庭成员基本信息" name="2"></el-tab-pane>
           <el-tab-pane label="就业信息" name="3"></el-tab-pane>
-          <el-tab-pane label="社会保险信息" name="4"></el-tab-pane>
-          <el-tab-pane label="培训求职信息" name="5"></el-tab-pane>
-          <el-tab-pane label="系统信息" name="6"></el-tab-pane>
+          <el-tab-pane label="社会保险信息" name="4">
+            <div class="dialog-text">
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">人员身份</div>
+                <div class="dialog-text-text">{{info.social_res.identity_type}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">社保信息(一)</div>
+                <div class="dialog-text-text">{{info.record_res.social_one}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">社保信息(二)</div>
+                <div class="dialog-text-text">{{info.record_res.social_two}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13" v-if="info.social_res.identity_type == '超龄人员'">
+                <div class="dialog-text-label">是否退休</div>
+                <div class="dialog-text-text">{{info.social_res.is_rest}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l11" 
+                v-if="info.record_res.identity_type == '超龄人员' && info.social_res.is_rest == '是'">
+                <div class="dialog-text-label">说明</div>
+                <div class="dialog-text-text">{{info.social_res.social_two}}</div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="培训求职信息" name="5">
+            <p class="dialog-title-p">{{info.job.hunting_list.length > 0 ? '求职信息' : '无求职信息'}}</p>
+            <div class="dialog-text" v-if="info.job.hunting_list.length > 0">
+              <template v-for="(item, index) in info.job.hunting_list">
+                <div class="dialog-text-c dialog-text-l13" :key="index + '1px'">
+                  <div class="dialog-text-label">求职岗位</div>
+                  <div class="dialog-text-text">{{item.job_position}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13" :key="index + '2px'">
+                  <div class="dialog-text-label">薪资要求</div>
+                  <div class="dialog-text-text">{{item.job_salary}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13" :key="index + '3px'">
+                  <div class="dialog-text-label">就业区域</div>
+                  <div class="dialog-text-text">{{item.job_area}}</div>
+                </div>
+              </template>
+            </div>
+            <p class="dialog-title-p" style="margin-top: 20px">{{info.job.skill_list.length > 0 ? '培训信息' : '无培训信息'}}</p>
+            <div class="dialog-text" v-if="info.job.skill_list.length > 0">
+              <template v-for="(item, index) in info.job.skill_list">
+                <div class="dialog-text-c dialog-text-l13" :key="index + '1qz'">
+                  <div class="dialog-text-label">技能名称</div>
+                  <div class="dialog-text-text">{{item.skill_name}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13" :key="index + '2qz'">
+                  <div class="dialog-text-label">技能等级</div>
+                  <div class="dialog-text-text">{{item.skill_level}}</div>
+                </div>
+              </template>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="系统信息" name="6">
+            <div class="dialog-text">
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">转移就业证号</div>
+                <div class="dialog-text-text">{{info.record_res.employment_number}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">系统状态</div>
+                <div class="dialog-text-text">{{info.record_res.employment_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">查询时间</div>
+                <div class="dialog-text-text">{{info.record_res.employment_time}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">就失业证号</div>
+                <div class="dialog-text-text">{{info.record_res.unemployment_number}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">系统状态</div>
+                <div class="dialog-text-text">{{info.record_res.unemployment_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">查询时间</div>
+                <div class="dialog-text-text">{{info.record_res.unemployment_time}}</div>
+              </div>
+            </div>
+          </el-tab-pane>
         </el-tabs>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-        </span>
       </el-dialog>
     </div>
   </div>
@@ -234,8 +331,18 @@ export default {
       pageTotal: 0,
       fromShow: true,
       dialogVisible: false,
-      info: {},
-      activeName: '1'
+      info: {
+        domicile_res: {},
+        record_res: {},
+        social_res: {},
+        job: {
+          hunting: "是",
+          hunting_list: [],
+          skill: '是',
+          skill_list: []
+        }
+      },
+      activeName: '6'
     };
   },
   methods: {
@@ -461,5 +568,39 @@ export default {
 .form-hidden{
   height: 263px;
   overflow: hidden;
+}
+.dialog-title-p{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  width: 105px;
+  padding-left: 43px;
+}
+.dialog-text{
+  font-size: 13px;
+  line-height: 30px;
+  .dialog-text-c{
+    display: inline-block;
+    div{
+      display: inline-block;
+    }
+  }
+  .dialog-text-label{
+    width: 95px;
+    text-align: right;
+    padding-right: 5px;
+    font-weight: bold;
+  }
+  .dialog-text-l11{
+    width: 760px;
+  }
+  .dialog-text-l13{
+    width: 250px;
+  }
+}
+.dialog-info{
+  ::v-deep .el-dialog__body{
+    min-height: 56vh;
+  }
 }
 </style>
