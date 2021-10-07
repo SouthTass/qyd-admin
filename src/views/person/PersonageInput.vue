@@ -467,6 +467,8 @@ export default {
         label: 'name',
         children: 'list',
       },
+      company_address_prop: ["", "", "", ""],
+      company_address_desc_prop: '',
       rules: {
         'domicile.identity_number': [
           { required: true, message: '请输入18位身份证号码', trigger: 'change' },
@@ -524,7 +526,12 @@ export default {
         'census.census_address': [
           { required: true, message: '请选择居住地址', trigger: 'blur' }
         ]
-      }
+      },
+      props: {
+        value: 'name',
+        label: 'name',
+        children: 'list',
+      },
     };
   },
   watch: {
@@ -749,6 +756,15 @@ export default {
       let tmp = JSON.parse(JSON.stringify(this.$root.user.domicile))
       this.$root.user = JSON.parse(JSON.stringify(this.$baseConfig))
       this.$root.user.domicile = tmp
+    },
+
+    // 处理工作地点
+    computedCompanyAddress(){
+      this.$root.user.work.company_address[0] = this.company_address_prop[0] || ''
+      this.$root.user.work.company_address[1] = this.company_address_prop[1] || ''
+      this.$root.user.work.company_address[2] = this.company_address_prop[2] || ''
+      this.$root.user.work.company_address[3] = this.company_address_prop[3] || ''
+      this.$root.user.work.company_address[4] = this.company_address_desc_prop || ''
     }
   }
 };

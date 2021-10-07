@@ -213,7 +213,7 @@
               </div>
               <div class="dialog-text-c dialog-text-l13">
                 <div class="dialog-text-label">户籍性质</div>
-                <div class="dialog-text-text">{{info.domicile_res.social_two}}</div>
+                <div class="dialog-text-text">{{info.domicile_res.domicile_type}}</div>
               </div>
               <div class="dialog-text-c dialog-text-l11">
                 <div class="dialog-text-label">住址</div>
@@ -221,8 +221,185 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="家庭成员基本信息" name="2"></el-tab-pane>
-          <el-tab-pane label="就业信息" name="3"></el-tab-pane>
+          <el-tab-pane label="家庭成员基本信息" name="2">
+            <div class="dialog-text">
+              <div class="dialog-text-c dialog-text-l11">
+                <div class="dialog-text-label">户主关系</div>
+                <div class="dialog-text-text">{{info.census_res.rapport}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">身份证号</div>
+                <div class="dialog-text-text">{{info.census_res.card_number}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">姓名</div>
+                <div class="dialog-text-text">{{info.census_res.census_name}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">性别</div>
+                <div class="dialog-text-text">{{info.census_res.sex}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">出生日期</div>
+                <div class="dialog-text-text">{{$root.computedBirthday(info.census_res.card_number)}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">年龄</div>
+                <div class="dialog-text-text">{{$root.computedAge(info.census_res.card_number)}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">户籍性质</div>
+                <div class="dialog-text-text">{{info.census_res.census_domicile_type}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">是否就业登记</div>
+                <div class="dialog-text-text">{{info.census_res.work_register}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">电话</div>
+                <div class="dialog-text-text">{{info.census_res.phone_number}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">特殊身份</div>
+                <div class="dialog-text-text">{{info.census_res.census_identity}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">民族</div>
+                <div class="dialog-text-text">{{info.census_res.nation}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">政治面貌</div>
+                <div class="dialog-text-text">{{info.census_res.political_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">婚姻状况</div>
+                <div class="dialog-text-text">{{info.census_res.marriage_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">健康状况</div>
+                <div class="dialog-text-text">{{info.census_res.health_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">残疾等级</div>
+                <div class="dialog-text-text">{{info.census_res.handicap_level}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">是否低保</div>
+                <div class="dialog-text-text">{{info.census_res.allowance_status}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">学历</div>
+                <div class="dialog-text-text">{{info.census_res.education}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l12">
+                <div class="dialog-text-label">专业</div>
+                <div class="dialog-text-text">{{info.census_res.profession}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l11">
+                <div class="dialog-text-label">户口地址</div>
+                <div class="dialog-text-text">
+                  {{info.census_res.domicile_city}} 
+                  {{info.census_res.domicile_area}} 
+                  {{info.census_res.domicile_town}} 
+                  {{info.census_res.domicile_village}} 
+                </div>
+              </div>
+              <div class="dialog-text-c dialog-text-l11">
+                <div class="dialog-text-label">居住地址</div>
+                <div class="dialog-text-text">
+                  {{info.census_res.census_city}} 
+                  {{info.census_res.census_area}} 
+                  {{info.census_res.census_town}} 
+                  {{info.census_res.census_village}} 
+                  {{info.census_res.house_number}} 
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="就业信息" name="3">
+            <div class="dialog-text">
+              <div class="dialog-text-c dialog-text-l13" v-if="info.work_res.work_status == '无业求职'">
+                <div class="dialog-text-label">就业状态</div>
+                <div class="dialog-text-text">{{info.work_res.work_status}}</div>
+              </div>
+              <template v-else-if="info.work_res.work_status == '无就业需求'">
+                <div class="dialog-text-c dialog-text-l13" >
+                  <div class="dialog-text-label">就业状态</div>
+                  <div class="dialog-text-text">{{info.work_res.work_status}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">说明</div>
+                  <div class="dialog-text-text">{{info.work_res.work_desc}}</div>
+                </div>
+              </template>
+              <div class="dialog-text-c dialog-text-l13" v-else>
+                <div class="dialog-text-label">就业状态</div>
+                <div class="dialog-text-text">{{info.work_res.work_status}}</div>
+              </div>
+              <template v-if="info.work_res.work_status == '灵活就业' || info.work_res.work_status == '社区村就业'">
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">工作地点</div>
+                  <div class="dialog-text-text">{{info.work_res.company_address}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">工作内容</div>
+                  <div class="dialog-text-text">{{info.work_res.work_desc}}</div>
+                </div>
+              </template>
+              <template v-if="info.work_res.work_status == '自主创业'">
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">创业项目名称</div>
+                  <div class="dialog-text-text">{{info.work_res.company_address}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">工作内容</div>
+                  <div class="dialog-text-text">{{info.work_res.work_desc}}</div>
+                </div>
+              </template>
+              <template v-if="info.work_res.work_status == '单位就业'">
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">就业单位全称</div>
+                  <div class="dialog-text-text">{{info.work_res.company_name}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">工作地点</div>
+                  <div class="dialog-text-text">{{info.work_res.company_address}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">职业工种</div>
+                  <div class="dialog-text-text">{{info.work_res.work_type}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">用工形式</div>
+                  <div class="dialog-text-text">{{info.work_res.work_shape}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">单位性质</div>
+                  <div class="dialog-text-text">{{info.work_res.company_type}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">单位联系人</div>
+                  <div class="dialog-text-text">{{info.work_res.contact_person}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">单位联系电话</div>
+                  <div class="dialog-text-text">{{info.work_res.company_number}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">是否公益性就业</div>
+                  <div class="dialog-text-text">{{info.work_res.is_charitable}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l13">
+                  <div class="dialog-text-label">单位产业</div>
+                  <div class="dialog-text-text">{{info.work_res.company_industry}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l12">
+                  <div class="dialog-text-label">劳动合同时间</div>
+                  <div class="dialog-text-text">{{info.work_res.start_time}} 至 {{info.work_res.end_time}}</div>
+                </div>
+              </template>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="社会保险信息" name="4">
             <div class="dialog-text">
               <div class="dialog-text-c dialog-text-l13">
@@ -335,6 +512,8 @@ export default {
         domicile_res: {},
         record_res: {},
         social_res: {},
+        work_res: {},
+        census_res: {},
         job: {
           hunting: "是",
           hunting_list: [],
@@ -342,7 +521,7 @@ export default {
           skill_list: []
         }
       },
-      activeName: '6'
+      activeName: '1'
     };
   },
   methods: {
@@ -601,6 +780,10 @@ export default {
 .dialog-info{
   ::v-deep .el-dialog__body{
     min-height: 56vh;
+  }
+  ::v-deep .el-tabs__content{
+    background: #FAFAFA;
+    padding: 15px 0;
   }
 }
 </style>
