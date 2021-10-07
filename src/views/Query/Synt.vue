@@ -607,6 +607,9 @@ export default {
       })
       if(dialog != 'confirm') return
       this.query = JSON.parse(JSON.stringify(this.$option.querysynt))
+      this.domicileAddress = []
+      this.censusAddress = []
+      this.companyAddress = []
     },
     
     computedData(){
