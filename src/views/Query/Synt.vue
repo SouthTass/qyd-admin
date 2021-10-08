@@ -204,12 +204,12 @@
           <el-tab-pane label="户主信息" name="1">
             <div class="dialog-text">
               <div class="dialog-text-c dialog-text-l13">
-                <div class="dialog-text-label">身份证号</div>
-                <div class="dialog-text-text">{{info.domicile_res.identity_number}}</div>
-              </div>
-              <div class="dialog-text-c dialog-text-l13">
                 <div class="dialog-text-label">户主姓名</div>
                 <div class="dialog-text-text">{{info.domicile_res.domicile_name}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">身份证号</div>
+                <div class="dialog-text-text">{{info.domicile_res.identity_number}}</div>
               </div>
               <div class="dialog-text-c dialog-text-l13">
                 <div class="dialog-text-label">户籍性质</div>
@@ -228,12 +228,12 @@
                 <div class="dialog-text-text">{{info.census_res.rapport}}</div>
               </div>
               <div class="dialog-text-c dialog-text-l13">
-                <div class="dialog-text-label">身份证号</div>
-                <div class="dialog-text-text">{{info.census_res.card_number}}</div>
-              </div>
-              <div class="dialog-text-c dialog-text-l13">
                 <div class="dialog-text-label">姓名</div>
                 <div class="dialog-text-text">{{info.census_res.census_name}}</div>
+              </div>
+              <div class="dialog-text-c dialog-text-l13">
+                <div class="dialog-text-label">身份证号</div>
+                <div class="dialog-text-text">{{info.census_res.card_number}}</div>
               </div>
               <div class="dialog-text-c dialog-text-l13">
                 <div class="dialog-text-label">性别</div>
@@ -349,11 +349,26 @@
               <template v-if="info.work_res.work_status == '自主创业'">
                 <div class="dialog-text-c dialog-text-l11">
                   <div class="dialog-text-label">创业项目名称</div>
-                  <div class="dialog-text-text">{{info.work_res.company_address}}</div>
+                  <div class="dialog-text-text">{{info.work_res.accord.name}}</div>
                 </div>
                 <div class="dialog-text-c dialog-text-l11">
-                  <div class="dialog-text-label">工作内容</div>
-                  <div class="dialog-text-text">{{info.work_res.work_desc}}</div>
+                  <div class="dialog-text-label">创业项目地址</div>
+                  <div class="dialog-text-text">
+                    {{info.work_res.accord.address_array.join(' ')}}
+                    {{info.work_res.accord.address_desc}}
+                  </div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">创业项目性质</div>
+                  <div class="dialog-text-text">{{info.work_res.accord.type}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l12">
+                  <div class="dialog-text-label">带动就业人数</div>
+                  <div class="dialog-text-text">{{info.work_res.accord.number}}</div>
+                </div>
+                <div class="dialog-text-c dialog-text-l11">
+                  <div class="dialog-text-label">创业项目内容</div>
+                  <div class="dialog-text-text">{{info.work_res.accord.desc}}</div>
                 </div>
               </template>
               <template v-if="info.work_res.work_status == '单位就业'">
