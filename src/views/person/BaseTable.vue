@@ -10,8 +10,6 @@
       <div class="handle-box">
         <el-input v-model="query.user_name" placeholder="请输入身份号或姓名" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="censusList(1)">检索</el-button>
-        <!-- <el-button type="primary" icon="el-icon-plus" @click="openPersonageInput()" 
-          style="float:right">录入信息</el-button> -->
         <el-button type="danger" icon="el-icon-download" plain style="float: right"
           @click="censusExport">导出数据</el-button>
         <el-select v-model="exportText" filterable style="float: right; margin-left: 10px">
@@ -68,18 +66,15 @@
     </div>
     
     <!-- 个人信息、注销弹窗、变更记录 -->
-    <!-- <ComponentsInfo ref="componentsInfo"></ComponentsInfo> -->
     <ComponentsLogout ref="componentsLogout"></ComponentsLogout>
     <ComponentsChangeRecord ref="componentsChangeRecord"></ComponentsChangeRecord>
   </div>
 </template>
 
 <script>
-// import ComponentsInfo from '@/components/person/Info'
 import ComponentsLogout from "@/components/person/Logout"
 import ComponentsChangeRecord from "@/components/person/ChangeRecord"
 export default {
-  // components: { ComponentsChangeRecord, ComponentsInfo, ComponentsLogout },
   components: { ComponentsChangeRecord, ComponentsLogout },
   data() {
     return {
@@ -117,11 +112,6 @@ export default {
     openPersonageInput(item, type){
       let query = {type: 'PersonageInput'}
       if(item) query.id = item.id
-      // let routeUrl = this.$router.resolve({
-      //   path: "/personageinput",
-      //   query: query
-      // });
-      // window.open(routeUrl .href, '_blank');
       if(type) query.pageType = type
       this.$router.push({
         path: '/personageinput',
